@@ -1,6 +1,8 @@
 package fciencias.edatos.practica03;
 import java.util.Scanner;
 import java.util.Iterator;
+import java.io.IOException;
+import java.util.InputMismatchException;
 
 /**
  * @version 1.0 Octubre 2021.
@@ -59,44 +61,54 @@ public class Maze{
         return false;
     }  */
 
-    public static void main(String[] args) {
-	//	Maze laberinto = new Maze();
-		
-	}
-
     public static void main(String[] args){
-        Scanner sc = new Scanner(System.in);
-    
-        // INICIO DEL MENU
         
-        System.out.println(verde+"Antes de comenzar: \n"+azul+
+        // COLORES                                                               
+        String verde = "\033[32m";
+        String blanco = "\u001B[0m";
+        String morado = "\033[35m";
+        String azul = "\033[34m";
+        String yellow= "\033[33m";
+        String rojo =  "\u001B[31m"; 
+
+        Scanner sc = new Scanner(System.in); //Objeto para usar la clase Scanner
+        ArrayReader arre= new ArrayReader(); //Objeto para usar la clase ArrayReader
+    
+        //	Maze laberinto = new Maze();
+        
+        // INSTRUCCIONES PARA EL USUARIO
+        System.out.println(verde+"Antes de comenzar:" +blanco+"\n"+azul+
           " Este es un programa que utiliza archivos,"
-          +"\n asi que tenemos algunas recomendaciones para ti"+red" 🚩\n"
-          +azul+"\n\t-- "+blanco+"Si los archivos que quieres leer 
-          se encuentran en la misma carpeta que este programa, 
-          \n\tsolo ingresa su nombre"+morado+ " (Recuerda incluir el .txt)\n"
-          +azul+"\n\t-- "+blanco+"Si tu caso no es el anterior 
-          tendras que incluir la ruta completa donde se encuentra 
-          el archivo \n\t"+morado+"Por ejemplo: 
-          /Documentos/ICC/carpetita/Archivo.txt\n\n");
+          +" asi que tenemos algunas recomendaciones para ti"+rojo+" 🚩" +blanco+"\n"+
+          "\n"+azul+"\t-- "+blanco+"Si los archivos que quieres leer"+
+          " se encuentran en la misma carpeta que este programa," + blanco+"\n"+
+          "\tsolo ingresa su nombre"+morado+ " (Recuerda incluir el .txt)"+blanco+"\n\n"
+          +azul+"\t-- "+blanco+"Si tu caso no es el anterior"+ 
+          " tendras que incluir la ruta completa \n\tdonde se encuentra" +
+          " el archivo "+morado+"Por ejemplo:" + 
+          "/Documentos/ICC/carpetita/Archivo.txt"+blanco+"\n\n");
           
-        System.out.println(morado+"Bienvenido al buscador 
-        de soluciones de laberintosツ\n");
+        // INICIO DEL MENU
+        System.out.println(yellow+"Bienvenido al buscador de soluciones de laberintos ツ"+blanco+"\n");
         int eleccion= 0;
         do{
-            System.out.println(azul+"Elige algunas de las siguientes opciones:");
+            System.out.println(azul+"Elige algunas de las siguientes opciones:"+blanco);
     
-            System.out.print(verde+ "[1]"+blanco+" Resolver laberinto 🌟 \n" +
-                             verde + "[2]"+blanco+" Cerrar el programa 😞\n"+azul);
+            System.out.print(verde+ "[1]"+blanco+" Resolver laberinto 🌟\n" +
+                            verde+ "[2]"+blanco+" Probar ejemplos 🌟\n" +
+                             verde + "[3]"+blanco+" Cerrar el programa 😞\n");
             try {
                 eleccion = sc.nextInt();
             } catch (InputMismatchException ime) {
-                System.out.println(red + "\tNo ingresaste un entero" + white);
-                System.out.print(verde+"\n\tIntenta de nuevo:)");
+                System.out.println(rojo+ "\tNo ingresaste un entero" + blanco);
+                System.out.print(verde+"\tIntenta de nuevo:)"+blanco+"\n\n");
+                sc.nextLine();
                 continue;
               }catch(Exception e){
                 System.out.print(rojo+"\n\tLo siento,ocurrio un error inesperado");
-                System.out.print(verde+"\n\tIntenta de nuevo:)");
+                System.out.print(verde+"\n\tIntenta de nuevo:)"+blanco+"\n\n");
+                sc.nextLine();
+                continue;
                 }
             sc.nextLine();
             System.out.println();
@@ -104,26 +116,25 @@ public class Maze{
             switch(eleccion){
             // opcion 1 (resolver Laberinto)
             case 1:
-            System.out.println(blanco+"Ingresa el nombre del archivo 
-                                donde esta la representación del laberinto\n");
-            try {
-                String archivo=sc.nextLine();
-            } catch(InputMismatchException ime){
-                System.out.println(red + "\tNo ingresaste un archivo valido" + white);
-                sc.nextLine();
-                continue;
-            } catch (Exception e){
-                System.out.println(red+"Hubo un error "+white);
-            }
-            break; // del case 1 del menu principal
-    
-            // opcion 2 (salir)
+            System.out.println(morado+"Ingresa el nombre del archivo donde esta la representación del laberinto"+blanco+"\n");
+            String archivo=sc.nextLine();
+            Box[][] tablero1= arre.readMatrix(archivo);
+            System.out.println("\n"+morado+"El laberinto del archivo se ve de la siguiente manera:");
+            //tablero1.toString();
+            break; 
+
+            //opcion 2 (Para no tener que escribir la ruta completa al probar ejemplos)
             case 2:
-            System.out.println(rojo+"\n\t🌈 Gracias por usar el programa 🌈\n");
+            System.out.println(morado+"Ingresa solo la letra del laberinto de ejemplo (A o B)"+blanco+"\n");
+            String archivoInc=sc.nextLine(); // La letra que el usuario ingrese
+            String archivoCom="Laberintos/Laberinto"+archivoInc+".txt"; //La ruta de acuerdo a como esta implementada la gráfica
+            Box[][] tablero2= arre.readMatrix(archivoCom);
+            System.out.println();
             break;
-            //
-            default:
-            System.out.println(rojo+"\nINGRESA UNA OPCION VALIDA\n");
+            
+            // opcion 3 (salir)
+            case 3:
+            System.out.println(blanco+"\n 🌈 " + rojo+" Gracias por usar el programa "+ blanco+ "🌈\n"+blanco);
             break;
     
             } // final switch principal 
@@ -131,7 +142,7 @@ public class Maze{
             System.out.println();
             
         } //final do .. while principal
-        while(eleccion!=2);
+        while(eleccion!=3);
       }
 
 
