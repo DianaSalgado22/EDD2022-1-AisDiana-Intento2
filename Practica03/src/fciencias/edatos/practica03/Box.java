@@ -1,5 +1,6 @@
-package fciencias.edatos.practica03;
 
+package fciencias.edatos.practica03;
+import java.util.Random;
 import java.util.Iterator;
 
 /**
@@ -18,7 +19,7 @@ public class Box{
     /** Crea la cola que representa el orden 
     en que se recorrera al siguiente vecino si es posible.
     */
-    TDAQueue<integer> neighbors=new Queue<>();
+    private Queue<Integer> neighbors=new Queue<>();
 
     /** Crea una nueva casilla
      *  @param wall te dice si la casilla es una pared.
@@ -29,7 +30,15 @@ public class Box{
         this.wall=wall;
         this.visited=visited;
         this.neighbors=rellenaNeighbors(neighbors);
+    
     }
+
+    public Box(boolean wall){
+        this.wall=wall;
+        
+    
+    }
+
 
     /** Crea una los elementos de la cola neighbors
      *  @param cola , cola a la que se le asignaran 
@@ -37,15 +46,20 @@ public class Box{
      *  @return la cola ya  rellena y con tamaño 4.
      */
     public Queue rellenaNeighbors(Queue cola){
+        int random=0;
         while(cola.size()<4){
-            int random=new Random();
-            int x=random.nextInt(4);
+            Random x = new Random();
+			random = x.nextInt(4);
+           /*  int random=new Random();
+            x=random.nextInt(4);
+
                 int random=new Random();
-                x=random.nextInt(4);
+                x=random.nextInt(4); */
             }
-            cola.enqueue(x);   
+            cola.enqueue(random);   
+            return cola;
         }
-    }
+   // }
 
     /** Permite saber si una casilla 
      *  es pared o no.

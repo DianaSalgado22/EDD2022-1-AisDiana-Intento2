@@ -30,16 +30,31 @@ public class Maze{
      *  Esta casilla no puede ser una pared*/
     Box actual;
 
+    public Maze(Box[][] tablero,Box inicio,Box fin, Box actual){
+        this.tablero = tablero;
+        this.inicio = inicio;
+        this.fin = fin;
+        this.actual = actual;
+    }
+
+    
+     
+
     /** Metodo para saber si el laberinto esta resuelto
      *  @return true si ya esta resuleto,false si no.
      */
-    public boolean isSolution{
+   /*  public boolean isSolution(){
         // Si son iguales significa que encontramos un camino
         if(actual==fin)
            return isExtensible();
         // De otra manera aún no se encuentra una solución
-        return false
-    }
+        return false;
+    }  */
+
+    public static void main(String[] args) {
+	//	Maze laberinto = new Maze();
+		
+	}
 
 
 }

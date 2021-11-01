@@ -1,3 +1,4 @@
+package fciencias.edatos.practica03;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.BufferedReader;
@@ -22,6 +23,7 @@ public class ArrayReader {
      * @return una matriz de enteros.
      */
     public static Box[][] readMatrix(String name){
+        
         try(BufferedReader reader = new BufferedReader(new FileReader(name))){
             String[] dimensions = reader.readLine().split(",");
             // Se leen las dimensiones del laberinto
@@ -31,12 +33,15 @@ public class ArrayReader {
             String line = null;
             int index = 0;
             while((line = reader.readLine()) != null){
+                
                 String[] data = line.split(",");
                 // Se obtiene la fila y columna de la casilla del laberinto
                 int row = Integer.valueOf(data[0]), column = Integer.valueOf(data[1]);
 
                 // Depende de como definas el constructor de Box ajusta la siguiente linea
                 //result[row][colum] = new Box(row, colum);
+                result[row][column] = new Box(false);
+                
             }
             
             return result;
