@@ -82,6 +82,8 @@ public class DoubleLinkedList<T> implements TDAList<T> {
     }
   }
 
+  
+
   /**
    * Clase que implementa iterator en una lista
    * doblemente ligada.

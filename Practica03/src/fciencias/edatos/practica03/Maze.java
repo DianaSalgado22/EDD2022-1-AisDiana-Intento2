@@ -122,6 +122,9 @@ public class Maze{
     //🎃👻
 
 
+   
+    
+
 
    
 //=======
@@ -142,6 +145,8 @@ public class Maze{
         Box start = new Box(false,true,9,0);
         Box end = new Box(false,false,9,20);
         Box actual = start;
+        System.out.println(actual.getNeighbors());
+        System.out.println(actual.getNeighbors().size());
 
 		Maze laberinto = new Maze(p1,start,end,actual); 
 

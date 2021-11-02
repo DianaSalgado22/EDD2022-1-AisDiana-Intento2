@@ -48,21 +48,31 @@ public class Box{
         return neighbors;
     }
 
+
     /** Crea una los elementos de la cola neighbors
      *  @param cola , cola a la que se le asignaran 
      *  los números del 1 al 4
      *  @return la cola ya  rellena y con tamaño 4.
      */
     public Queue rellenaNeighbors(Queue cola){
-        int random=0;
+        int random;
+        String numeros="";
         while(cola.size()<4){
             Random x = new Random();
 			random = x.nextInt(4);
-           /*  int random=new Random();
-            x=random.nextInt(4);
-                int random=new Random();
-                x=random.nextInt(4); */
-                cola.enqueue(random);  
+
+         
+
+                if(numeros.contains(""+random)){
+                    continue;
+                }
+                numeros += ""+random+"";
+
+               // if(!(cola.contains(random))){
+                    cola.enqueue(random);  
+                
+
+
             }
              
             return cola;
