@@ -1,4 +1,3 @@
-
 package fciencias.edatos.practica03;
 import java.util.Random;
 import java.util.Iterator;
@@ -62,7 +61,6 @@ public class Box{
 			random = x.nextInt(4);
            /*  int random=new Random();
             x=random.nextInt(4);
-
                 int random=new Random();
                 x=random.nextInt(4); */
                 cola.enqueue(random);  

@@ -100,12 +100,12 @@ public class Maze{
             //
             for(int j = 0; j < tablero[i].length; j++){
                  if(i  == inicio.fila && j == inicio.columna){
-                    representación += "👻 ";
+                    representación += morado+"👻  "+blanco;
                     continue;
                 } 
 
                 if(i  == fin.fila && j == fin.columna){
-                    representación += "🎃 ";
+                    representación += yellow+" 🎃 "+blanco;
                     continue;
                 } 
 
