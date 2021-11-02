@@ -37,7 +37,11 @@ public class Maze{
         this.actual = actual;
     }
 
-    
+    public Maze(Box[][] tablero){
+
+        this.tablero = tablero;
+
+    }
      
 
     /** Metodo para saber si el laberinto esta resuelto
@@ -51,8 +55,32 @@ public class Maze{
         return false;
     }  */
 
+    public String toString(){
+        String representación = "";
+        for(int i = 0; i < tablero.length; i++){
+            representación += "|";
+            for(int j = 0; j < tablero[i].length; j++){
+            //    if(tablero[i][j] == null){
+            //        rep += 
+            //    } 
+              representación += tablero[i][j] == null ? "@@@" : "   ";
+            }
+            representación += "|\n";
+        }
+        return representación;
+    }
+
     public static void main(String[] args) {
-	//	Maze laberinto = new Maze();
+
+        Box[][] p1 = ArrayReader.readMatrix("Laberintos/LaberintoA.txt");
+
+		Maze laberinto = new Maze(p1);
+
+        //System.out.println("holiu");
+        System.out.println(laberinto);       
+
+
+       // ArrayReader p1 = new ArrayReader();
 		
 	}
 
