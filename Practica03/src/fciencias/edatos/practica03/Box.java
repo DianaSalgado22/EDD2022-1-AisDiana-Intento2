@@ -19,14 +19,19 @@ public class Box{
     /** Crea la cola que representa el orden 
     en que se recorrera al siguiente vecino si es posible.
     */
+
     private Queue<Integer> neighbors=new Queue<>();
+
+    int fila;
+    int columna;
+    
 
     /** Crea una nueva casilla
      *  @param wall te dice si la casilla es una pared.
      *  @param visited te dice si la casilla ya fue visitada.
      *  @param neighbors Cola por rellenar.
     */
-    public Box(boolean wall,boolean visited,Queue neighbors){
+    public Box(boolean wall,boolean visited,int fila,int columna ){
         this.wall=wall;
         this.visited=visited;
         this.neighbors=rellenaNeighbors(neighbors);

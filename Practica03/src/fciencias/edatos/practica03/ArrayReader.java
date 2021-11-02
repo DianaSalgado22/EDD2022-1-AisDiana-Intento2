@@ -48,6 +48,8 @@ public class ArrayReader {
                 result[row][column] = new Box(false);
                 
             }
+
+            
             
             return result;
         } catch(FileNotFoundException fnfe){

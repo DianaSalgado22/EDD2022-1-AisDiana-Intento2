@@ -106,7 +106,7 @@ public class Maze{
         String rojo =  "\u001B[31m"; 
 
         Box[][] p1 = ArrayReader.readMatrix("Laberintos/LaberintoA.txt");
-
+        
 		Maze laberinto = new Maze(p1);
 
         //System.out.println("holiu");
