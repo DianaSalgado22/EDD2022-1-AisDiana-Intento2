@@ -65,7 +65,7 @@ public class Maze{
         return false;
     }  */
 
-<<<<<<< HEAD
+//<<<<<<< HEAD
     public String toString(){
         String representación = "";
         for(int i = 0; i < tablero.length; i++){
@@ -81,7 +81,7 @@ public class Maze{
         return representación;
     }
 
-    public static void main(String[] args) {
+   /*  public static void main(String[] args) {
 
         Box[][] p1 = ArrayReader.readMatrix("Laberintos/LaberintoA.txt");
 
@@ -93,8 +93,8 @@ public class Maze{
 
        // ArrayReader p1 = new ArrayReader();
 		
-	}
-=======
+	} */
+//=======
     public static void main(String[] args){
         
         // COLORES                                                               
@@ -105,6 +105,12 @@ public class Maze{
         String yellow= "\033[33m";
         String rojo =  "\u001B[31m"; 
 
+        Box[][] p1 = ArrayReader.readMatrix("Laberintos/LaberintoA.txt");
+
+		Maze laberinto = new Maze(p1);
+
+        //System.out.println("holiu");
+        System.out.println(laberinto);  
         Scanner sc = new Scanner(System.in); //Objeto para usar la clase Scanner
         ArrayReader arre= new ArrayReader(); //Objeto para usar la clase ArrayReader
     
@@ -178,7 +184,7 @@ public class Maze{
         } //final do .. while principal
         while(eleccion!=3);
       }
->>>>>>> 23d007fbb8856333b94742be0e6902244f37e3a0
+//>>>>>>> 23d007fbb8856333b94742be0e6902244f37e3a0
 
 
 }
