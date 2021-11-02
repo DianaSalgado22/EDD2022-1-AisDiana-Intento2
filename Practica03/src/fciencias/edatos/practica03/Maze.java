@@ -153,7 +153,7 @@ public class Maze{
 		//Maze laberinto = new Maze(p1);
 //>>>>>>> ba9fadf080bf5c6633eac86e23f18457f52c5a01
 
-        //System.out.println("holiu");
+        System.out.println(rojo+"🂡"+blanco);
        
         Scanner sc = new Scanner(System.in); //Objeto para usar la clase Scanner
         ArrayReader arre= new ArrayReader(); //Objeto para usar la clase ArrayReader
