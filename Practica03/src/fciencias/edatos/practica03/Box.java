@@ -1,4 +1,3 @@
-
 package fciencias.edatos.practica03;
 import java.util.Random;
 import java.util.Iterator;
@@ -62,6 +61,7 @@ public class Box{
         while(cola.size()<4){
             Random x = new Random();
 			random = x.nextInt(4);
+<<<<<<< HEAD
          
 
                 if(numeros.contains(""+random)){
@@ -76,6 +76,13 @@ public class Box{
 
                 
                 
+=======
+           /*  int random=new Random();
+            x=random.nextInt(4);
+                int random=new Random();
+                x=random.nextInt(4); */
+                cola.enqueue(random);  
+>>>>>>> 94443f33dded672625f69f01da28ab889cb1b45f
             }
              
             return cola;
