@@ -66,6 +66,11 @@ public class Maze{
     }  */
 
 //<<<<<<< HEAD
+
+    public boolean isExtensible(){
+        return  !((actual.getNeighbors().size()) == 0);
+    }
+
     public String toString(){
         int contadorC=1; //contador columnas
         int contadorF=0; //contador filas
@@ -94,29 +99,31 @@ public class Maze{
             }
             //
             for(int j = 0; j < tablero[i].length; j++){
+                 if(i  == inicio.fila && j == inicio.columna){
+                    representación += "👻 ";
+                    continue;
+                } 
+
+                if(i  == fin.fila && j == fin.columna){
+                    representación += "🎃 ";
+                    continue;
+                } 
+
                 representación += tablero[i][j] == null ? "@@@" : "   ";
             }
+
+          //  tablero[inicio.fila][inicio.columna] = "👻 ";
             representación += "|\n";
             contadorC++;
         }
         return representaciónC+"\n"+representación;
     }
 
-    /*  
-  
-    public static void main(String[] args) {
-
-        Box[][] p1 = ArrayReader.readMatrix("Laberintos/LaberintoA.txt");
-
-		Maze laberinto = new Maze(p1);
-
-        //System.out.println("holiu");
-        System.out.println(laberinto);       
+    //🎃👻
 
 
-       // ArrayReader p1 = new ArrayReader();
-		
-	} */
+
+   
 //=======
  // /*
     public static void main(String[] args){
@@ -129,18 +136,25 @@ public class Maze{
         String yellow= "\033[33m";
         String rojo =  "\u001B[31m"; 
 
-<<<<<<< HEAD
+//<<<<<<< HEAD
         Box[][] p1 = ArrayReader.readMatrix("Laberintos/LaberintoA.txt");
-        
-		Maze laberinto = new Maze(p1);
-=======
+
+        Box start = new Box(false,true,9,0);
+        Box end = new Box(false,false,9,20);
+        Box actual = start;
+
+		Maze laberinto = new Maze(p1,start,end,actual); 
+
+        //Maze laberinto = new Maze(p1);
+        System.out.println(laberinto);  
+//=======
         //Box[][] p1 = ArrayReader.readMatrix("Laberintos/LaberintoA.txt");
 
 		//Maze laberinto = new Maze(p1);
->>>>>>> ba9fadf080bf5c6633eac86e23f18457f52c5a01
+//>>>>>>> ba9fadf080bf5c6633eac86e23f18457f52c5a01
 
         //System.out.println("holiu");
-        //System.out.println(laberinto);  
+       
         Scanner sc = new Scanner(System.in); //Objeto para usar la clase Scanner
         ArrayReader arre= new ArrayReader(); //Objeto para usar la clase ArrayReader
     

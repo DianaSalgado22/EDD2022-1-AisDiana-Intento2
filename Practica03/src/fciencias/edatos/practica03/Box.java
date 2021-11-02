@@ -32,6 +32,8 @@ public class Box{
      *  @param neighbors Cola por rellenar.
     */
     public Box(boolean wall,boolean visited,int fila,int columna ){
+        this.fila = fila;
+        this.columna = columna;
         this.wall=wall;
         this.visited=visited;
         this.neighbors=rellenaNeighbors(neighbors);
@@ -44,6 +46,9 @@ public class Box{
     
     }
 
+    public Queue getNeighbors(){
+        return neighbors;
+    }
 
     /** Crea una los elementos de la cola neighbors
      *  @param cola , cola a la que se le asignaran 
@@ -60,8 +65,9 @@ public class Box{
 
                 int random=new Random();
                 x=random.nextInt(4); */
+                cola.enqueue(random);  
             }
-            cola.enqueue(random);   
+             
             return cola;
         }
    // }
