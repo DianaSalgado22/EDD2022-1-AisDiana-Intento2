@@ -324,13 +324,6 @@ public class Maze{
 		Maze laberinto = new Maze(p1,start,end,actual); 
         Maze aux = new Maze();
 
-<<<<<<< HEAD
-       
-        //Maze laberinto = new Maze(p1);
-        System.out.println(laberinto);  
-       // System.out.println(aux.solve(laberinto));
-       
-=======
         Box start = new Box(false,true,9,0);
         Box end = new Box(false,false,9,20);
         Box actual = start;
