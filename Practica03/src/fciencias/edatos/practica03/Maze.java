@@ -63,7 +63,7 @@ public class Maze{
      */
       public boolean isSolution(){
         // Si son iguales significa que encontramos un camino
-        if(actual==fin)
+        if(actual.fila==fin.fila && actual.columna==fin.columna)
            return isExtensible();
         // De otra manera aún no se encuentra una solución
         return false;
@@ -326,15 +326,14 @@ public class Maze{
      */
     public TDAStack<Box> solve(Maze laberinto){
         TDAStack<Box> camino = new Stack<>();
-       
+        int it=1;
         /* Seguimos iterando mientras no lleguemos a una solución
          * o la conclusión de que no hay */
         while(!laberinto.isSolution()){
-
+            System.out.println(it);
             System.out.println(laberinto.toStringIntermedio());
             // Checamos si se puede extender
             if(laberinto.isExtensible()){
-                System.out.println(laberinto.isExtensible());
                 // si la respuesta es true
                 // Se agrega la casilla actual a la pila de posibles caminos
                 camino.push(actual);
@@ -360,6 +359,7 @@ public class Maze{
                 System.out.println(rojo+"Estas atrapado😵"+blanco+"\n"+morado+"No existe una solución para este laberinto😨");
                 return camino;
             }
+            it++;
         }
         camino.push(actual);
         return camino;

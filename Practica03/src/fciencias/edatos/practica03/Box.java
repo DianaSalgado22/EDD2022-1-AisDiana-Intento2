@@ -42,6 +42,7 @@ public class Box{
     }
 
     /** Metodo constructor auxiliar
+     *  para construir paredes 
      *  @param fila 
      *  @param columna
      *  @return Box
@@ -50,11 +51,13 @@ public class Box{
         this.fila = fila;
         this.columna = columna;
         this.wall=wall;
+        this.visited=false;
         this.neighbors=rellenaNeighbors(neighbors);
 
     }
 
-    /** Metodo constructor auxiliar
+    /** Metodo constructor auxiliar 
+     *  que crea casillas que no son paredes
      *  @param fila 
      *  @param columna
      *  @return Box
@@ -62,6 +65,8 @@ public class Box{
     public Box(int fila,int columna){
         this.fila = fila;
         this.columna = columna;
+        this.visited=false;
+        this.wall=false;
         this.neighbors=rellenaNeighbors(neighbors);
     }
 
