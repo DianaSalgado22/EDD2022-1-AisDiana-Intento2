@@ -28,6 +28,8 @@ public class Box{
     /** Crea una nueva casilla
      *  @param wall te dice si la casilla es una pared.
      *  @param visited te dice si la casilla ya fue visitada.
+     *  @param fila la fila donde se encuentra la casilla
+     *  @param columna la columna de la casilla
      *  @param neighbors Cola por rellenar.
     */
     public Box(boolean wall,boolean visited,int fila,int columna ){
