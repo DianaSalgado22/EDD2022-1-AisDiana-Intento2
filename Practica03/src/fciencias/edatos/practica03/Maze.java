@@ -40,6 +40,10 @@ public class Maze{
      *  Esta casilla no puede ser una pared*/
     Box actual;
 
+    public Maze(){
+
+    }
+
     public Maze(Box[][] tablero,Box inicio,Box fin, Box actual){
         this.tablero = tablero;
         this.inicio = inicio;
@@ -126,6 +130,60 @@ public class Maze{
 
     //🎃👻✨
 
+    public String toStringSolución(TDAStack<Box> coordenadas ){
+        int contadorC=1; //contador columnas
+        int contadorF=0; //contador filas
+        String representación = "";
+        String representaciónC ="     "+yellow+"0";
+        for(int i = 0; i < tablero.length; i++){
+            // Para escribir las filas
+            if(contadorF<=9){
+                representación += verde+" "+contadorF+blanco+" |";
+                contadorF++;
+            }
+            else{
+                representación += verde+contadorF+blanco+" |";
+                contadorF++;
+            }
+            // Para escribir las columnas
+
+            // Para eliminar la etiqueta extra
+            if(contadorC==tablero.length){} 
+            // Para que los numeros con dos cifras no arruinen la simetria
+            if(contadorC<=9){
+                representaciónC+= "  "+yellow+contadorC+blanco;
+            }
+            if(contadorC>9 && contadorC!=tablero.length){
+                representaciónC+= " "+yellow+contadorC+blanco;
+            }
+            //
+            for(int j = 0; j < tablero[i].length; j++){
+                 if(i  == inicio.fila && j == inicio.columna){
+                    representación += morado+"👻 "+blanco;
+                    continue;
+                } 
+
+                if(i  == fin.fila && j == fin.columna){
+                    representación += yellow+" 🎃"+blanco;
+                    continue;
+                } 
+
+
+                 if(i  == coordenadas.pop().fila && j == coordenadas.pop().columna){
+                    representación += yellow+" ✨ "+blanco;
+                    continue;
+                }              
+ 
+                representación += tablero[i][j] == null ? "@@@" : "   ";
+            }
+
+          //  tablero[inicio.fila][inicio.columna] = "👻 ";
+            representación += "|\n";
+            contadorC++;
+        }
+        return representaciónC+"\n"+representación;
+    }
+
 
     public void extend(){
 
@@ -134,36 +192,36 @@ public class Maze{
         int dirección= actual.neighbors.first();
         switch(dirección){
             case 0:
-                if(actual.fila== 0)
-                    break;
-               /*  if ((tablero[actual.fila+1][actual.columna].wall == false) && (actual.visited == false)){
+                // if(actual.fila== 0)
+                //     break;
+                if (actual.fila != 0 && (tablero[actual.fila+1][actual.columna].wall == false) && (tablero[actual.fila+1][actual.columna].visited == false)){
                     actual = tablero[actual.fila+1][actual.columna];
                     return;
-                } */
+                } 
                 break;   
             case 1:
                 if(tablero[actual.fila].length-1 == actual.columna){
                     break;
                 }
-                if(tablero[actual.fila][actual.columna + 1].wall== false && actual.visited == false ){
+                if(tablero[actual.fila][actual.columna + 1].wall== false && tablero[actual.fila][actual.columna + 1].visited == false ){
                     actual = tablero[actual.fila][actual.columna+1];
                     return;
                 }    
                 break;
             case 2:
-                if(tablero.length-1 == actual.fila){
+               /*  if(tablero.length-1 == actual.fila){
                     break;
-                }
-               /*  if(tablero[actual.fila-1][actual.columna].wall== false && actual.visited == false ){
+                } */
+                if(tablero.length-1 == actual.fila && tablero[actual.fila-1][actual.columna].wall== false && tablero[actual.fila-1][actual.columna].visited == false ){
                 actual = tablero[actual.fila-1][actual.columna];
                 return;
-                }     */
+                }     
                 break;
             case 3:
-                if(actual.columna==0){
-                    break;
-                }
-                if(tablero[actual.fila-1][actual.columna].wall== false && actual.visited == false ){
+                // if(actual.columna==0){
+                //     break;
+                // }
+                if(actual.columna != 0  && tablero[actual.fila-1][actual.columna].wall== false && tablero[actual.fila-1][actual.columna].visited == false ){
                 actual = tablero[actual.fila-1][actual.columna];
                 return;
 
@@ -179,17 +237,20 @@ public class Maze{
 
     }
     
-    public TDAStack<Box> solve(Maze laberinto){
+        public TDAStack<Box> solve(Maze laberinto){
         TDAStack<Box> camino = new Stack<>();
         camino.push(actual);
+        actual.visited = true;
         while(!laberinto.isSolution()){
-            if(actual.neighbors.size() != 0){
-                actual.visited = true;
+            if(laberinto.isExtensible()){
+                
                 laberinto.extend();
+                actual.visited = true;
                 camino.push(actual);
+            
             }
 
-            if(actual.neighbors.size()==0){
+            if(!laberinto.isExtensible()){
                 actual= camino.pop();
 
             }
@@ -198,9 +259,8 @@ public class Maze{
 
         return camino;
     }
+ 
 
-   
-//=======
  // /*
     public static void main(String[] args){
         
@@ -223,17 +283,12 @@ public class Maze{
 
         
 		Maze laberinto = new Maze(p1,start,end,actual); 
+        Maze aux = new Maze();
 
-        laberinto.extend();
+       
         //Maze laberinto = new Maze(p1);
         System.out.println(laberinto);  
-//=======
-        //Box[][] p1 = ArrayReader.readMatrix("Laberintos/LaberintoA.txt");
-
-		//Maze laberinto = new Maze(p1);
-//>>>>>>> ba9fadf080bf5c6633eac86e23f18457f52c5a01
-
-        //System.out.println("holiu");
+       // System.out.println(aux.solve(laberinto));
        
         Scanner sc = new Scanner(System.in); //Objeto para usar la clase Scanner
         ArrayReader arre= new ArrayReader(); //Objeto para usar la clase ArrayReader
