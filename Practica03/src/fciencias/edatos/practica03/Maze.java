@@ -227,7 +227,7 @@ public class Maze{
     /** Mueve la casilla actual a una casilla vecina
      *  que no sea pared y que no haya sido visitada
      */
-    public void extend(){
+    /* public void extend(){
         // Iterador para recorrer todas las posibles direciones
         for(int i=0; i<4;i++){
             //System.out.println(yellow+"Lleguee aquui"+blanco);
@@ -286,10 +286,86 @@ public class Maze{
                     break;
                 }// Termina switch
 
+            //si no se puede extender en la dirección de la iteracion actual 
+            // se saca de la fila y pasas a la siguiente
+            //
+            actual.neighbors.dequeue();  // se saca de la fila 
+            //System.out.println(actual.neighbors.toString());  
+        }
+    } */
+
+    public void extend(){
+        // Iterador para recorrer todas las posibles direciones
+        for(int i=0; i<4;i++){
+            //System.out.println(yellow+"Lleguee aquui"+blanco);
+            int dirección= actual.neighbors.first(); // la direccion que se checara en esa iteración
+            switch(dirección){
+                // 0 --> Arriba
+                case 0:
+                    if (actual.fila != 0 && (tablero[actual.fila-1][actual.columna].isWall() == false) 
+                    && (tablero[actual.fila-1][actual.columna].isVisited() == false)){
+                        actual.visit();
+                        actual.neighbors.dequeue();
+                        actual = tablero[actual.fila-1][actual.columna];
+                        
+                        this.actual=actual;
+                        
+                        return; // Estos return son porque en estos casos sí es extendible la casilla
+                    } 
+                break;   
+                // 1 --> Derecha
+                case 1:
+                    if(tablero[actual.fila].length-1 == actual.columna){
+                        break;
+                    }
+                    if(tablero[actual.fila][actual.columna + 1].isWall()== false 
+                    && tablero[actual.fila][actual.columna + 1].isVisited() == false ){
+                        actual.visit();
+                        actual.neighbors.dequeue();
+                        actual = tablero[actual.fila][actual.columna+1];
+                        this.actual=actual;
+                       
+                        return;
+                    }    
+                    break;
+
+                // 2 --> Abajo
+                case 2:
+                    // Caso donde se llega al final de la fila
+                    if(tablero.length-1 == actual.fila){
+                        break;
+                    }
+
+                    if(tablero[actual.fila+1][actual.columna].isWall()== false 
+                    && tablero[actual.fila+1][actual.columna].isVisited() == false ){
+                        actual.visit();
+                        actual.neighbors.dequeue();
+                        actual = tablero[actual.fila+1][actual.columna];
+                        this.actual=actual;
+                        
+                          return;
+                    }     
+                    break;
+                // 3 --> Izquierda
+                case 3:
+                    if(actual.columna != 0  && tablero[actual.fila][actual.columna-1].isWall()== false 
+                    && tablero[actual.fila][actual.columna-1].isVisited() == false ){
+                        actual.neighbors.dequeue();
+                        
+                        actual.visit();
+                        actual = tablero[actual.fila][actual.columna-1];
+
+                        this.actual=actual;
+                        
+                        return;
+                    }    
+                    break;
+                }// Termina switch
+
             /* si no se puede extender en la dirección de la iteracion actual 
              * se saca de la fila y pasas a la siguiente
             */
-            actual.neighbors.dequeue();  // se saca de la fila 
+           actual.neighbors.dequeue();  // se saca de la fila 
             //System.out.println(actual.neighbors.toString());  
         }
     }
@@ -330,8 +406,9 @@ public class Maze{
                  * actual ya no se puede avanzar.
                  * por lo tanto regresamos a la casilla 
                  * anterior para probar otro posible camino.*/
-                 actual= camino.pop(); // Se saca a la casilla anterior de la pilla y se regresa a ella.
-
+                 //actual= camino.pop(); // Se saca a la casilla anterior de la pilla y se regresa a ella.
+                 camino.pop();
+                 actual = camino.top();
             }
 
             /* Si nuestra pila esta vacia, es decir 
