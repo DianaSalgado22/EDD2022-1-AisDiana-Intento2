@@ -125,6 +125,44 @@ public class Maze{
     }
 
     //🎃👻✨
+    /** Metodo para imprimir un laberinto cuando aún no tiene 
+     *  casilla de inicio o de fin
+     */
+    public String toStringVacio(){
+        int contadorC=1; //contador columnas
+        int contadorF=0; //contador filas
+        String representación = "";
+        String representaciónC ="     "+yellow+"0";
+        for(int i = 0; i < tablero.length; i++){
+            // Para escribir las filas
+            if(contadorF<=9){
+                representación += verde+" "+contadorF+blanco+" |";
+                contadorF++;
+            }
+            else{
+                representación += verde+contadorF+blanco+" |";
+                contadorF++;
+            }
+            // Para escribir las columnas
+
+            // Para eliminar la etiqueta extra
+            if(contadorC==tablero.length){} 
+            // Para que los numeros con dos cifras no arruinen la simetria
+            if(contadorC<=9){
+                representaciónC+= "  "+yellow+contadorC+blanco;
+            }
+            if(contadorC>9 && contadorC!=tablero.length){
+                representaciónC+= " "+yellow+contadorC+blanco;
+            }
+            //
+            for(int j = 0; j < tablero[i].length; j++){             
+                representación += tablero[i][j] == null ? "@@@" : "   ";
+            }
+            representación += "|\n";
+            contadorC++;
+        }
+        return representaciónC+"\n"+representación;
+    }
 
 
     public void extend(){
@@ -213,6 +251,7 @@ public class Maze{
         String rojo =  "\u001B[31m"; 
 
 //<<<<<<< HEAD
+/*
         Box[][] p1 = ArrayReader.readMatrix("Laberintos/LaberintoA.txt");
 
         Box start = new Box(false,true,9,0);
@@ -224,6 +263,14 @@ public class Maze{
         
 		Maze laberinto = new Maze(p1,start,end,actual); 
 
+        Box start = new Box(false,true,9,0);
+        Box end = new Box(false,false,9,20);
+        Box actual = start;
+		Maze laberinto = new Maze(p1,start,end,actual); 
+
+
+
+
         laberinto.extend();
         //Maze laberinto = new Maze(p1);
         System.out.println(laberinto);  
@@ -232,9 +279,7 @@ public class Maze{
 
 		//Maze laberinto = new Maze(p1);
 //>>>>>>> ba9fadf080bf5c6633eac86e23f18457f52c5a01
-
-        System.out.println(rojo+"🂡"+blanco);
-       
+       */
         Scanner sc = new Scanner(System.in); //Objeto para usar la clase Scanner
         ArrayReader arre= new ArrayReader(); //Objeto para usar la clase ArrayReader
     
@@ -335,15 +380,17 @@ public class Maze{
             System.out.println(morado+"Ingresa solo la letra del laberinto de ejemplo (A o B)"+blanco+"\n");
             String archivoInc=sc.nextLine(); // La letra que el usuario ingrese
             String archivoCom="Laberintos/Laberinto"+archivoInc+".txt"; //La ruta de acuerdo a como esta implementada la gráfica
-            Box[][] tablero2= arre.readMatrix(archivoCom);
             // mostrar laberinto
+            Box[][] tablero2= arre.readMatrix(archivoCom);
             try{
+            //System.out.println("pt 1");
             Maze lab2=new Maze(tablero2);
-            lab2.toString();
+            //System.out.println("pt 1");
+            lab2.toStringVacio();
             System.out.println("\n"+morado+"El laberinto del ejemplo "+ archivoInc+" se ve de la siguiente manera:"+blanco);
-            System.out.println(lab2);
+            System.out.println(lab2.toStringVacio());
             }catch(NullPointerException npe){
-                System.out.println();
+                System.out.println("");
                 continue;
             }
             try{
@@ -365,6 +412,13 @@ public class Maze{
             int fFin2=sc.nextInt(); // número de la fila de inicio
             sc.nextLine();
             Box fin2 = tablero2[fFin2][cFin2];
+            //
+            Box start = new Box(inicio2.isWall(),inicio2.isVisited(),fInicio2,cInicio2);
+            Box end = new Box(fin2.isWall(),fin2.isVisited(),fFin2,cFin2);
+            Box actual = start;
+		    Maze solucion2 = new Maze(tablero2,start,end,actual);
+            //System.out.println(solucion2);
+            solucion2.solve(solucion2);
             }catch (InputMismatchException ime) {
                 System.out.println(rojo+ "\tNo ingresaste un entero" + blanco);
                 System.out.print(verde+"\tIntenta de nuevo:)"+blanco+"\n\n");
@@ -378,13 +432,7 @@ public class Maze{
                 System.out.print(rojo+"\n\tLo siento,ocurrio un error inesperado");
                 System.out.print(verde+"\n\tIntenta de nuevo:)"+blanco+"\n\n");
                 continue;
-                }
-            // Resolver laberinto y mostrar solucion
-            /*
-            try{
-                Maze solucion2= new Maze(tablero2,inicio,fin,inicio);
-                solucion2.solve();
-            }*/
+            }
             break;
             
             // opcion 3 (salir)
@@ -399,6 +447,7 @@ public class Maze{
         } //final do .. while principal
         while(eleccion!=3);
       }
+    
      // */
 //>>>>>>> 23d007fbb8856333b94742be0e6902244f37e3a0
 
