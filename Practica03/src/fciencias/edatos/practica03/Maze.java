@@ -72,7 +72,7 @@ public class Maze{
 //<<<<<<< HEAD
 
     public boolean isExtensible(){
-        return  !((actual.getNeighbors().size()) == 0);
+        return  ((actual.getNeighbors().size()) != 0);
     }
 
     public String toString(){
@@ -381,9 +381,9 @@ public class Maze{
     public TDAStack<Box> solve(Maze laberinto){
         TDAStack<Box> camino = new Stack<>();
 //<<<<<<< HEAD
-        /* actual = laberinto.inicio;
+        actual = laberinto.inicio;
         actual.visit();
-        camino.push(actual); */
+        camino.push(actual);
        
 //=======
       //  int it=1;
@@ -392,29 +392,20 @@ public class Maze{
          * o la conclusión de que no hay */
 
         while(!laberinto.isSolution()){
+            System.out.println(camino);
           //  System.out.println(it);
             System.out.println(laberinto.toStringIntermedio());
             // Checamos si se puede extender
             if(laberinto.isExtensible()){
                 // si la respuesta es true
-                // Se agrega la casilla actual a la pila de posibles caminos
-                camino.push(actual);
+                
                 // Se extiende
                 laberinto.extend();
+                // Se agrega la casilla actual a la pila de posibles caminos
+                camino.push(actual);
             }
 
-            if(!laberinto.isExtensible()){
-                /* si la respuesta es false,
-                 * quiere decir que con la casilla
-                 * actual ya no se puede avanzar.
-                 * por lo tanto regresamos a la casilla 
-                 * anterior para probar otro posible camino.*/
-                 //actual= camino.pop(); // Se saca a la casilla anterior de la pilla y se regresa a ella.
-                 camino.pop();
-                 actual =camino.top();
-            }
-
-            /* Si nuestra pila esta vacia, es decir 
+              /* Si nuestra pila esta vacia, es decir 
              * ya no hay una casilla anterior a la cual
              * regresar y además ya se probaron todas
              * las direcciones posibles de la casilla actual
@@ -423,6 +414,19 @@ public class Maze{
                 System.out.println(rojo+"Estas atrapado😵"+blanco+"\n"+morado+"No existe una solución para este laberinto😨");
                 return camino;
             }
+            if(!laberinto.isExtensible() && !camino.isEmpty()){
+                /* si la respuesta es false,
+                 * quiere decir que con la casilla
+                 * actual ya no se puede avanzar.
+                 * por lo tanto regresamos a la casilla 
+                 * anterior para probar otro posible camino.*/
+                 //actual= camino.pop(); // Se saca a la casilla anterior de la pilla y se regresa a ella.
+                 camino.pop();
+                 actual =camino.top();
+
+            }
+
+          
         //   it++;
         }
         camino.push(actual);

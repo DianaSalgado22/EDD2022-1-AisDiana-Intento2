@@ -48,7 +48,11 @@ public class Stack<T> implements TDAStack<T> {
      */
     public String toString(){
         return list.toString();
-    } 
+    }
+    
+    public int size(){
+        return list.size();
+    }
 
     /**  Pruebitas de clase Stack
     public static void main(String[] args){
