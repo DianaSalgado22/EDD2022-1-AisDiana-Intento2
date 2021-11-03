@@ -226,6 +226,7 @@ public class Maze{
     public void extend(){
 
 
+        
         for(int i=0; i<4;i++){
         int dirección= actual.neighbors.first();
         switch(dirección){
@@ -275,10 +276,12 @@ public class Maze{
 
     }
     
-        public TDAStack<Box> solve(Maze laberinto){
+        /* public TDAStack<Box> solve(Maze laberinto){
         TDAStack<Box> camino = new Stack<>();
+        //actual.visited= true;
         camino.push(actual);
-        actual.visited = true;
+      
+        //actual.visited = true;
         while(!laberinto.isSolution()){
             if(laberinto.isExtensible()){
                 
@@ -296,8 +299,37 @@ public class Maze{
         }
 
         return camino;
-    }
+    } */
  
+    public TDAStack<Box> solve(Maze laberinto){
+        TDAStack<Box> camino = new Stack<>();
+        actual = laberinto.inicio;
+        camino.push(actual);
+          /* if(actual==null){
+            System.out.println("aaaa");
+            return camino;
+        }   */
+
+        actual.visit();
+
+        while(!laberinto.isSolution()){
+            if(laberinto.isExtensible()){
+                
+                laberinto.extend();
+                actual.visit();
+                camino.push(actual);
+            
+            }
+
+            if(!laberinto.isExtensible()){
+                actual= camino.pop();
+
+            }
+
+        }
+
+        return camino;
+    }
 
  // /*
     public static void main(String[] args){
@@ -312,43 +344,43 @@ public class Maze{
 
 //<<<<<<< HEAD
 /*
+   
+*/
         Box[][] p1 = ArrayReader.readMatrix("Laberintos/LaberintoA.txt");
 
-        Box start = new Box(false,true,9,0);
-        Box end = new Box(false,false,9,20);
-        Box actual = start;
-        System.out.println(actual.getNeighbors());
-        System.out.println(actual.getNeighbors().size());
+        Box startp = new Box(false,true,9,0);
+        Box endp = new Box(false,false,9,20);
+        Box actualp = startp;
+        System.out.println(actualp.getNeighbors());
+        System.out.println(actualp.getNeighbors().size());
 
         
-		Maze laberinto = new Maze(p1,start,end,actual); 
+		Maze laberinto = new Maze(p1,startp,endp,actualp); 
         Maze aux = new Maze();
 
-<<<<<<< HEAD
-       
-        //Maze laberinto = new Maze(p1);
+
         System.out.println(laberinto);  
-       // System.out.println(aux.solve(laberinto));
+        aux.solve(laberinto);
        
-=======
-        Box start = new Box(false,true,9,0);
+//=======
+       /*  Box start = new Box(false,true,9,0);
         Box end = new Box(false,false,9,20);
         Box actual = start;
 		Maze laberinto = new Maze(p1,start,end,actual); 
+ */
 
 
 
-
-        laberinto.extend();
+       // laberinto.extend();
         //Maze laberinto = new Maze(p1);
-        System.out.println(laberinto);  
+       // System.out.println(laberinto);  
 //=======
         //Box[][] p1 = ArrayReader.readMatrix("Laberintos/LaberintoA.txt");
 
 		//Maze laberinto = new Maze(p1);
 //>>>>>>> ba9fadf080bf5c6633eac86e23f18457f52c5a01
-       */
->>>>>>> 2331652aeb0da0723d8d9ea338a09e9ad8fc2ce9
+    
+//>>>>>>> 2331652aeb0da0723d8d9ea338a09e9ad8fc2ce9
         Scanner sc = new Scanner(System.in); //Objeto para usar la clase Scanner
         ArrayReader arre= new ArrayReader(); //Objeto para usar la clase ArrayReader
     
