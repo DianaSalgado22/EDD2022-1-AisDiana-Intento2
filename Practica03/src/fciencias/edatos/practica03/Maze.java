@@ -226,15 +226,24 @@ public class Maze{
     public void extend(){
 
 
-        
+        //int auxf=actual.fila;
+        //int auxc=actual.columna;
         for(int i=0; i<4;i++){
         int dirección= actual.neighbors.first();
         switch(dirección){
             case 0:
                 // if(actual.fila== 0)
                 //     break;
+                //actual.fila += 1;
+                int auxf= actual.fila;
                 if (actual.fila != 0 && (tablero[actual.fila+1][actual.columna].wall == false) && (tablero[actual.fila+1][actual.columna].visited == false)){
+                    
+                   // actual.fila += 1;
+                //    auxf += 1;
                     actual = tablero[actual.fila+1][actual.columna];
+                //    actual.fila = auxf;
+                   /*  tablero[actual.fila+1][actual.columna].fila = actual.fila;
+                    tablero[actual.fila+1][actual.columna].columna = actual.columna; */
                     return;
                 } 
                 break;   
@@ -244,8 +253,11 @@ public class Maze{
                 }
                 if(tablero[actual.fila][actual.columna + 1].wall== false && tablero[actual.fila][actual.columna + 1].visited == false ){
                     actual = tablero[actual.fila][actual.columna+1];
+                  //  actual.columna += 1;
                     return;
+
                 }    
+
                 break;
             case 2:
                /*  if(tablero.length-1 == actual.fila){
@@ -253,6 +265,7 @@ public class Maze{
                 } */
                 if(tablero.length-1 == actual.fila && tablero[actual.fila-1][actual.columna].wall== false && tablero[actual.fila-1][actual.columna].visited == false ){
                 actual = tablero[actual.fila-1][actual.columna];
+              //  actual.fila = actual.fila -1 ;
                 return;
                 }     
                 break;
@@ -260,8 +273,9 @@ public class Maze{
                 // if(actual.columna==0){
                 //     break;
                 // }
-                if(actual.columna != 0  && tablero[actual.fila-1][actual.columna].wall== false && tablero[actual.fila-1][actual.columna].visited == false ){
-                actual = tablero[actual.fila-1][actual.columna];
+                if(actual.columna != 0  && tablero[actual.fila][actual.columna-1].wall== false && tablero[actual.fila-1][actual.columna].visited == false ){
+              //  actual = tablero[actual.fila-1][actual.columna];
+               // actual.
                 return;
 
                 }    
@@ -381,6 +395,7 @@ public class Maze{
 //>>>>>>> ba9fadf080bf5c6633eac86e23f18457f52c5a01
     
 //>>>>>>> 2331652aeb0da0723d8d9ea338a09e9ad8fc2ce9
+/*
         Scanner sc = new Scanner(System.in); //Objeto para usar la clase Scanner
         ArrayReader arre= new ArrayReader(); //Objeto para usar la clase ArrayReader
     
@@ -549,9 +564,10 @@ public class Maze{
             
         } //final do .. while principal
         while(eleccion!=3);
+        */
       }
     
-     // */
+     
 //>>>>>>> 23d007fbb8856333b94742be0e6902244f37e3a0
 
 
