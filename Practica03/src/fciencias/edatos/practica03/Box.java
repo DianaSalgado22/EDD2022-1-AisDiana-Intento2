@@ -50,6 +50,8 @@ public class Box{
         this.fila = fila;
         this.columna = columna;
         this.wall=wall;
+        this.neighbors =rellenaNeighbors(neighbors);
+        this.visited = false;
 
     }
 
