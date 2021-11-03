@@ -18,7 +18,12 @@ public class Box{
     /** Crea la cola que representa el orden 
     en que se recorrera al siguiente vecino si es posible.
     */
+<<<<<<< HEAD
     private Queue<Integer> neighbors=new Queue<>();
+=======
+
+    public Queue<Integer> neighbors=new Queue<>();
+>>>>>>> d2194728e773e1a07edadc0e66039bd8e14ce6b4
 
     int fila;
     int columna;
