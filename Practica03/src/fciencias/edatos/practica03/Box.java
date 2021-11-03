@@ -51,7 +51,9 @@ public class Box{
         this.columna = columna;
         this.wall=wall;
         this.neighbors =rellenaNeighbors(neighbors);
-        this.visited = false;
+       // this.visited = false;
+       // this.neighbors=rellenaNeighbors(neighbors);
+
 
     }
 
@@ -63,6 +65,7 @@ public class Box{
     public Box(int fila,int columna){
         this.fila = fila;
         this.columna = columna;
+        this.neighbors=rellenaNeighbors(neighbors);
     }
 
     public Queue getNeighbors(){

@@ -230,59 +230,67 @@ public class Maze{
     public void extend(){
         // Iterador para recorrer todas las posibles direciones
         for(int i=0; i<4;i++){
-        int dirección= actual.neighbors.first(); // la direccion que se checara en esa iteración
-        switch(dirección){
-            // 0 --> Arriba
-            case 0:
-                if (actual.fila != 0 && (tablero[actual.fila-1][actual.columna].isWall() == false) 
-                && (tablero[actual.fila-1][actual.columna].isVisited() == false)){
-                    actual = tablero[actual.fila-1][actual.columna];
-                    actual.visit();
-                    return; // Estos return son porque en estos casos sí es extendible la casilla
-                } 
+            //System.out.println(yellow+"Lleguee aquui"+blanco);
+            int dirección= actual.neighbors.first(); // la direccion que se checara en esa iteración
+            switch(dirección){
+                // 0 --> Arriba
+                case 0:
+                    if (actual.fila != 0 && (tablero[actual.fila-1][actual.columna].isWall() == false) 
+                    && (tablero[actual.fila-1][actual.columna].isVisited() == false)){
+                        actual.visit();
+                        actual = tablero[actual.fila-1][actual.columna];
+                        
+                        this.actual=actual;
+                        return; // Estos return son porque en estos casos sí es extendible la casilla
+                    } 
                 break;   
-            // 1 --> Derecha
-            case 1:
-                if(tablero[actual.fila].length-1 == actual.columna){
+                // 1 --> Derecha
+                case 1:
+                    if(tablero[actual.fila].length-1 == actual.columna){
+                        break;
+                    }
+                    if(tablero[actual.fila][actual.columna + 1].isWall()== false 
+                    && tablero[actual.fila][actual.columna + 1].isVisited() == false ){
+                        actual.visit();
+                        actual = tablero[actual.fila][actual.columna+1];
+                        this.actual=actual;
+                        
+                        return;
+                    }    
                     break;
-                }
-                if(tablero[actual.fila][actual.columna + 1].isWall()== false 
-                && tablero[actual.fila][actual.columna + 1].isVisited() == false ){
-                    actual = tablero[actual.fila][actual.columna+1];
-                    actual.visit();
-                return;
-                }    
-                break;
 
-            // 2 --> Abajo
-            case 2:
-                // Caso donde se llega al final de la fila
-                if(tablero.length-1 == actual.fila){
+                // 2 --> Abajo
+                case 2:
+                    // Caso donde se llega al final de la fila
+                    if(tablero.length-1 == actual.fila){
+                        break;
+                    }
+
+                    if(tablero[actual.fila+1][actual.columna].isWall()== false 
+                    && tablero[actual.fila+1][actual.columna].isVisited() == false ){
+                        actual.visit();
+                        actual = tablero[actual.fila+1][actual.columna];
+                        this.actual=actual;
+                        return;
+                    }     
                     break;
-                }
-
-                if(tablero[actual.fila+1][actual.columna].isWall()== false 
-                && tablero[actual.fila+1][actual.columna].isVisited() == false ){
-                actual = tablero[actual.fila+1][actual.columna];
-                actual.visit();
-                return;
-                }     
-                break;
-            // 3 --> Izquierda
-            case 3:
-                if(actual.columna != 0  && tablero[actual.fila][actual.columna-1].isWall()== false 
-                && tablero[actual.fila][actual.columna-1].isVisited() == false ){
-                actual = tablero[actual.fila][actual.columna-1];
-                actual.visit();
-                return;
-                }    
-                break;
-            }// Termina switch
+                // 3 --> Izquierda
+                case 3:
+                    if(actual.columna != 0  && tablero[actual.fila][actual.columna-1].isWall()== false 
+                    && tablero[actual.fila][actual.columna-1].isVisited() == false ){
+                        actual = tablero[actual.fila][actual.columna-1];
+                        actual.visit();
+                        this.actual=actual;
+                        return;
+                    }    
+                    break;
+                }// Termina switch
 
             /* si no se puede extender en la dirección de la iteracion actual 
              * se saca de la fila y pasas a la siguiente
             */
-            actual.neighbors.dequeue();  // se saca de la fila   
+            actual.neighbors.dequeue();  // se saca de la fila 
+            //System.out.println(actual.neighbors.toString());  
         }
     }
        
@@ -360,32 +368,35 @@ public class Maze{
         Box startp = new Box(false,true,9,0);
         Box endp = new Box(false,false,9,20);
         Box actualp = startp;
-        System.out.println(actualp.getNeighbors());
-        System.out.println(actualp.getNeighbors().size());
+        //System.out.println(actualp.getNeighbors());
+        //System.out.println(actualp.getNeighbors().size());
 
         
 		Maze laberinto = new Maze(p1,startp,endp,actualp); 
        // laberinto.tablero[9][0]=actualp;
         
         Maze aux = new Maze();
-
-        System.out.println(verde+"Checkpoint 0"+blanco); 
-        System.out.println(laberinto.toStringVacio()); 
+        //System.out.println(laberinto.tablero[9][1].neighbors.first());
+       // System.out.println(verde+"Checkpoint 0"+blanco); 
+       // System.out.println(laberinto.toStringVacio()); 
         System.out.println(verde+"Checkpoint 1"+blanco); 
         System.out.println(laberinto.toString()); 
         System.out.println(verde+"Checkpoint 2"+blanco); 
-        System.out.println(laberinto.actual.fila+ "  " +laberinto.actual.columna);
-        laberinto.extend();
-        System.out.println(laberinto.toStringIntermedio());
-        System.out.println(laberinto.actual.fila+ "  " +laberinto.actual.columna);
-        laberinto.extend();
-        System.out.println(laberinto.toStringIntermedio());
-        System.out.println(laberinto.actual.fila+ "  " +laberinto.actual.columna);
         /*
+        System.out.println(laberinto.actual.fila+ "  " +laberinto.actual.columna);
+        laberinto.extend();
+        System.out.println(laberinto.toStringIntermedio());
+        System.out.println(laberinto.actual.fila+ "  " +laberinto.actual.columna);
+        System.out.println(laberinto.actual.getNeighbors());
+        System.out.println(laberinto.actual.neighbors.first());
+        laberinto.extend();
+        System.out.println(laberinto.toStringIntermedio());
+        System.out.println(laberinto.actual.fila+ "  " +laberinto.actual.columna);
+        */
         System.out.println(verde+"Checkpoint 3"+blanco);  
         System.out.println(aux.solve(laberinto).toString());
         System.out.println(verde+"Checkpoint 4"+blanco); 
-       */ 
+       
        
 //=======
        /*  Box start = new Box(false,true,9,0);
