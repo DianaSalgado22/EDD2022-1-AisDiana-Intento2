@@ -428,15 +428,15 @@ public class Maze{
             case 1:
             System.out.println(morado+"Ingresa el nombre del archivo donde esta la representación del laberinto"+blanco+"\n");
             String archivo=sc.nextLine();
-            // Mostrar laberinto
+            // mostrar laberinto
             Box[][] tablero1= arre.readMatrix(archivo);
             try{
             Maze lab1=new Maze(tablero1);
-            lab1.toString();
-            System.out.println("\n"+morado+"El laberinto se ve de la siguiente manera:"+blanco);
-            System.out.println(lab1);
+            lab1.toStringVacio();
+            System.out.println("\n"+morado+"El laberinto del ejemplo se ve de la siguiente manera:"+blanco);
+            System.out.println(lab.toStringVacio());
             }catch(NullPointerException npe){
-                System.out.println();
+                System.out.println("");
                 continue;
             }
             try{
@@ -448,7 +448,7 @@ public class Maze{
             System.out.println(verde+"Ingresa el número de fila: "+blanco);
             int fInicio1=sc.nextInt(); // número de la fila de inicio
             sc.nextLine();
-            Box inicio1 = tablero1[fInicio1][cInicio1];
+            Box inicio1 = tablero2[fInicio1][cInicio1];
             // casilla fin
             System.out.println(morado+"Ahora seleccionaremos coordenadas de la casilla de fin:"+blanco);
             System.out.println(yellow+"Ingresa el número de columna: "+blanco);
@@ -457,7 +457,13 @@ public class Maze{
             System.out.println(verde+"Ingresa el número de fila: "+blanco);
             int fFin1=sc.nextInt(); // número de la fila de inicio
             sc.nextLine();
-            Box fin1 = tablero1[fFin1][cFin1];
+            Box fin1 = tablero2[fFin1][cFin1];
+            //
+            Box start = new Box(inicio1.isWall(),inicio2.isVisited(),fInicio1,cInicio1);
+            Box end = new Box(fin1.isWall(),fin2.isVisited(),fFin1,cFin1);
+            Box actual = start;
+		    Maze solucion1 = new Maze(tablero1,start,end,actual);
+            solucion1.solve(solucion1);
             }catch (InputMismatchException ime) {
                 System.out.println(rojo+ "\tNo ingresaste un entero" + blanco);
                 System.out.print(verde+"\tIntenta de nuevo:)"+blanco+"\n\n");
@@ -471,10 +477,8 @@ public class Maze{
                 System.out.print(rojo+"\n\tLo siento,ocurrio un error inesperado");
                 System.out.print(verde+"\n\tIntenta de nuevo:)"+blanco+"\n\n");
                 continue;
-                }
-            
-            
-            break; 
+            }
+            break;
 
             //opcion 2 (Para no tener que escribir la ruta completa al probar ejemplos)
             case 2:
@@ -484,9 +488,7 @@ public class Maze{
             // mostrar laberinto
             Box[][] tablero2= arre.readMatrix(archivoCom);
             try{
-            //System.out.println("pt 1");
             Maze lab2=new Maze(tablero2);
-            //System.out.println("pt 1");
             lab2.toStringVacio();
             System.out.println("\n"+morado+"El laberinto del ejemplo "+ archivoInc+" se ve de la siguiente manera:"+blanco);
             System.out.println(lab2.toStringVacio());
@@ -498,12 +500,12 @@ public class Maze{
             // casilla inicio
             System.out.println(morado+"Ahora seleccionaremos coordenadas de la casilla de inicio:"+blanco);
             System.out.println(yellow+"Ingresa el número de columna: "+blanco);
-            int cInicio2=sc.nextInt(); // número de la columna de inicio
+            int cInicio1=sc.nextInt(); // número de la columna de inicio
             sc.nextLine();
             System.out.println(verde+"Ingresa el número de fila: "+blanco);
             int fInicio2=sc.nextInt(); // número de la fila de inicio
             sc.nextLine();
-            Box inicio2 = tablero2[fInicio2][cInicio2];
+            Box inicio2 = tablero2[fInicio2][cInicio1];
             // casilla fin
             System.out.println(morado+"Ahora seleccionaremos coordenadas de la casilla de fin:"+blanco);
             System.out.println(yellow+"Ingresa el número de columna: "+blanco);
@@ -514,7 +516,7 @@ public class Maze{
             sc.nextLine();
             Box fin2 = tablero2[fFin2][cFin2];
             //
-            Box start = new Box(inicio2.isWall(),inicio2.isVisited(),fInicio2,cInicio2);
+            Box start = new Box(inicio2.isWall(),inicio2.isVisited(),fInicio2,cInicio1);
             Box end = new Box(fin2.isWall(),fin2.isVisited(),fFin2,cFin2);
             Box actual = start;
 		    Maze solucion2 = new Maze(tablero2,start,end,actual);
