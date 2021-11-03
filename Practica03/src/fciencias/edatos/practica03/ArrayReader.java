@@ -44,11 +44,17 @@ public class ArrayReader {
                 int row = Integer.valueOf(data[0]), column = Integer.valueOf(data[1]);
 
                 // Depende de como definas el constructor de Box ajusta la siguiente linea
-                //result[row][colum] = new Box(row, colum);
-                result[row][column] = new Box(false);
+                result[row][column] = new Box(row, column);
+                //result[row][column] = new Box(false);
                 
             }
-
+            for(int i=0;i<result.length;i++){
+                for(int j=0;j<result.length;j++){
+                    if(result[i][j]==null){
+                        result[i][j]= new Box(i,j,true);
+                    }
+                }
+            }
             
             
             return result;

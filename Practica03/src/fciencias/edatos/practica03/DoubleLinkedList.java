@@ -264,12 +264,22 @@ public class DoubleLinkedList<T> implements TDAList<T> {
         System.out.println(yellow+"No se puede eliminar el elemento porque el indice es invalido"+white);
         throw new IndexOutOfBoundsException();
       } 
+<<<<<<< HEAD
 
     if(size == 1){
       T retorno = head.getElement();
       this.clear();
       return retorno;
     }
+=======
+      // Para corregir error de null pointer exception
+      if (size==1){
+        T retorno=head.getElement();
+        this.clear();
+        return retorno;
+      }
+
+>>>>>>> 24f1d3d32cce30e30fe414b04cbe41ec1effb79d
     // Para eliminar la cabeza
     if (i == 0) {
       T aux = head.getElement(); //primero guardamos el elemento
@@ -278,6 +288,7 @@ public class DoubleLinkedList<T> implements TDAList<T> {
       size--; // Se actualiza el tamaño
       return aux;
     }
+    
     // Para eliminar el ultimo elemento
     if (i == size - 1) {
       T aux = tail.getElement();
