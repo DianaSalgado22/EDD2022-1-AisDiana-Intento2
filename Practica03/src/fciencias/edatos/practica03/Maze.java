@@ -104,12 +104,12 @@ public class Maze{
             //
             for(int j = 0; j < tablero[i].length; j++){
                  if(i  == inicio.fila && j == inicio.columna){
-                    representación += morado+"👻 "+blanco;
+                    representación += morado+" 👻 "+blanco;
                     continue;
                 } 
 
                 if(i  == fin.fila && j == fin.columna){
-                    representación += yellow+" 🎃"+blanco;
+                    representación += yellow+" 🎃 "+blanco;
                     continue;
                 } 
 
@@ -118,17 +118,16 @@ public class Maze{
                     continue;
                 }              
  
-                representación += tablero[i][j] == null ? "@@@" : "   ";
+                representación += tablero[i][j].isWall() == true ? "@@@" : "   ";
             }
-
-          //  tablero[inicio.fila][inicio.columna] = "👻 ";
             representación += "|\n";
             contadorC++;
         }
         return representaciónC+"\n"+representación;
     }
 
-    //🎃👻✨
+    //🎃👻✨ 
+
     /** Metodo para imprimir un laberinto cuando aún no tiene 
      *  casilla de inicio o de fin
      */
@@ -160,7 +159,7 @@ public class Maze{
             }
             //
             for(int j = 0; j < tablero[i].length; j++){             
-                representación += tablero[i][j] == null ? "@@@" : "   ";
+                representación += tablero[i][j].isWall() == true ? "@@@" : "   ";
             }
             representación += "|\n";
             contadorC++;
@@ -168,7 +167,10 @@ public class Maze{
         return representaciónC+"\n"+representación;
     }
 
-    public String toStringSolución(TDAStack<Box> coordenadas ){
+    /** Metodo para imprimir un laberinto cuando se quiere ver 
+     *  donde esta la casilla actual
+     */
+    public String toStringIntermedio(){
         int contadorC=1; //contador columnas
         int contadorF=0; //contador filas
         String representación = "";
@@ -183,6 +185,7 @@ public class Maze{
                 representación += verde+contadorF+blanco+" |";
                 contadorF++;
             }
+
             // Para escribir las columnas
 
             // Para eliminar la etiqueta extra
@@ -196,98 +199,91 @@ public class Maze{
             }
             //
             for(int j = 0; j < tablero[i].length; j++){
+                // Marcar la casilla de inicio
                  if(i  == inicio.fila && j == inicio.columna){
-                    representación += morado+"👻 "+blanco;
+                    representación += morado+" 👻 "+blanco;
                     continue;
                 } 
-
+                // Marcar la casilla de final
                 if(i  == fin.fila && j == fin.columna){
-                    representación += yellow+" 🎃"+blanco;
+                    representación += yellow+" 🎃 "+blanco;
                     continue;
                 } 
 
-
-                 if(i  == coordenadas.pop().fila && j == coordenadas.pop().columna){
+                // Marcar Casilla actual
+                 if(i  == actual.fila && j == actual.columna){
                     representación += yellow+" ✨ "+blanco;
                     continue;
                 }              
  
-                representación += tablero[i][j] == null ? "@@@" : "   ";
+                representación += tablero[i][j].isWall() == true ? "@@@" : "   ";
             }
-
-          //  tablero[inicio.fila][inicio.columna] = "👻 ";
             representación += "|\n";
             contadorC++;
         }
         return representaciónC+"\n"+representación;
     }
 
-
+    /** Mueve la casilla actual a una casilla vecina
+     *  que no sea pared y que no haya sido visitada
+     */
     public void extend(){
-
-
-        //int auxf=actual.fila;
-        //int auxc=actual.columna;
+        // Iterador para recorrer todas las posibles direciones
         for(int i=0; i<4;i++){
-        int dirección= actual.neighbors.first();
+        int dirección= actual.neighbors.first(); // la direccion que se checara en esa iteración
         switch(dirección){
+            // 0 --> Arriba
             case 0:
-                // if(actual.fila== 0)
-                //     break;
-                //actual.fila += 1;
-                int auxf= actual.fila;
-                if (actual.fila != 0 && (tablero[actual.fila+1][actual.columna].wall == false) && (tablero[actual.fila+1][actual.columna].visited == false)){
-                    
-                   // actual.fila += 1;
-                //    auxf += 1;
-                    actual = tablero[actual.fila+1][actual.columna];
-                //    actual.fila = auxf;
-                   /*  tablero[actual.fila+1][actual.columna].fila = actual.fila;
-                    tablero[actual.fila+1][actual.columna].columna = actual.columna; */
-                    return;
+                if (actual.fila != 0 && (tablero[actual.fila-1][actual.columna].isWall() == false) 
+                && (tablero[actual.fila-1][actual.columna].isVisited() == false)){
+                    actual = tablero[actual.fila-1][actual.columna];
+                    actual.visit();
+                    return; // Estos return son porque en estos casos sí es extendible la casilla
                 } 
                 break;   
+            // 1 --> Derecha
             case 1:
                 if(tablero[actual.fila].length-1 == actual.columna){
                     break;
                 }
-                if(tablero[actual.fila][actual.columna + 1].wall== false && tablero[actual.fila][actual.columna + 1].visited == false ){
+                if(tablero[actual.fila][actual.columna + 1].isWall()== false 
+                && tablero[actual.fila][actual.columna + 1].isVisited() == false ){
                     actual = tablero[actual.fila][actual.columna+1];
-                  //  actual.columna += 1;
-                    return;
-
+                    actual.visit();
+                return;
                 }    
-
                 break;
+
+            // 2 --> Abajo
             case 2:
-               /*  if(tablero.length-1 == actual.fila){
+                // Caso donde se llega al final de la fila
+                if(tablero.length-1 == actual.fila){
                     break;
-                } */
-                if(tablero.length-1 == actual.fila && tablero[actual.fila-1][actual.columna].wall== false && tablero[actual.fila-1][actual.columna].visited == false ){
-                actual = tablero[actual.fila-1][actual.columna];
-              //  actual.fila = actual.fila -1 ;
+                }
+
+                if(tablero[actual.fila+1][actual.columna].isWall()== false 
+                && tablero[actual.fila+1][actual.columna].isVisited() == false ){
+                actual = tablero[actual.fila+1][actual.columna];
+                actual.visit();
                 return;
                 }     
                 break;
+            // 3 --> Izquierda
             case 3:
-                // if(actual.columna==0){
-                //     break;
-                // }
-                if(actual.columna != 0  && tablero[actual.fila][actual.columna-1].wall== false && tablero[actual.fila-1][actual.columna].visited == false ){
-              //  actual = tablero[actual.fila-1][actual.columna];
-               // actual.
+                if(actual.columna != 0  && tablero[actual.fila][actual.columna-1].isWall()== false 
+                && tablero[actual.fila][actual.columna-1].isVisited() == false ){
+                actual = tablero[actual.fila][actual.columna-1];
+                actual.visit();
                 return;
-
                 }    
-            actual.neighbors.dequeue();    
+                break;
+            }// Termina switch
+
+            /* si no se puede extender en la dirección de la iteracion actual 
+             * se saca de la fila y pasas a la siguiente
+            */
+            actual.neighbors.dequeue();  // se saca de la fila   
         }
-
-
-        }
-
-        //if(getNeighbors().first())
-
-
     }
     
         /* public TDAStack<Box> solve(Maze laberinto){
@@ -314,34 +310,50 @@ public class Maze{
 
         return camino;
     } */
- 
+    
+    /** Encuentra una solución al laberinto,si existe
+     *  @return si existe ,regresa una pila de casillas 
+     *  que representan el camino a seguir. De lo 
+     *  contrario regresa la lista vacia
+     */
     public TDAStack<Box> solve(Maze laberinto){
         TDAStack<Box> camino = new Stack<>();
-        actual = laberinto.inicio;
-        camino.push(actual);
-          /* if(actual==null){
-            System.out.println("aaaa");
-            return camino;
-        }   */
-
-        actual.visit();
-
+       
+        /* Seguimos iterando mientras no lleguemos a una solución
+         * o la conclusión de que no hay */
         while(!laberinto.isSolution()){
+
+            System.out.println(laberinto.toStringIntermedio());
+            // Checamos si se puede extender
             if(laberinto.isExtensible()){
-                
-                laberinto.extend();
-                actual.visit();
+                System.out.println(laberinto.isExtensible());
+                // si la respuesta es true
+                // Se agrega la casilla actual a la pila de posibles caminos
                 camino.push(actual);
-            
+                // Se extiende
+                laberinto.extend();
             }
 
             if(!laberinto.isExtensible()){
-                actual= camino.pop();
-
+                /* si la respuesta es false,
+                 * quiere decir que con la casilla
+                 * actual ya no se puede avanzar.
+                 * por lo tanto regresamos a la casilla 
+                 * anterior para probar otro posible camino.*/
+                 actual= camino.pop(); // Se saca a la casilla anterior de la pilla y se regresa a ella.
             }
 
+            /* Si nuestra pila esta vacia, es decir 
+             * ya no hay una casilla anterior a la cual
+             * regresar y además ya se probaron todas
+             * las direcciones posibles de la casilla actual
+             * el laberinto NO tiene solución. */
+            if(camino.isEmpty() && laberinto.actual.neighbors.isEmpty()){
+                System.out.println(rojo+"Estas atrapado😵"+blanco+"\n"+morado+"No existe una solución para este laberinto😨");
+                return camino;
+            }
         }
-
+        camino.push(actual);
         return camino;
     }
 
@@ -372,9 +384,23 @@ public class Maze{
 		Maze laberinto = new Maze(p1,startp,endp,actualp); 
         Maze aux = new Maze();
 
-
-        System.out.println(laberinto);  
-        aux.solve(laberinto);
+        System.out.println(verde+"Checkpoint 0"+blanco); 
+        System.out.println(laberinto.toStringVacio()); 
+        System.out.println(verde+"Checkpoint 1"+blanco); 
+        System.out.println(laberinto.toString()); 
+        System.out.println(verde+"Checkpoint 2"+blanco); 
+        System.out.println(laberinto.actual.fila+ "  " +laberinto.actual.columna);
+        laberinto.extend();
+        System.out.println(laberinto.toStringIntermedio());
+        System.out.println(laberinto.actual.fila+ "  " +laberinto.actual.columna);
+        laberinto.extend();
+        System.out.println(laberinto.toStringIntermedio());
+        System.out.println(laberinto.actual.fila+ "  " +laberinto.actual.columna);
+        /*
+        System.out.println(verde+"Checkpoint 3"+blanco);  
+        System.out.println(aux.solve(laberinto).toString());
+        System.out.println(verde+"Checkpoint 4"+blanco); 
+       */ 
        
 //=======
        /*  Box start = new Box(false,true,9,0);

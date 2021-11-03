@@ -41,10 +41,26 @@ public class Box{
     
     }
 
-    public Box(boolean wall){
+    /** Metodo constructor auxiliar
+     *  @param fila 
+     *  @param columna
+     *  @return Box
+     */
+    public Box(int fila,int columna,boolean wall){
+        this.fila = fila;
+        this.columna = columna;
         this.wall=wall;
-        
-    
+
+    }
+
+    /** Metodo constructor auxiliar
+     *  @param fila 
+     *  @param columna
+     *  @return Box
+     */
+    public Box(int fila,int columna){
+        this.fila = fila;
+        this.columna = columna;
     }
 
     public Queue getNeighbors(){
