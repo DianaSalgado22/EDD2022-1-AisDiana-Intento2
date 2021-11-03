@@ -57,13 +57,13 @@ public class Maze{
     /** Metodo para saber si el laberinto esta resuelto
      *  @return true si ya esta resuleto,false si no.
      */
-   /*  public boolean isSolution(){
+      public boolean isSolution(){
         // Si son iguales significa que encontramos un camino
         if(actual==fin)
            return isExtensible();
         // De otra manera aún no se encuentra una solución
         return false;
-    }  */
+    }  
 
 //<<<<<<< HEAD
 
@@ -100,15 +100,20 @@ public class Maze{
             //
             for(int j = 0; j < tablero[i].length; j++){
                  if(i  == inicio.fila && j == inicio.columna){
-                    representación += morado+"👻  "+blanco;
+                    representación += morado+"👻 "+blanco;
                     continue;
                 } 
 
                 if(i  == fin.fila && j == fin.columna){
-                    representación += yellow+" 🎃 "+blanco;
+                    representación += yellow+" 🎃"+blanco;
                     continue;
                 } 
 
+                 if(i  == actual.fila && j == actual.columna){
+                    representación += yellow+" ✨ "+blanco;
+                    continue;
+                }              
+ 
                 representación += tablero[i][j] == null ? "@@@" : "   ";
             }
 
@@ -119,12 +124,80 @@ public class Maze{
         return representaciónC+"\n"+representación;
     }
 
-    //🎃👻
+    //🎃👻✨
 
 
-   
+    public void extend(){
+
+
+        for(int i=0; i<4;i++){
+        int dirección= actual.neighbors.first();
+        switch(dirección){
+            case 0:
+                if(actual.fila== 0)
+                    break;
+               /*  if ((tablero[actual.fila+1][actual.columna].wall == false) && (actual.visited == false)){
+                    actual = tablero[actual.fila+1][actual.columna];
+                    return;
+                } */
+                break;   
+            case 1:
+                if(tablero[actual.fila].length-1 == actual.columna){
+                    break;
+                }
+                if(tablero[actual.fila][actual.columna + 1].wall== false && actual.visited == false ){
+                    actual = tablero[actual.fila][actual.columna+1];
+                    return;
+                }    
+                break;
+            case 2:
+                if(tablero.length-1 == actual.fila){
+                    break;
+                }
+               /*  if(tablero[actual.fila-1][actual.columna].wall== false && actual.visited == false ){
+                actual = tablero[actual.fila-1][actual.columna];
+                return;
+                }     */
+                break;
+            case 3:
+                if(actual.columna==0){
+                    break;
+                }
+                if(tablero[actual.fila-1][actual.columna].wall== false && actual.visited == false ){
+                actual = tablero[actual.fila-1][actual.columna];
+                return;
+
+                }    
+            actual.neighbors.dequeue();    
+        }
+
+
+        }
+
+        //if(getNeighbors().first())
+
+
+    }
     
+    public TDAStack<Box> solve(Maze laberinto){
+        TDAStack<Box> camino = new Stack<>();
+        camino.push(actual);
+        while(!laberinto.isSolution()){
+            if(actual.neighbors.size() != 0){
+                actual.visited = true;
+                laberinto.extend();
+                camino.push(actual);
+            }
 
+            if(actual.neighbors.size()==0){
+                actual= camino.pop();
+
+            }
+
+        }
+
+        return camino;
+    }
 
    
 //=======
@@ -148,8 +221,10 @@ public class Maze{
         System.out.println(actual.getNeighbors());
         System.out.println(actual.getNeighbors().size());
 
+        
 		Maze laberinto = new Maze(p1,start,end,actual); 
 
+        laberinto.extend();
         //Maze laberinto = new Maze(p1);
         System.out.println(laberinto);  
 //=======

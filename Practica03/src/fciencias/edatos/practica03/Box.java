@@ -19,7 +19,7 @@ public class Box{
     en que se recorrera al siguiente vecino si es posible.
     */
 
-    private Queue<Integer> neighbors=new Queue<>();
+    public Queue<Integer> neighbors=new Queue<>();
 
     int fila;
     int columna;
