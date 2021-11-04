@@ -48,10 +48,12 @@ public class ArrayReader {
                 //result[row][column] = new Box(false);
                 
             }
+            // Hace paredes
             for(int i=0;i<result.length;i++){
                 for(int j=0;j<result.length;j++){
                     if(result[i][j]==null){
                         result[i][j]= new Box(i,j,true);
+                        
                     }
                 }
             }

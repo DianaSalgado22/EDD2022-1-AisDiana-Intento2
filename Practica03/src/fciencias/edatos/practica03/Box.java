@@ -51,15 +51,8 @@ public class Box{
         this.fila = fila;
         this.columna = columna;
         this.wall=wall;
-//<<<<<<< HEAD
-      //  this.neighbors =rellenaNeighbors(neighbors);
-       // this.visited = false;
-       // this.neighbors=rellenaNeighbors(neighbors);
-
-//=======
-   //     this.visited=false;
         this.neighbors=rellenaNeighbors(neighbors);
-//>>>>>>> d2f44577db12794225f3fc91f1ca91514fa555c4
+
 
     }
 
@@ -77,7 +70,7 @@ public class Box{
         this.neighbors=rellenaNeighbors(neighbors);
     }
 
-    public Queue getNeighbors(){
+    public Queue<Integer> getNeighbors(){
         return neighbors;
     }
 
@@ -91,6 +84,7 @@ public class Box{
         int random;
         String numeros="";
         while(cola.size()<4){
+            //System.out.println(cola.size());
             Random x = new Random();
 			random = x.nextInt(4);
 
@@ -107,7 +101,7 @@ public class Box{
 
 
             }
-             
+            // System.out.println(cola.toString());
             return cola;
         }
    // }
