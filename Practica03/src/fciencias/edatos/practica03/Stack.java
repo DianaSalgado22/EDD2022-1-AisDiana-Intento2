@@ -54,7 +54,7 @@ public class Stack<T> implements TDAStack<T> {
         return list.size();
     }
 
-    /**  Pruebitas de clase Stack
+    ///**  Pruebitas de clase Stack
     public static void main(String[] args){
         TDAStack<String> pila1=new Stack<>();
         pila1.push("Entrada 1");
@@ -69,6 +69,6 @@ public class Stack<T> implements TDAStack<T> {
         pila1.pop(); 
         System.out.println(pila1.toString()+"\n");
     }
-    */
+   // */
     
 }
