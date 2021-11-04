@@ -64,7 +64,7 @@ public class Maze{
       public boolean isSolution(){
         // Si son iguales significa que encontramos un camino
         if(actual.fila==fin.fila && actual.columna==fin.columna)
-           return isExtensible();
+           return true; // 
         // De otra manera aún no se encuentra una solución
         return false;
     }  
