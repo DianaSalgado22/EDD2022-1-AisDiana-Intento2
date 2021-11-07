@@ -26,9 +26,8 @@ public class Carta{
     int valor=0; 
     // Representación de la carta en consola
     String rep="";
-
-
-// POSIBLEMENTE HACER ESTAS UN METODO
+    // Representacio de la carta por delante, esta nunca cambi
+    String repFija="";
     // Posible valores del palo
     String posiblesPalos="Picas,Corazones,Diamantes,Treboles";
     // Posible valores de valor
@@ -46,351 +45,261 @@ public class Carta{
             switch (valor){
                 case 1:
                     this.rep= black+"🂡 "+white;
-                    
+                    this.repFija=black+"🂡 "+white;
+                    break;
                 case 2:
                     this.rep= black+"🂢 "+white;
-                    
+                    this.repFija=black+"🂢 "+white;
+                    break;
                 case 3:
                     this.rep= black+"🂣 "+white;
-                    
+                    this.repFija=this.rep;
+                    break;
                 case 4:
                     this.rep= black+"🂤 "+white;
-                    
+                    this.repFija=this.rep;
+                    break;
                 case 5:
                     this.rep= black+"🂥 "+white;
-                    
+                    this.repFija=this.rep;
+                    break;
                 case 6:
                     this.rep= black+"🂦 "+white;
-                    
+                    this.repFija=this.rep;
+                    break;
                 case 7:
                     this.rep= black+"🂧 "+white;
-                    
+                    this.repFija=this.rep;
+                    break;
                 case 8:
                     this.rep= black+"🂨 "+white;
-                    
+                    this.repFija=this.rep;
+                    break;
                 case 9:
                     this.rep= black+"🂩 "+white;
-                    
+                    this.repFija=this.rep;
+                    break;
                 case 10:
                     this.rep= black+"🂪 "+white;
-                    
+                    this.repFija=this.rep;
+                    break;
                 case 11:
                     this.rep= black+"🂫 "+white;
-                    
+                    this.repFija=this.rep;
+                    break;
                 case 12:
                     this.rep= black+"🂭 "+white;
-                    
+                    this.repFija=this.rep;
+                    break;
                 case 13:
                     this.rep= black+"🂮 "+white;
-                    
+                    this.repFija=this.rep;
+                    break;
             }
         }
         if(palo.equals("Treboles")){
             switch (valor) {
                 case 1:
                     this.rep= black+"🃑 "+white;
-                    
+                    this.repFija=this.rep;
+                    break;
                 case 2:
                     this.rep= black+"🃒 "+white;
-                    
+                    this.repFija=this.rep;
+                    break;
                 case 3:
                     this.rep= black+"🃓 "+white;
-                    
+                    this.repFija=this.rep;
+                    break;
                 case 4:
                     this.rep= black+"🃔 "+white;
-                    
+                    this.repFija=this.rep;
+                    break;
                 case 5:
                     this.rep= black+"🃕 "+white;
-                    
+                    this.repFija=this.rep;
+                    break;
                 case 6:
                     this.rep= black+"🃖 "+white;
-                    
+                    this.repFija=this.rep;
+                    break;
                 case 7:
                     this.rep= black+"🃗 "+white;
-                    
+                    this.repFija=this.rep;
+                    break;
                 case 8:
                     this.rep= black+"🃘 "+white;
-                    
+                    this.repFija=this.rep;
+                    break;
                 case 9:
                     this.rep= black+"🃙 "+white;
-                    
+                    this.repFija=this.rep;
+                    break;
                 case 10:
                     this.rep= black+"🃚 "+white;
-                    
+                    this.repFija=this.rep;
+                    break;
                 case 11:
                     this.rep= black+"🃛 "+white;
-                    
+                    this.repFija=this.rep;
+                    break;
                 case 12:
                     this.rep= black+"🃝 "+white;
-                    
+                    this.repFija=this.rep;
+                    break;
                 case 13:
                     this.rep= black+"🃞 "+white;
-                    
+                    this.repFija=this.rep;
+                    break;
             }
         }
         if(palo.equals("Corazones")){
             switch (valor) {
                 case 1:
                     this.rep= red+"🂱 "+white;
-                    
+                    this.repFija=this.rep;
+                    break;
                 case 2:
                     this.rep= red+"🂲 "+white;
-                    
+                    this.repFija=this.rep;
+                    break;
                 case 3:
                     this.rep= red+"🂳 "+white;
-                    
+                    this.repFija=this.rep;
+                    break;
                 case 4:
                     this.rep= red+"🂴 "+white;
-                    
+                    this.repFija=this.rep;
+                    break;
                 case 5:
                     this.rep= red+"🂵 "+white;
-                    
+                    this.repFija=this.rep;
+                    break;
                 case 6:
                     this.rep= red+"🂶 "+white;
-                    
+                    this.repFija=this.rep;
+                    break;
                 case 7:
                     this.rep= red+"🂷 "+white;
-                    
+                    this.repFija=this.rep;
+                    break;
                 case 8:
                     this.rep= red+"🂸 "+white;
-                    
+                    this.repFija=this.rep;
+                    break;
                 case 9:
                     this.rep= red+"🂹 "+white;
-                    
+                    this.repFija=this.rep;
+                    break;
                 case 10:
                     this.rep= red+"🂺 "+white;
-                    
+                    this.repFija=this.rep;
+                    break;
                 case 11:
                     this.rep= red+"🂻 "+white;
-                    
+                    this.repFija=this.rep;
+                    break;
                 case 12:
                     this.rep= red+"🂽 "+white;
-                    
+                    this.repFija=this.rep;
+                    break;
                 case 13:
                     this.rep= red+"🂾 "+white;
-                    
+                    this.repFija=this.rep;
+                    break;
             }
         }
         if(palo.equals("Diamantes")){
             switch (valor) {
                 case 1:
                     this.rep= red+"🃁 "+white;
-                    
+                    this.repFija=this.rep;
+                    break;
                 case 2:
                     this.rep= red+"🃂 "+white;
-                    
+                    this.repFija=this.rep;
+                    break;
                 case 3:
                     this.rep= red+"🃃 "+white;
-                    
+                    this.repFija=this.rep;
+                    break;
                 case 4:
                     this.rep= red+"🃄 "+white;
-                    
+                    this.repFija=this.rep;
+                    break;
                 case 5:
                     this.rep= red+"🃅 "+white;
-                    
+                    this.repFija=this.rep;
+                    break;
                 case 6:
                     this.rep= red+"🃆 "+white;
-                    
+                    this.repFija=this.rep;
+                    break;
                 case 7:
                     this.rep= red+"🃇 "+white;
-                    
+                    this.repFija=this.rep;
+                    break;
                 case 8:
                     this.rep= red+"🃈 "+white;
-                    
+                    this.repFija=this.rep;
+                    break;
                 case 9:
                     this.rep= red+"🃉 "+white;
-                    
+                    this.repFija=this.rep;
+                    break;
                 case 10:
                     this.rep= red+"🃊 "+white;
-                    
+                    this.repFija=this.rep;
+                    break;
                 case 11:
                     this.rep= red+"🃋 "+white;
-                    
+                    this.repFija=this.rep;
+                    break;
                 case 12:
                     this.rep= red+"🃍 "+white;
-                    
+                    this.repFija=this.rep;
+                    break;
                 case 13:
                     this.rep= red+"🃎 "+white;
-                    
+                    this.repFija=this.rep;
+                    break;
             }
         }
     }
-    
 
+    /** Metodo para cambiar la representación 
+     *  de una carta.
+     *  @param nueva representacion de la carta
+     */
+    public void setRep(String nueva){
+        this.rep=nueva;
+    }
+    
+    /** Metodo para saber si una carta esta volteada 
+     *  @return true si esta volteado false si no.
+     */
+    public boolean isFlip(){
+        return rep.equals("🂠");
+    }
+
+    /** Método para voltear una carta  
+     */
+    public void volter(){
+        // Si esta volteado quiere decir que tiene rep=🂠
+        if(this.isFlip()){
+            // Para cambiar a la representacion de frente
+            this.setRep(repFija);
+        }else{
+            // Si la representación no es rep=🂠
+        this.setRep(green+"🂠");  // La volteamos
+        }
+    }
+ 
+    /** Metodo para imprimir una carta
+     *  @return el atributo rep de la carta.
+     */
     public String toString(){
-        if(palo.equals("Picas")){
-            switch (valor){
-                case 1:
-                    return black+"🂡 "+white;
-                    
-                case 2:
-                    return black+"🂢 "+white;
-                    
-                case 3:
-                    return black+"🂣 "+white;
-                    
-                case 4:
-                    return black+"🂤 "+white;
-                    
-                case 5:
-                    return black+"🂥 "+white;
-                    
-                case 6:
-                    return black+"🂦 "+white;
-                    
-                case 7:
-                    return black+"🂧 "+white;
-                    
-                case 8:
-                    return black+"🂨 "+white;
-                    
-                case 9:
-                    return black+"🂩 "+white;
-                    
-                case 10:
-                    return black+"🂪 "+white;
-                    
-                case 11:
-                    return black+"🂫 "+white;
-                    
-                case 12:
-                    return black+"🂭 "+white;
-                    
-                case 13:
-                    return black+"🂮 "+white;
-                    
-            }
-        }
-        if(palo.equals("Treboles")){
-            switch (valor) {
-                case 1:
-                    return black+"🃑 "+white;
-                    
-                case 2:
-                    return black+"🃒 "+white;
-                    
-                case 3:
-                    return black+"🃓 "+white;
-                    
-                case 4:
-                    return black+"🃔 "+white;
-                    
-                case 5:
-                    return black+"🃕 "+white;
-                    
-                case 6:
-                    return black+"🃖 "+white;
-                    
-                case 7:
-                    return black+"🃗 "+white;
-                    
-                case 8:
-                    return black+"🃘 "+white;
-                    
-                case 9:
-                    return black+"🃙 "+white;
-                    
-                case 10:
-                    return black+"🃚 "+white;
-                    
-                case 11:
-                    return black+"🃛 "+white;
-                    
-                case 12:
-                    return black+"🃝 "+white;
-                    
-                case 13:
-                    return black+"🃞 "+white;
-                    
-            }
-        }
-        if(palo.equals("Corazones")){
-            switch (valor) {
-                case 1:
-                    return red+"🂱 "+white;
-                    
-                case 2:
-                    return red+"🂲 "+white;
-                    
-                case 3:
-                    return red+"🂳 "+white;
-                    
-                case 4:
-                    return red+"🂴 "+white;
-                    
-                case 5:
-                    return red+"🂵 "+white;
-                    
-                case 6:
-                    return red+"🂶 "+white;
-                    
-                case 7:
-                    return red+"🂷 "+white;
-                    
-                case 8:
-                    return red+"🂸 "+white;
-                    
-                case 9:
-                    return red+"🂹 "+white;
-                    
-                case 10:
-                    return red+"🂺 "+white;
-                    
-                case 11:
-                    return red+"🂻 "+white;
-                    
-                case 12:
-                    return red+"🂽 "+white;
-                    
-                case 13:
-                    return red+"🂾 "+white;
-                    
-            }
-        }
-        if(palo.equals("Diamantes")){
-            switch (valor) {
-                case 1:
-                    return red+"🃁 "+white;
-                    
-                case 2:
-                    return red+"🃂 "+white;
-                    
-                case 3:
-                    return red+"🃃 "+white;
-                    
-                case 4:
-                    return red+"🃄 "+white;
-                    
-                case 5:
-                    return red+"🃅 "+white;
-                    
-                case 6:
-                    return red+"🃆 "+white;
-                    
-                case 7:
-                    return red+"🃇 "+white;
-                    
-                case 8:
-                    return red+"🃈 "+white;
-                    
-                case 9:
-                    return red+"🃉 "+white;
-                    
-                case 10:
-                    return red+"🃊 "+white;
-                    
-                case 11:
-                    return red+"🃋 "+white;
-                    
-                case 12:
-                    return red+"🃍 "+white;
-                    
-                case 13:
-                    return red+"🃎 "+white;
-                    
-            }
-        }
-        return "";
+        return rep;
     }
 
 

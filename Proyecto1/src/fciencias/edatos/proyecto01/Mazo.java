@@ -10,9 +10,25 @@ import java.util.Random;
  */
 
 public class Mazo{
-    // Un mazo es una lista de cartas
-    // Un mazo tiene 52 cartas
 
+    // No se bien si deshacer esta clase o cambiarla un poco 
+
+
+    
+
+    /** Metodo para contruir la estructura de un mazo
+     *  es decir un lista de tipo carta pero vacia.
+     */
+    public Mazo(){
+        TDAList<Carta> mazo= new DoubleLinkedList<>();
+    }
+   
+
+    // PORQUE POR EJEMPLO EN ESTOS DOS METODOS LO QUE REGRESA ES ALGO TIṔO LISTA
+    // PERO EN LAS OTRAS CLASE QUEDA MEJOR SI LO QUE SE REGRESA ES ALGO TIPO MAZO
+    // POR ESO MANDA EL ERROR
+
+    
     /** Metodo para construir un mazoCompleto (SIN BARAJEAR),
      *  es decir con las 52 cartas de una baraja
      *  inglesa.
@@ -38,7 +54,7 @@ public class Mazo{
     /** Método para barajear el mazo completo 
      *  se creara una nueva lista donde pondremos las cartas en un orden aleatorio
      */
-    public TDAList<Carta> mazoCompletoBarajeado(){
+    public TDAList<Carta>  mazoCompletoBarajeado(){
         //lista no barajeada
         TDAList<Carta> mazo = mazoCompleto(); 
         //Creamos lista que sera la barajeada
@@ -69,6 +85,13 @@ public class Mazo{
            
         }
         return mazoCompletoBarajeado;    
+    }
+
+    /** Metodo para agregar una carta a un mazo
+     *  @param carta la nueva carta que se añade al mazo
+     */
+    public void add(Carta carta){
+        this.add(0,carta);
     }
 
     public static void main(String[] args){
