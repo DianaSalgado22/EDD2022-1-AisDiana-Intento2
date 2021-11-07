@@ -74,7 +74,7 @@ public class Mazo{
     public static void main(String[] args){
         Mazo p1=new Mazo();
         System.out.println(p1.mazoCompleto()+ "\n");   
-        //System.out.println(p1.mazoCompletoBarajeado());      
+        System.out.println(p1.mazoCompletoBarajeado());      
     }
 
 }
