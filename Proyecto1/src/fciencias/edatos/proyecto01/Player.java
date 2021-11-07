@@ -17,4 +17,15 @@ public class Player{
     // Mazo del jugador
     Mazo mazoPlayer= new Mazo();
 
+    /** Metodo para crear a un jugador
+     *  @param name nombre del jugador
+     *  @param playerTurn turno del jugador
+     *  @param mazoPlayer mazo del jugador 
+     */
+    public Player(String name,int playerTurn,Mazo mazoPlayer){
+        this.name=name;
+        this.playerTurn=playerTurn;
+        this.mazo=mazoPlayer;
+    }
+
 }
