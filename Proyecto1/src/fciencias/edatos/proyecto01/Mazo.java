@@ -13,15 +13,24 @@ public class Mazo{
 
     // No se bien si deshacer esta clase o cambiarla un poco 
 
+    String tipoDeMazo;
+
+    TDAList<Carta> cartasMazo= new DoubleLinkedList<>();
 
     
 
     /** Metodo para contruir la estructura de un mazo
      *  es decir un lista de tipo carta pero vacia.
      */
-    public Mazo(){
-        TDAList<Carta> mazo= new DoubleLinkedList<>();
+    public Mazo(String tipo){
+        if(tipo.equals("inglesa") || tipo.equals("1")){
+            cartasMazo= mazoCompleto(); 
+            this.tipoDeMazo=tipo;            
+        }
+
+       // TDAList<Carta> mazo= new DoubleLinkedList<>();
     }
+//no entiendo pq este metodo constructor:( 
    
 
     // PORQUE POR EJEMPLO EN ESTOS DOS METODOS LO QUE REGRESA ES ALGO TIṔO LISTA
@@ -87,17 +96,22 @@ public class Mazo{
         return mazoCompletoBarajeado;    
     }
 
-    /** Metodo para agregar una carta a un mazo
-     *  @param carta la nueva carta que se añade al mazo
-     */
-    public void add(Carta carta){
-        this.add(0,carta);
-    }
+    public Carta eliminarUnaCarta(){
 
-    public static void main(String[] args){
-        Mazo p1=new Mazo();
-        System.out.println(p1.mazoCompleto()+ "\n");   
-        System.out.println(p1.mazoCompletoBarajeado());      
+        return cartasMazo.remove(0);
     }
+    // /** Metodo para agregar una carta a un mazo
+    //  *  @param carta la nueva carta que se añade al mazo
+    //  */
+    // public void add(Carta carta){
+    //     this.add(0,carta);
+    // }
+
+   /*  public static void main(String[] args){
+        Mazo p1=new Mazo("inglesa");
+        System.out.println(p1.mazoCompleto()+ "\n");  
+        //System.out.println(p1.cartasMazo+ "\n");   
+        System.out.println(p1.mazoCompletoBarajeado());      
+    } */
 
 }
