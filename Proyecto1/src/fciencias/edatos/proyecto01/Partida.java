@@ -70,35 +70,46 @@ public class Partida{
     //     // Al terminar el while el mazo ya esta repartido entre los jugadores.
     // }
 
-     public void imprimrLista(){
+    /*  public void imprimrLista(){
             for(int i = 0;i< listaPlayers.size();i++){
          System.out.println(listaPlayers);
             }
-     }
+     } */
      /**
       * metodo que barajea el mazo, retira una carta y escoge a la solterona y ademas reparte las cartas a los jugadores
       */
      public void preGame(){
        // mazoDelJuego=mazoDelJuego.mazoCompletoBarajeado();
+       //el mazo del juego ahora esta barajeado, al hacer la igualdad
        mazoDelJuego.cartasMazo = mazoDelJuego.mazoCompletoBarajeado();
+       //imprimirmos para checar jiji
        System.out.println(mazoDelJuego.cartasMazo);
+       //se guarda a la solterona y se elimina una carta del mazo
        this.solterona = mazoDelJuego.eliminarUnaCarta();
+       //genera a los jugadores artificiales
        generaJugadores();
+       //al ultimo nos agregamos a nosotras las usuarias
       listaPlayers.add(0,usuario);
+      //se imprime el size para checar
        System.out.println(listaPlayers.size());
+       //se imprime los jugadores con sus cartas
        System.out.println(listaPlayers);
        
        //imprimrLista();
        //System.out.println(listaPlayers.name);
        int aux=0;
        System.out.println(mazoDelJuego.cartasMazo.size());
+       //mientra el mazo del juego este no  vacio se repartiran las cartas
          while(!mazoDelJuego.cartasMazo.isEmpty()){
            //listaPlayers.get(aux).cartsOfThePlayer = mazoDelJuego.cartasMazo.remove(0);
 
+           //la carta a agregar en el mazo de algun jugador sera el que se elimine del mazo
             Carta cartaAagregar = mazoDelJuego.cartasMazo.remove(0);
+            //se agrega la carta q se elimino del mazo en la posicion 0
             listaPlayers.get(aux).cartsOfThePlayer.add(0,cartaAagregar); 
             
             aux++;
+            //esto es para que se vuelta a regresar a repartir desde el jugador 0
             if(aux == listaPlayers.size()){
                 aux=0;
             }
@@ -110,20 +121,25 @@ public class Partida{
        * metodo que crea los demas jugadores no reales,es decir artificiales.
        */
       public void generaJugadores(){
+          //se le resta uno pq  no contamos al judaor real
           int jugadoresPorGenerar= cantPlayers-1;
           //String aux="jugador"
           //k es el string que dice el numero de jugador y va arriba hacia abajo por como se agregan
           int k = jugadoresPorGenerar-1;
           String aux="";
+          //
           for(int i= 0;i<jugadoresPorGenerar;i++){
+              //para que siempre si haya una jugadora llamada diana en la segunda posicion jiji
                 if(i== jugadoresPorGenerar-1){
+                    //se crea al jugador y se agrega a la lista
                     Player player =new Player("Diana   ");
                     listaPlayers.add(0,player);
                     //k++;
                     continue;
                     
                 }
-                aux="Jugador"+k;
+                aux="Jugador"+k;//k es el numero de l jugador 
+                //se crea al jugador y se agrega a la lista
                 Player player = new Player(aux);
                 listaPlayers.add(0,player);
                 k--;
