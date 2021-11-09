@@ -101,6 +101,8 @@ public class Sorter{
 	private static void merge(int[] arr, int lo, int mid, int hi){
 		int i = lo;
 		int j = mid+1;
+		System.out.println("holi probando");
+		//ver como quitar esa linea para mejorar la complejidad
 		int[] aux = Arrays.copyOf(arr,arr.length);
 		for(int k = lo ; k <= hi; k++){
 			// Si ya nos acabamos los elementos de la primera mitad
@@ -114,6 +116,62 @@ public class Sorter{
 				arr[k] = aux[i++];
 		}
 	}
+
+	// desde aqui empieza el mergeoptimizado
+	static void mergeSort2(int[] A) {
+        if (A.length > 1) {
+            int q = A.length/2;
+
+//changed range of leftArray from 0-to-q to 0-to-(q-1)
+            int[] leftArray = Arrays.copyOfRange(A, 0, q-1);
+//changed range of rightArray from q-to-A.length to q-to-(A.length-1)
+            int[] rightArray = Arrays.copyOfRange(A,q,A.length-1);
+
+            mergeSort2(leftArray);
+            mergeSort2(rightArray);
+
+            merge2(A,leftArray,rightArray);
+        }
+    }
+
+    static void merge2(int[] a, int[] l, int[] r) {
+        int totElem = l.length + r.length;
+        //int[] a = new int[totElem];
+        int i,li,ri;
+        i = li = ri = 0;
+        while ( i < totElem) {
+            if ((li < l.length) && (ri<r.length)) {
+                if (l[li] < r[ri]) {
+                    a[i] = l[li];
+                    i++;
+                    li++;
+                }
+                else {
+                    a[i] = r[ri];
+                    i++;
+                    ri++;
+                }
+            }
+            else {
+                if (li >= l.length) {
+                    while (ri < r.length) {
+                        a[i] = r[ri];
+                        i++;
+                        ri++;
+                    }
+                }
+                if (ri >= r.length) {
+                    while (li < l.length) {
+                        a[i] = l[li];
+                        li++;
+                        i++;
+                    }
+                }
+            }
+        }
+        //return a;
+
+    }
 
 
     /**
@@ -187,6 +245,10 @@ public class Sorter{
 		long fin = System.currentTimeMillis();
 		System.out.println("Arreglo ordenado: "+Arrays.toString(arr1));
 		System.out.println("Ordenado con mergeSort tardó: " + (fin - inicio) + " milisegundos");
+		inicio = System.currentTimeMillis();
+		mergeSort2(arr1);
+		fin = System.currentTimeMillis();
+		System.out.println("Ordenado con mergeSortOptimizado tardó: " + (fin - inicio) + " milisegundos");
 		System.out.println("¿En qué posición se encuentra el elemento 5? " + find(arr1,5));
 
 
@@ -200,8 +262,8 @@ public class Sorter{
 
 		
 
-		/*
-
+		
+/* 
 		inicio = System.currentTimeMillis();
 		insertionSort(arr2);
 		fin = System.currentTimeMillis();
@@ -214,7 +276,7 @@ public class Sorter{
 		mergeSort(arr3);
 		fin = System.currentTimeMillis();
 		//System.out.println("Ordenado: " + Arrays.toString(arr3));
-		System.out.println("Ordenado con mergeSort tardó: " + (fin - inicio) + " milisegundos");
-	*/
+		System.out.println("Ordenado con mergeSort tardó: " + (fin - inicio) + " milisegundos"); */
+	
     }
 }
