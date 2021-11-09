@@ -284,7 +284,7 @@ public class Carta{
 
     /** Método para voltear una carta  
      */
-    public void volter(){
+    public void voltear(){
         // Si esta volteado quiere decir que tiene rep=🂠
         if(this.isFlip()){
             // Para cambiar a la representacion de frente
