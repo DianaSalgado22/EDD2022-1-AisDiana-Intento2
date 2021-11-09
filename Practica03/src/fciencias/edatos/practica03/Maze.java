@@ -610,7 +610,7 @@ public class Maze{
         } //final do .. while principal
         while(eleccion!=3);
         */
-      }
+      //}
     
      
 //>>>>>>> 23d007fbb8856333b94742be0e6902244f37e3a0

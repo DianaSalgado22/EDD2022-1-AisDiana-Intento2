@@ -11,31 +11,19 @@ import java.util.Random;
 
 public class Mazo{
 
-    // No se bien si deshacer esta clase o cambiarla un poco 
-
-    String tipoDeMazo;
 
     TDAList<Carta> cartasMazo= new DoubleLinkedList<>();
 
     
 
     /** Metodo para contruir la estructura de un mazo
-     *  es decir un lista de tipo carta pero vacia.
+     *  sin barajear usando al metodo mazoCompleto.
      */
-    public Mazo(String tipo){
-        if(tipo.equals("inglesa") || tipo.equals("1")){
-            cartasMazo= mazoCompleto(); 
-            this.tipoDeMazo=tipo;            
-        }
-
-       // TDAList<Carta> mazo= new DoubleLinkedList<>();
+    public Mazo(){
+	cartasMazo= mazoCompleto();           
+    
     }
-//no entiendo pq este metodo constructor:( 
-   
 
-    // PORQUE POR EJEMPLO EN ESTOS DOS METODOS LO QUE REGRESA ES ALGO TIṔO LISTA
-    // PERO EN LAS OTRAS CLASE QUEDA MEJOR SI LO QUE SE REGRESA ES ALGO TIPO MAZO
-    // POR ESO MANDA EL ERROR
 
     
     /** Metodo para construir un mazoCompleto (SIN BARAJEAR),
@@ -82,7 +70,7 @@ public class Mazo{
             // y funfionaba pero no daba la ultima carta, la vdd no se muy bien a que se deba como que el problema era en el remove cuando la lista del mazo
             //  era igual a 1 su size
             if(mazo.size()==1){
-               // System.out.println(mazo.get(0));
+		// System.out.println(mazo.get(0));
                 mazoCompletoBarajeado.add(0,mazo.get(0));
                 break;
             }
@@ -100,18 +88,5 @@ public class Mazo{
 
         return cartasMazo.remove(0);
     }
-    // /** Metodo para agregar una carta a un mazo
-    //  *  @param carta la nueva carta que se añade al mazo
-    //  */
-    // public void add(Carta carta){
-    //     this.add(0,carta);
-    // }
-
-   /*  public static void main(String[] args){
-        Mazo p1=new Mazo("inglesa");
-        System.out.println(p1.mazoCompleto()+ "\n");  
-        //System.out.println(p1.cartasMazo+ "\n");   
-        System.out.println(p1.mazoCompletoBarajeado());      
-    } */
 
 }

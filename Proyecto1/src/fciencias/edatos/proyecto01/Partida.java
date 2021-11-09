@@ -2,6 +2,7 @@ package fciencias.edatos.proyecto01;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.Random;
+import java.util.Scanner;
 /**
  * @version 1.0 Noviembre 2021.
  * @author Salgado Tirado Diana Laura
@@ -11,11 +12,21 @@ import java.util.Random;
  */
 public class Partida{
 
+    // COLORES                                                               
+    String green = "\033[32m";
+    String white = "\u001B[0m";
+    String purple = "\033[35m";
+    String blue = "\033[34m";
+    String yellow= "\033[33m";
+    String red =  "\u001B[31m";  
+    String black = "\033[30m";
+
     // Cantidad de jugadores 
     int cantPlayers;
-    // Cola con los jugadores
-    //TDAQueue<Player> colaPlayers= new Queue<>(); 
+    // Lista con los jugadores
     TDAList<Player> listaPlayers= new DoubleLinkedList<>();
+		//Lista con los turnos
+		TDAList<Player> turnos=new DoubleLinkedList<>();
     // Solterona elegida
     Carta solterona;
     //ganador de la partida
@@ -25,167 +36,352 @@ public class Partida{
     //Player real
     Player usuario;
 
-   // int numeroDeJugadores;
-
-
     /** Método para construir una partida
-     * 
+     *  @param mazoDelJuego mazo con el que se jugara
+     *  @param cantPlayers la cantidad de jugadores que habra en la partida
+     *  @param usuario el usuario del programa, pero ya como un player.
      */
-
     public Partida(Mazo mazoDelJuego,int cantPlayers,Player usuario){
-       // this.mazoDelJuego.cartasMazo = mazoDelJuego.mazoCompleto();
-       // this.mazoDelJuego.tipoDeMazo=mazoDelJuego.tipoDeMazo;
-       this.mazoDelJuego=mazoDelJuego;
+	      this.mazoDelJuego=mazoDelJuego;
         this.cantPlayers= cantPlayers;
         this.usuario= usuario;
-
     }
-    // este aún no sé muy bien si se ocupa
 
-     /** Metodo para crear a los jugadores de la partida
-      *  @param cantPlayers la cantidad de jugadores que tendra la partida
-      *  @return arrPlayers un arreglo con los jugadores. 
-      */
-    
-    /** Metodo para preparar todo antes de una partida
-     *  @param colaPlayers la lista con los jugadores de la partida.
+    /** Metodo que barajea el mazo, retira una carta 
+     *  y escoge a la solterona, reparte las cartas a los jugadores
+		 *  y además elimina todos los primeros pares.
      */
-    // public void preGame(TDAQueue<Players> colaPlayers){
-    //     // Se crea el mazo y se barajea
-    //     Mazo mazo=new Mazo(); 
-    //     mazo=mazo.mazoCompleto().mazoCompletoBarajeado(); 
-    //     // Elegimos a la Solterona 
-    //     this.solterona=mazo.eliminarUnaCarta();    
-    //     // Repartimos el resto
-    //     while(!mazo.cartasMazo.isEmpty()){ //Mientras que el mazo no este vacio
-    //         // Obtenemos el mazo del jugador en la primera posicion de la cola    
-    //         Mazo mazoAux=colaPlayers.first().getMazoPlayer(); 
-    //         /* Cambiamos el mazo del jugador:
-    //          * le agregamos al mazo del jugador la primera carta del mazo total
-    //          * y la eliminamos del mazo total.*/
-    //         mazoAux.setMazoPlayer(mazoAux.add(mazo.eliminarUnaCarta()));
-    //         // Agrega al jugador actual al final de la cola y lo elimina del principio.
-    //         colaPlayers.enqueue(colaPlayers.dequeue());    
-    //     } 
-    //     // Al terminar el while el mazo ya esta repartido entre los jugadores.
-    // }
+    public void preGame(){
+	  // El mazo del juego ahora esta barajeado, al hacer la igualdad
+	  mazoDelJuego.cartasMazo = mazoDelJuego.mazoCompletoBarajeado();
 
-    /*  public void imprimrLista(){
-            for(int i = 0;i< listaPlayers.size();i++){
-         System.out.println(listaPlayers);
-            }
-     } */
-     /**
-      * metodo que barajea el mazo, retira una carta y escoge a la solterona y ademas reparte las cartas a los jugadores
-      */
-     public void preGame(){
-       // mazoDelJuego=mazoDelJuego.mazoCompletoBarajeado();
-       //el mazo del juego ahora esta barajeado, al hacer la igualdad
-       mazoDelJuego.cartasMazo = mazoDelJuego.mazoCompletoBarajeado();
-       //imprimirmos para checar jiji
-       System.out.println(mazoDelJuego.cartasMazo);
-       //se guarda a la solterona y se elimina una carta del mazo
-       this.solterona = mazoDelJuego.eliminarUnaCarta();
-       //genera a los jugadores artificiales
-       generaJugadores();
-       //al ultimo nos agregamos a nosotras las usuarias
-      listaPlayers.add(0,usuario);
-      //se imprime el size para checar
-       System.out.println(listaPlayers.size());
-       //se imprime los jugadores con sus cartas
-       System.out.println(listaPlayers);
+	  // Se guarda a la solterona y se elimina una carta del mazo
+	  this.solterona = mazoDelJuego.eliminarUnaCarta();
+
+	  // Se genera a los jugadores artificiales.
+	  generaJugadores();
+
+	  // Al ultimo nos agregamos a nosotras las usuarias
+	  listaPlayers.add(0,usuario);
+		turnos.add(0,usuario);
+      
+	  // Para acceder al lugar del player 
+	  int aux=0;
        
-       //imprimrLista();
-       //System.out.println(listaPlayers.name);
-       int aux=0;
-       System.out.println(mazoDelJuego.cartasMazo.size());
-       //mientra el mazo del juego este no  vacio se repartiran las cartas
-         while(!mazoDelJuego.cartasMazo.isEmpty()){
-           //listaPlayers.get(aux).cartsOfThePlayer = mazoDelJuego.cartasMazo.remove(0);
+	  //mientra el mazo del juego no este vacio se repartiran las cartas
+	  while(!mazoDelJuego.cartasMazo.isEmpty()){
 
-           //la carta a agregar en el mazo de algun jugador sera el que se elimine del mazo
-            Carta cartaAagregar = mazoDelJuego.cartasMazo.remove(0);
-            //se agrega la carta q se elimino del mazo en la posicion 0
-            listaPlayers.get(aux).cartsOfThePlayer.add(0,cartaAagregar); 
-            
-            aux++;
-            //esto es para que se vuelta a regresar a repartir desde el jugador 0
-            if(aux == listaPlayers.size()){
-                aux=0;
-            }
+	    //la carta a agregar en el mazo de algun jugador sera la que se elimine del mazo de la partida
+      Carta cartaAagregar = mazoDelJuego.cartasMazo.remove(0);
 
-          //  System.out.println(mazoDelJuego.cartasMazo);
-        } 
+      // Se checa si la carta a agregar puede ser par con alguna de las cartas del jugador
+      TDAList<Carta> cartasPlayer= listaPlayers.get(aux).cartsOfThePlayer;
+      
+      // si el jugador no tiene ninguna carta se agrega sin necesidad de comparar.
+      if(cartasPlayer.size()==0){
+        cartasPlayer.add(0,cartaAagregar);
+      }else{
+      for(int c=0;c<cartasPlayer.size();c++){
+        int valorPorComparar= cartasPlayer.get(c).valor; // Se obtiene el valor de la carta en la posición c
+        // si tienen el valor igual, son par.
+        if(cartaAagregar.valor==valorPorComparar){
+          break; // se rompe porque ya encontramos un par
+        }
+        // si no tienen el valor igual, no pueden ser par. Asi que continuamos
+
+        /* si llegamos hasta este if quiere decir que
+         * ninguna de las cartas del jugador es par con la nueva por lo tanto se agrega.*/
+          if(c==cartasPlayer.size()-1){
+          //se agrega la carta,que se elimino del mazo, en la posición 0 de las cartas del jugador 
+          cartasPlayer.add(0,cartaAagregar); 
+          break;
+        }
       }
-      /**
-       * metodo que crea los demas jugadores no reales,es decir artificiales.
-       */
-      public void generaJugadores(){
-          //se le resta uno pq  no contamos al judaor real
-          int jugadoresPorGenerar= cantPlayers-1;
-          //String aux="jugador"
-          //k es el string que dice el numero de jugador y va arriba hacia abajo por como se agregan
-          int k = jugadoresPorGenerar-1;
-          String aux="";
-          //
-          for(int i= 0;i<jugadoresPorGenerar;i++){
-              //para que siempre si haya una jugadora llamada diana en la segunda posicion jiji
-                if(i== jugadoresPorGenerar-1){
-                    //se crea al jugador y se agrega a la lista
-                    Player player =new Player("Diana   ");
-                    listaPlayers.add(0,player);
-                    //k++;
-                    continue;
-                    
-                }
-                aux="Jugador"+k;//k es el numero de l jugador 
-                //se crea al jugador y se agrega a la lista
-                Player player = new Player(aux);
-                listaPlayers.add(0,player);
-                k--;
+    }
+      // Se suma para para pasar al siguiente jugador
+      aux++;
+      //esto es para que se vuelva a regresar a repartir desde el jugador 0
+      if(aux == listaPlayers.size())
+        aux=0; 
+    } 
+  }
 
+    /** Metodo que crea los demas jugadores no reales,es decir artificiales.
+     */
+    public void generaJugadores(){
 
-          }
-      }
+	  // Se le resta uno pq no contamos al jugador real
+	  int jugadoresPorGenerar= cantPlayers-1;
+          
+	  // k es el int que dice el numero de jugador 
+	  int k = jugadoresPorGenerar-1; // empieza en -1 porque siempre habra un jugador llamado Diana
+	  String aux="";
+	  //
+	  for(int i= 0;i<jugadoresPorGenerar;i++){
+	    //para que siempre haya una jugadora llamada LULA en la segunda posicion 
+	    if(i== jugadoresPorGenerar-1){
+		    //se crea al jugador y se agrega a la lista
+		    Player player =new Player(" LULA🐙  ");
+		    listaPlayers.add(0,player);
+				turnos.add(0,player);
+		    continue;
+	    }
+	    aux="Jugador"+k; //k es el numero del jugador 
+	    //se crea al jugador y se agrega a la lista y a la de turnos
+	    Player player = new Player(aux);
+	    listaPlayers.add(0,player);
+			turnos.add(0,player);
+	    k--; 
+	}
+}
+		/** Metodo que voltea todas las cartas de un jugador al reves
+ 		 *  @param jugador al que se le pondran sus cartas 
+		 */
+		public void volteaTodasReves(Player jugador){
+				// Las cartas del jugador 
+				TDAList<Carta> mazoJugador=jugador.cartsOfThePlayer;
+				// Recorremos las cartas del jugador
+				for(int j=0;j<mazoJugador.size();j++){
+						Carta carta =mazoJugador.get(j); // La carta en la posición j
+						// Si la carta ya esta al reves continuamos con la siguiente 
+						if(carta.isFlip()){
+							continue;
+						}
+						// si no
+						carta.voltear(); // volteamos la carta
+				}
+		}
+
+		/** Metodo que voltea todas las cartas de un jugador al frente
+ 		 *  @param jugador al que se le pondran sus cartas de frente
+		 */
+		// Creo que esta esta mal pero no alcance a checarlo pq se llevaron mi compu,igual creo que no se ocupa asi que dejemoslo al ultimo
+		public void volteaTodasFrente(Player jugador){
+			// Las cartas del jugador 
+			TDAList<Carta> mazoJugador=jugador.cartsOfThePlayer;
+			// Recorremos las cartas del jugador
+			for(int j=0;j<mazoJugador.size();j++){
+					Carta carta =mazoJugador.get(j); // La carta en la posición j
+					// Si la carta no esta al reves continuamos con la siguiente 
+					if(!carta.isFlip()){
+						continue;
+					}
+					// si esta al reves 
+					carta.voltear(); // volteamos la carta
+			}
+	}
+
+		/** Metodo que muestra las cartas disponibles a robar
+		 *  @param jugadorActual es decir el jugador que esta de turno 
+		 *  que no puede robarse a si mismo.
+		 */
+		// para enseñarle al usuario cuantas cartas tienen los otros jugadores y poder elegir a quien robar.
+		public void muestraRobables(Player jugadorActual){
+				for(int j=0;j<turnos.size();j++){
+					// si es el jugador que esta en turno, se ignora
+					if(jugadorActual==turnos.get(j)){
+						continue;
+					}
+					// Si no pone al reves todas las carta del jugador en la posción j 
+					volteaTodasReves(turnos.get(j));
+					// Imprime las cartas del jugador en la posición j
+					turnos.get(j).toString();
+				}
+				
+		}
+
+		/** Metodo que muestra todos las cartas de todos los jugadores
+		 *  que siguen en la partida (Los que estan en Turnos)
+		 */
+		// este metodo es solo para hacer pruebas, creo que no se ocupara ya al jugar
+		public void muestraCartas(){
+			for(int j=0;j<turnos.size();j++){
+				System.out.println(turnos.get(j).toString());
+			}
+			
+	}
+
+		/** Metodo que muestra las cartas de un jugador numeradas 
+		 *  para que el usuario pueda elegir una para robar 
+		 *  @param jugador al que se le checaran sus cartas
+		 */
+		// este metodo se usara para mostrarle al usuario las cartas y pueda elegir por numero
+		public void muestraCartasNumeradas(Player jugador){
+				int contador=1;
+				// las cartas del jugador
+				TDAList<Carta> mazoJugador=jugador.cartsOfThePlayer;
+				// 
+				for(;contador<mazoJugador.size()+1;contador++){
+					System.out.print(blue+"["+contador+"] ");
+					System.out.print(mazoJugador.get(contador-1)+"   "+white);
+					
+				}
+				System.out.println();
+		}
+		/** Metodo para robar una carta
+		 *  @param p1 jugador que recibe la carta
+		 *  @param p2 jugador al que le quitan la carta
+		 *  @param num numero de la carta que se quiere robar 
+		 */
+		public void robar(Player p1,Player p2, int num){
+				// Posición de la carta que se regresara
+				int pos=num-1 ;// se le resta 1 pq al usuario se le muestra numerado del 1-n 
+				// Primero removemos a la carta robada
+				Carta cartaRobada= p2.cartsOfThePlayer.remove(pos);
+				// volteamos al frente l carta robada
+				cartaRobada.voltear();
+				// Agregamos la carta robada en la poscición 0 de la lista de cartas del p1.
+				p1.cartsOfThePlayer.add(0,cartaRobada);
+		}
 
     public static void main(String[] args){
-        Mazo m1=new Mazo("inglesa");
-
-        //System.out.println(p1.mazoCompleto()+ "\n");  
-        //System.out.println(p1.cartasMazo+ "\n");   
-        //System.out.println(p1.mazoCompletoBarajeado()); 
+      // COLORES                                                               
+        String green = "\033[32m";
+        String white = "\u001B[0m";
+        String purple = "\033[35m";
+        String blue = "\033[34m";
+        String yellow= "\033[33m";
+        String red =  "\u001B[31m";  
+        String black = "\033[30m";
+        Mazo m1=new Mazo();
         Player player1 = new Player("Aislinn ");   
         Partida p1 =new Partida(m1,4,player1); 
-        System.out.println(p1.mazoDelJuego.cartasMazo+ "\n"); 
         p1.preGame();
-      //  System.out.println("\n"+p1.mazoDelJuego.cartasMazo);
-        
-      System.out.println(p1.listaPlayers.get(0));
-        // p1.listaPlayers.get(0).descartaPares();
-        // System.out.println(p1.listaPlayers.get(0));
-        // Carta cartan = new Carta("Picas",4);
-        // p1.listaPlayers.get(0).cartsOfThePlayer.add(0,cartan);
-        // System.out.println(p1.listaPlayers.get(0));
-        // p1.listaPlayers.get(0).descartarPar();
-        // System.out.println(p1.listaPlayers.get(0));
-      System.out.println(p1.listaPlayers.get(1));
-      System.out.println(p1.listaPlayers.get(2));
-      System.out.println(p1.listaPlayers.get(3));
-     // System.out.println(p1.listaPlayers.get(4));
-      System.out.println(p1.mazoDelJuego.cartasMazo.size());
+				p1.muestraCartas();
+				p1.muestraRobables(player1);
+				p1.muestraCartas();
+				Player player2= p1.listaPlayers.get(2);
+				p1.muestraCartasNumeradas(player2);
+				System.out.println("Se hace un robo de la carta [2] \n");
+				p1.robar(player1,player2,2); 
+				System.out.println(player1);
+				System.out.println("Se elimina si hubo par \n");
+				player1.descartarPar();
+				System.out.println(player1);
+	      //System.out.println(p1.listaPlayers.get(0)+"\n");
+	      //System.out.println(p1.listaPlayers.get(1)+"\n");
+	      //System.out.println(p1.listaPlayers.get(2)+"\n");
+	      //System.out.println(p1.listaPlayers.get(3)+"\n");
+        TDAList<String> historial= new DoubleLinkedList<>();
 
-      System.out.println(p1.listaPlayers.get(0));
-        p1.listaPlayers.get(0).descartaPares();
-        System.out.println("\ndescartando todas las cartas pares\n"+p1.listaPlayers.get(0));
-        //creamos una carta solo para probar supongamos q esta se va a robar
-        Carta cartan = new Carta("Picas",4);
-        //la añadimos pos se la robo
-        p1.listaPlayers.get(0).cartsOfThePlayer.add(0,cartan);
-        //la imprimirmos
-        System.out.println("\nañadiendo una carta\n"+p1.listaPlayers.get(0));
-        //ve si con la carta que añadio hay un par , si lo hay lo elimina
-        p1.listaPlayers.get(0).descartarPar();
-        //imprimir como queda
-        System.out.println("\nEliminandos dos cartas si se encuentra un par\n"+p1.listaPlayers.get(0));
-    }
+				/*
+        // INICIO DEL MENU
+        Scanner sc = new Scanner(System.in); //Objeto para usar la clase Scanner
+
+        
+        System.out.println(blue+"🃏 Bienvenido al juego Solterona 🃏"+white+"\n");
+        int eleccion= 0;
+        do{
+            System.out.println(yellow+"Elige algunas de las siguientes opciones:"+white);
+    
+            System.out.print(green+ "[1]"+white+" Empezar una partida 🎴 \n" +
+                            green+ "[2]"+white+" Conocer las Reglas del juego 👀\n" +
+                             green + "[3]"+white+" Cerrar 😞\n");
+            try {
+                eleccion = sc.nextInt();
+            } catch (InputMismatchException ime) {
+                System.out.println(rojo+ "\tNo ingresaste un entero" + white);
+                System.out.print(green+"\tIntenta de nuevo:)"+white+"\n\n");
+                sc.nextLine();
+                continue;
+              }catch(Exception e){
+                System.out.print(rojo+"\n\tLo siento,ocurrio un error inesperado");
+                System.out.print(green+"\n\tIntenta de nuevo:)"+white+"\n\n");
+                sc.nextLine();
+                continue;
+                }
+            sc.nextLine();
+            System.out.println();
+    
+            switch(eleccion){
+            // opcion 1 (empezar partida)
+            case 1:
+              boolean aux=true;
+              String nombre;
+              System.out.print(purple+"🐙 : Hola soy LULA y soy tu ayudante en el juego"+
+                ",antes de empezar,");
+              while(aux){
+                System.out.println(purple+"¿Cuál es tu nombre? "+white+"\n");
+                nombre=sc.nextLine();
+                System.out.println(purple+ "🐙 : Entonces tu nombre es "+green+nombre+" ¿cierto?"+white+"\n");
+                System.out.println(white+"Responde"+ green+ "SI" +white
+                +" para continuar o"+red+" NO"+white+" para cambiar tu nombre."+white+"\n");
+                String confirmacion=sc.nextLine();
+                if(confirmacion.equals("SI")){
+                  System.out.println(purple+"🐙 : Wow que lindo nombre, un placer conocerte"+green+
+                  nombre+white+"\n");
+                  aux=false; 
+                  continue; //salimos del ciclo.
+                }
+                if(confirmacion.equals("NO")){
+                  System.out.print(purple+"🐙 : Lo siento, quiza entendí mal, ");
+                  continue; //continuamos en el ciclo.
+                }
+                System.out.println(purple+"🐙:" +red+" AL PARECER NO SABES LEER INSTRUCCIONES"+
+                " ASI QUE TE DARE UNA OPORTUNIDAD MÁS 😡");
+              }
+              System.out.println(purple+"🐙 : Ahora dime ¿cuántos jugadores quieres que haya en el juego?,"
+              "por cierto recuerda que solo puedes elegir entre 2 a 10 jugadores"+white+"\n");
+
+              int cantJugadores= 0;
+							aux=true;
+              while(aux){
+								System.out.println(purple+"🐙 : Ahora dime ¿cuántos jugadores quieres que haya en el juego?,"
+								"por cierto recuerda que solo puedes elegir entre 2 a 10 jugadores"+white+"\n");
+            try {
+              	cantJugadores = sc.nextInt();
+								// Por si no se ingresa un valor valido
+								if(cantJugadores<2 || cantJugadores>10){
+									System.out.println(purple+"🐙:" +red+" AL PARECER NO SABES LEER INSTRUCCIONES"+
+                " ASI QUE TE DARE UNA OPORTUNIDAD MÁS 😡");
+                	sc.nextLine();
+                	continue;
+								}
+            } catch (InputMismatchException ime) {
+                System.out.println(rojo+ "\tNo ingresaste un entero" + white);
+                System.out.print(green+"\tIntenta de nuevo:)"+white+"\n\n");
+                sc.nextLine();
+                continue;
+              }catch(Exception e){
+                System.out.print(rojo+"\n\tLo siento,ocurrio un error inesperado");
+                System.out.print(green+"\n\tIntenta de nuevo:)"+white+"\n\n");
+                sc.nextLine();
+                continue;
+                }
+								aux=false; //Para salir del ciclo si ya se ingreso un valor valido
+            		sc.nextLine();
+            		System.out.println();
+							}
+								
+						
+                // Creamos al jugador
+                Player playerReal=new Player(nombre);
+                // Creamos al Mazo
+                Mazo m1=new Mazo();
+                // Creamos la partida 
+                Partida p1 =new Partida(m1,cantJugadores,playerReal); 
+								System.out.println(purple+"🐙 : Estamos listos y listas para inciar🎉🎉"+white+"\n");
+								System.out.println(purple+"🐙 : La solterona en esta partida es "+p1.solterona.toString()+white+"\n");
+                break;
+
+            //opcion 2 (REGLAS)
+            case 2:
+            
+            break;
+            
+            // opcion 3 (salir)
+            case 3:
+            System.out.println(white+"\n 🌈 " + rojo+" Gracias por usar el programa "+ white+ "🌈\n"+white);
+            break;
+    
+            } // final switch principal 
+           
+            System.out.println();
+            
+        } //final do .. while principal
+        while(eleccion!=3);
+
+
+*/
+      }
 }

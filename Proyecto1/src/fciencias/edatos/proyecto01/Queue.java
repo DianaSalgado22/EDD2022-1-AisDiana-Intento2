@@ -15,30 +15,7 @@ public class Queue<T> implements TDAQueue<T>{
     private DoubleLinkedList<T> list = new DoubleLinkedList<T>();
 
      public  String toString(){
-        /*  
-        String representación = " ";
-        if(list.size() == 0)
-    
-         System.out.print(" Queue is empty");
-    
-     
-    
-        else
-    
-        {
-    
-            for(int i = 0; i < list.size(); i++)
-    
-            if(list.isEmpty())
-                break;
-            {
-               representación+= list.remove(0);
-    
-            } */
             return list.toString();
-    //}
-    
-    //return (String)representación;
     } 
 
     public boolean contains(T e){
