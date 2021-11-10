@@ -23,10 +23,13 @@ public class Player{
     // Nombre del jugador
     String name="";
     // Mazo del jugador
-    TDAList<Carta> cartsOfThePlayer= new DoubleLinkedList<>();
+    //??
+    DoubleLinkedList<Carta> cartsOfThePlayer= new DoubleLinkedList<>();
     //atributo que se le asignara al final de la partida pero por default se inicializa en false
     // true si es loser osea perdedor jeje y falso si no es loser osea ganador jeje
     boolean Loser;
+
+    boolean sigueJugando;
 
 
     /** Metodo para crear a un jugador
@@ -34,6 +37,7 @@ public class Player{
      */
     public Player(String name){
         this.name=name;
+        sigueJugando=true;
     }
     
     

@@ -3,6 +3,7 @@ import java.io.IOException;
 import java.util.Arrays;
 import java.util.Random;
 import java.util.Scanner;
+import java.util.InputMismatchException;
 /**
  * @version 1.0 Noviembre 2021.
  * @author Salgado Tirado Diana Laura
@@ -54,6 +55,7 @@ public class Partida{
     public void preGame(){
 	  // El mazo del juego ahora esta barajeado, al hacer la igualdad
 	  mazoDelJuego.cartasMazo = mazoDelJuego.mazoCompletoBarajeado();
+    //mazoDelJuego.cartasBarajeado=mazoDelJuego.mazoCompletoBarajeado();
 
 	  // Se guarda a la solterona y se elimina una carta del mazo
 	  this.solterona = mazoDelJuego.eliminarUnaCarta();
@@ -152,6 +154,22 @@ public class Partida{
 				}
 		}
 
+
+    public void volteaTodasRev(){
+      // Las cartas del jugador 
+     // TDAList<Carta> mazoJugador=jugador.cartsOfThePlayer;
+      // Recorremos las cartas del jugador
+      for(int j=0;j<mazoDelJuego.cartasMazo.size();j++){
+          Carta carta =mazoDelJuego.cartasMazo.get(j); // La carta en la posición j
+          // Si la carta ya esta al reves continuamos con la siguiente 
+          if(carta.isFlip()){
+            continue;
+          }
+          // si no
+          carta.voltear(); // volteamos la carta
+      }
+  }
+
 		/** Metodo que voltea todas las cartas de un jugador al frente
  		 *  @param jugador al que se le pondran sus cartas de frente
 		 */
@@ -170,6 +188,21 @@ public class Partida{
 					carta.voltear(); // volteamos la carta
 			}
 	}
+
+ /*  public void volteaTodasFrente(){
+    // Las cartas del jugador 
+    TDAList<Carta> mazoJugador=jugador.cartsOfThePlayer;
+    // Recorremos las cartas del jugador
+    for(int j=0;j<mazoJugador.size();j++){
+        Carta carta =mazoJugador.get(j); // La carta en la posición j
+        // Si la carta no esta al reves continuamos con la siguiente 
+        if(!carta.isFlip()){
+          continue;
+        }
+        // si esta al reves 
+        carta.voltear(); // volteamos la carta
+    }
+} */
 
 		/** Metodo que muestra las cartas disponibles a robar
 		 *  @param jugadorActual es decir el jugador que esta de turno 
@@ -234,6 +267,15 @@ public class Partida{
 				p1.cartsOfThePlayer.add(0,cartaRobada);
 		}
 
+     public void reacomodarCartas(int x, int y,Player p1){
+        
+       /*  Carta aux=p.cartsOfThePlayer.get(x);
+        p.cartsOfThePlayer.get(x) = p.cartsOfThePlayer.get(y);
+        p.cartsOfThePlayer.get(y) = aux; */
+
+        p1.cartsOfThePlayer.swap(x,y);
+
+    } 
     public static void main(String[] args){
       // COLORES                                                               
         String green = "\033[32m";
@@ -243,28 +285,33 @@ public class Partida{
         String yellow= "\033[33m";
         String red =  "\u001B[31m";  
         String black = "\033[30m";
-        Mazo m1=new Mazo();
+        Mazo m=new Mazo();
         Player player1 = new Player("Aislinn ");   
-        Partida p1 =new Partida(m1,4,player1); 
-        p1.preGame();
-				p1.muestraCartas();
-				p1.muestraRobables(player1);
-				p1.muestraCartas();
-				Player player2= p1.listaPlayers.get(2);
-				p1.muestraCartasNumeradas(player2);
+        Partida p =new Partida(m,4,player1); 
+         //System.out.println(p1.listaPlayers.get(0)+"\n");
+	      //System.out.println(p1.listaPlayers.get(1)+"\n");
+	      //System.out.println(p1.listaPlayers.get(2)+"\n");
+	      //System.out.println(p1.listaPlayers.get(3)+"\n");
+        p.preGame();
+				p.muestraCartas();
+        p.reacomodarCartas(4,5,player1);
+				p.muestraRobables(player1);
+				p.muestraCartas();
+				Player player2= p.listaPlayers.get(2);
+				p.muestraCartasNumeradas(player2);
 				System.out.println("Se hace un robo de la carta [2] \n");
-				p1.robar(player1,player2,2); 
+				p.robar(player1,player2,2); 
 				System.out.println(player1);
 				System.out.println("Se elimina si hubo par \n");
 				player1.descartarPar();
 				System.out.println(player1);
-	      //System.out.println(p1.listaPlayers.get(0)+"\n");
-	      //System.out.println(p1.listaPlayers.get(1)+"\n");
-	      //System.out.println(p1.listaPlayers.get(2)+"\n");
-	      //System.out.println(p1.listaPlayers.get(3)+"\n");
+	      // System.out.println(p1.listaPlayers.get(0)+"\n");
+	      // System.out.println(p1.listaPlayers.get(1)+"\n");
+	      // System.out.println(p1.listaPlayers.get(2)+"\n");
+	      // System.out.println(p1.listaPlayers.get(3)+"\n");
         TDAList<String> historial= new DoubleLinkedList<>();
 
-				/*
+				
         // INICIO DEL MENU
         Scanner sc = new Scanner(System.in); //Objeto para usar la clase Scanner
 
@@ -280,12 +327,12 @@ public class Partida{
             try {
                 eleccion = sc.nextInt();
             } catch (InputMismatchException ime) {
-                System.out.println(rojo+ "\tNo ingresaste un entero" + white);
+                System.out.println(red+ "\tNo ingresaste un entero" + white);
                 System.out.print(green+"\tIntenta de nuevo:)"+white+"\n\n");
                 sc.nextLine();
                 continue;
               }catch(Exception e){
-                System.out.print(rojo+"\n\tLo siento,ocurrio un error inesperado");
+                System.out.print(red+"\n\tLo siento,ocurrio un error inesperado");
                 System.out.print(green+"\n\tIntenta de nuevo:)"+white+"\n\n");
                 sc.nextLine();
                 continue;
@@ -297,7 +344,7 @@ public class Partida{
             // opcion 1 (empezar partida)
             case 1:
               boolean aux=true;
-              String nombre;
+              String nombre="";
               System.out.print(purple+"🐙 : Hola soy LULA y soy tu ayudante en el juego"+
                 ",antes de empezar,");
               while(aux){
@@ -320,14 +367,12 @@ public class Partida{
                 System.out.println(purple+"🐙:" +red+" AL PARECER NO SABES LEER INSTRUCCIONES"+
                 " ASI QUE TE DARE UNA OPORTUNIDAD MÁS 😡");
               }
-              System.out.println(purple+"🐙 : Ahora dime ¿cuántos jugadores quieres que haya en el juego?,"
-              "por cierto recuerda que solo puedes elegir entre 2 a 10 jugadores"+white+"\n");
+              System.out.println(purple+"🐙 : Ahora dime ¿cuántos jugadores quieres que haya en el juego?,por cierto recuerda que solo puedes elegir entre 2 a 10 jugadores"+white+"\n");
 
               int cantJugadores= 0;
 							aux=true;
               while(aux){
-								System.out.println(purple+"🐙 : Ahora dime ¿cuántos jugadores quieres que haya en el juego?,"
-								"por cierto recuerda que solo puedes elegir entre 2 a 10 jugadores"+white+"\n");
+								//System.out.println(purple+"🐙 : Ahora dime ¿cuántos jugadores quieres que haya en el juego?,por cierto recuerda que solo puedes elegir entre 2 a 10 jugadores"+white+"\n");
             try {
               	cantJugadores = sc.nextInt();
 								// Por si no se ingresa un valor valido
@@ -338,12 +383,12 @@ public class Partida{
                 	continue;
 								}
             } catch (InputMismatchException ime) {
-                System.out.println(rojo+ "\tNo ingresaste un entero" + white);
+                System.out.println(red+ "\tNo ingresaste un entero" + white);
                 System.out.print(green+"\tIntenta de nuevo:)"+white+"\n\n");
                 sc.nextLine();
                 continue;
               }catch(Exception e){
-                System.out.print(rojo+"\n\tLo siento,ocurrio un error inesperado");
+                System.out.print(red+"\n\tLo siento,ocurrio un error inesperado");
                 System.out.print(green+"\n\tIntenta de nuevo:)"+white+"\n\n");
                 sc.nextLine();
                 continue;
@@ -358,10 +403,57 @@ public class Partida{
                 Player playerReal=new Player(nombre);
                 // Creamos al Mazo
                 Mazo m1=new Mazo();
-                // Creamos la partida 
+                // Creamos la partida
+                //Thread t = new Thread(); 
                 Partida p1 =new Partida(m1,cantJugadores,playerReal); 
 								System.out.println(purple+"🐙 : Estamos listos y listas para inciar🎉🎉"+white+"\n");
-								System.out.println(purple+"🐙 : La solterona en esta partida es "+p1.solterona.toString()+white+"\n");
+                System.out.println("jugaremos con baraja inglesa 🙊 🙉\n");
+                System.out.println(p1.mazoDelJuego.cartasMazo);
+                try{
+                Thread.sleep(1000);
+                }catch(Exception e){
+                  System.out.println(e);
+                }
+                System.out.println("\nAhora vamos a barajear las cartas\n");
+                try{
+                  Thread.sleep(1000);
+                  }catch(Exception e){
+                    System.out.println(e);
+                  }
+                System.out.println("\nBarajeando...\n");
+
+                try{
+                  Thread.sleep(1000);
+                  }catch(Exception e){
+                    System.out.println(e);
+                  }
+                  //las barajea
+                 // p1.mazoDelJuego.cartasBarajeado=p1.mazoDelJuego.mazoCompletoBarajeado();
+                p1.volteaTodasRev();
+
+                 // System.out.println(p1.mazoDelJuego.cartasBarajeado);
+                 System.out.println(p1.mazoDelJuego.cartasMazo);
+                  System.out.println("\nA continuación se retirara una carta y se repartiran las cartas entre todos los jugadores y se descartaran todas sus cartas pares\n");
+                 try{
+                  Thread.sleep(100);
+                  }catch(Exception e){
+                    System.out.println(e);
+                  }
+
+                p1.preGame();
+							
+               // System.out.println(purple+"\n🐙 : La solterona en esta partida es "+p1.solterona.toString()+white+"\n");
+                p1.muestraCartas();
+        //          System.out.println(p1.listaPlayers.get(0)+"\n");
+	      // System.out.println(p1.listaPlayers.get(1)+"\n");
+        // System.out.println(p1.listaPlayers.get(2)+"\n");
+
+                  System.out.println("Primero te toca a ti 🙉. Roba una carta a tu contrincante del lado derecho:D\n Escoge el indice de la carta que quieres robar\n");
+
+                  p1.muestraCartasNumeradas(p1.turnos.get(1));
+
+
+
                 break;
 
             //opcion 2 (REGLAS)
@@ -371,7 +463,7 @@ public class Partida{
             
             // opcion 3 (salir)
             case 3:
-            System.out.println(white+"\n 🌈 " + rojo+" Gracias por usar el programa "+ white+ "🌈\n"+white);
+            System.out.println(white+"\n 🌈 " + red+" Gracias por usar el programa "+ white+ "🌈\n"+white);
             break;
     
             } // final switch principal 
@@ -382,6 +474,6 @@ public class Partida{
         while(eleccion!=3);
 
 
-*/
+
       }
 }

@@ -14,7 +14,7 @@ public class Mazo{
 
     TDAList<Carta> cartasMazo= new DoubleLinkedList<>();
 
-    
+    TDAList<Carta> cartasBarajeado= new DoubleLinkedList<>();
 
     /** Metodo para contruir la estructura de un mazo
      *  sin barajear usando al metodo mazoCompleto.

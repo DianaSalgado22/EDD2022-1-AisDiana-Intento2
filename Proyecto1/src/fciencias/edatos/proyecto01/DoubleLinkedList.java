@@ -38,7 +38,7 @@ public class DoubleLinkedList<T> implements TDAList<T> {
      * @param element el elemento que almacena el nodo.
      */
     public Node(T element) {
-      this.element = element;
+      this.element = element;;
     }
 
     /**
@@ -49,6 +49,16 @@ public class DoubleLinkedList<T> implements TDAList<T> {
       this.next = newNode;
     }
 
+    /**
+     * Permite cambiar eel elemento actual.
+     * @param newNode el nuevo nodo siguiente.
+     */
+    public void setElement(T element) {
+      this.element = element;
+    }
+
+
+   
     /**
      * Permite cambiar el nodo anterior.
      * @param newNode el nuevo nodo anterior.
@@ -243,6 +253,38 @@ public class DoubleLinkedList<T> implements TDAList<T> {
       for (int c = size - 1; c > i; c--) iterador = iterador.getPrev();
       return iterador.getElement();
     }
+  }
+
+  public Node getNode(int i) throws IndexOutOfBoundsException {
+    if (i >=size || i < 0) {
+      System.out.println(yellow+"No se puede obtener el elemento porque el indice es invalido"+white);
+      throw new IndexOutOfBoundsException();
+    }
+    // Caso donde i esta mas cerca de head o en el medio.
+    if (i <= size / 2) {
+      Node iterador = head;
+      /* Empezamos a recorrer desde head
+       * hasta el nodo de la posición deseada */
+      for (int c = 0; c < i; c++) iterador = iterador.getNext();
+      // Regresamos el elemento donde esta el iterador
+      return iterador;
+    }
+    // Caso donde i esta mas cerca de tail (i>n/2).
+    else {
+      Node iterador = tail;
+      /* Empezamos a recorrer desde tail
+       * hasta el nodo de la posición deseada */
+      for (int c = size - 1; c > i; c--) iterador = iterador.getPrev();
+      return iterador;
+    }
+  }
+
+  public void swap(int i, int j){
+   Node n = getNode(i);
+   Node m = getNode(j);
+   T aux = n.getElement();
+   n.setElement(m.getElement());
+   m.setElement(aux);
   }
 
   @Override
