@@ -44,8 +44,9 @@ public class Player{
         /**
          * Metodo que revisa si hay un par de cartas
          * (este metodo es para cuando se roba una carta y dado que ya se tuvo que haber ocupado el metodo anterior entonces maximo se encuentra un par de cartas)
+         * @return true si se descarta el par, false si no
          */
-        public void descartarPar(){
+        public boolean descartarPar(){
             // la carta que robo siempre estara en la posición 0 de la lista xq tramposas jiji nosotras siempre la pondremos en 
             Carta cartaQueRobo = cartsOfThePlayer.get(0);
             //se recorren las cartas
@@ -53,12 +54,12 @@ public class Player{
                 //si la carta que robo es igual a otra de las cartas entonces se elima la primera q es la q se robo y la de posicion i que fue la q encontro
                 // y sera unica pues antes ya se eliminaron todos los pares
                 if(cartaQueRobo.valor == cartsOfThePlayer.get(i).valor){
-                    System.out.println("holi probando");
                     cartsOfThePlayer.remove(i);
                     cartsOfThePlayer.remove(0);
-                    
+                    return true;       
                 }
             }
+            return false;
         }
 
     public String toString(){
