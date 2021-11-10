@@ -72,7 +72,7 @@ public class Sorter{
 	}
 
 	/**
-	 * Auxiliar de mergeSort para dividir y mezclar.
+	 * Auxiliar de mergeSort para dividir y mezclar. OPTIMIZADO
 	 * @param arr el arreglo con los elementos a dividir y mezclar.
 	 * @param lo el índice de inicio a modificación.
 	 * @param hi el índice del último elemento a modificación.
@@ -90,6 +90,31 @@ public class Sorter{
 
 		merge(arr, lo, mid, hi);
 	}
+
+	/**
+	 * Ordena un arreglo de forma ascendente con insertion sort.
+	 * @param arr el arreglo a ordenar.
+	 */
+	public static void insertionSort(int[] arr){
+		for(int i = 0; i < arr.length-1; i++)
+			for(int j = i+1; j>0 && arr[j-1]>arr[j]; j--)
+				swap(arr, j, j-1);
+	}
+
+	/**
+	 * Ordena un arreglo de forma ascendente con selection sort.
+	 * @param arr el arreglo a ordenar.
+	 */
+	public static void selectionSort(int[] arr){
+		for(int i = arr.length-1; i > 0 ; i--){
+			int max = 0;
+			for(int j = 1; j<=i; j++){
+				if(arr[j] > arr[max])
+					max = j;
+			}
+			swap(arr, max, i);
+		}
+	} // El peor caso es tener el arreglo ordenado descendentemente
 	
 	/**
 	 * Mezcla dos arreglos, ordenando de menor a mayor.
@@ -99,14 +124,21 @@ public class Sorter{
 	 * @param hi el índice del último elemento.
 	 */
 	private static void merge(int[] arr, int lo, int mid, int hi){
-		int i = lo;
-		int j = mid+1;
-		int[] aux = Arrays.copyOf(arr,arr.length);
+		// Copiamos solo de lo hasta hi (el +1 es por como esta definido copy of range)
+		int[] aux = Arrays.copyOfRange(arr,lo,hi+1);
+		// El inicio del primer sub-arreglo (del ya subarreglo de arr lo-hi)
+		// (La posición 0 del aux,es decir el elemento en la posicion lo de arr)
+		int i = 0; 
+		/* El inicio del segundo sub-arreglo (del ya subarreglo de arr lo-hi)
+		 * seria la mitad de aux+1, que seria (aux.length-1)+1/2
+		*/
+		int j = aux.length/2;
+		
 		for(int k = lo ; k <= hi; k++){
 			// Si ya nos acabamos los elementos de la primera mitad
-			if(i > mid)
+			if(i > (mid-lo))
 				arr[k] = aux[j++];
-			else if(j > hi) // Si ya nos acabamos la segunda mitad
+			else if((j +lo)> hi) // Si ya nos acabamos la segunda mitad
 				arr[k] = aux[i++];
 			else if(aux[j] < aux[i]) // El menor está en la primera mitad
 				arr[k] = aux[j++];
@@ -176,9 +208,10 @@ public class Sorter{
 	}
 
 	public static void main(String[] args) {
-		int[] arr1 = generate(50, 15);
+		int[] arr1 = generate(150, 15);
 		int[] arr2 = Arrays.copyOf(arr1, arr1.length);
 		int[] arr3 = Arrays.copyOf(arr1, arr1.length);
+		int[] arr4 = Arrays.copyOf(arr1, arr1.length);
 		//System.out.println("No ordenado: " + Arrays.toString(arr1));
 		
 		System.out.println("Arreglo No ordenado: "+Arrays.toString(arr1));
@@ -187,7 +220,7 @@ public class Sorter{
 		long fin = System.currentTimeMillis();
 		System.out.println("Arreglo ordenado: "+Arrays.toString(arr1));
 		System.out.println("Ordenado con mergeSort tardó: " + (fin - inicio) + " milisegundos");
-		System.out.println("¿En qué posición se encuentra el elemento 5? " + find(arr1,5));
+		System.out.println("¿En qué posición se encuentra el elemento 5? " + find(arr1,5)+"\n");
 
 
 		System.out.println("Arreglo No ordenado: "+Arrays.toString(arr2));
@@ -196,9 +229,21 @@ public class Sorter{
 		fin = System.currentTimeMillis();
 		System.out.println("Arreglo ordenado: "+Arrays.toString(arr2));
 		System.out.println("Ordenado con quickSort tardó: " + (fin - inicio) + " milisegundos");
-		System.out.println("¿En qué posición se encuentra el elemento 2? " + find(arr1,2));
+		System.out.println("¿En qué posición se encuentra el elemento 2? " + find(arr1,2)+"\n");
+
+		inicio = System.currentTimeMillis();
+		selectionSort(arr3);
+		fin = System.currentTimeMillis();
+
+		System.out.println("Ordenado con selectionSort tardó: " + (fin - inicio) + " milisegundos"+"\n");
 
 		
+
+		inicio = System.currentTimeMillis();
+		insertionSort(arr4);
+		fin = System.currentTimeMillis();
+
+		System.out.println("Ordenado con insertionSort tardó: " + (fin - inicio) + " milisegundos"+"\n");
 
 		/*
 
