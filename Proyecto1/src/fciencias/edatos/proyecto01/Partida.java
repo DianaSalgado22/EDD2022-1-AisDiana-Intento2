@@ -267,15 +267,152 @@ public class Partida{
 				p1.cartsOfThePlayer.add(0,cartaRobada);
 		}
 
+    /** Metodo para cambiar la posicion de las cartas
+     * de un jugador.
+     * @param x la posición donde esta la carta que se cambiara.
+     * @param y la posicion donde esta la otra carta que se cambiara
+     * @param p1 el jugador al que se le cambiara sus cartas de posicion.
+    */
      public void reacomodarCartas(int x, int y,Player p1){
-        
-       /*  Carta aux=p.cartsOfThePlayer.get(x);
-        p.cartsOfThePlayer.get(x) = p.cartsOfThePlayer.get(y);
-        p.cartsOfThePlayer.get(y) = aux; */
-
         p1.cartsOfThePlayer.swap(x,y);
-
     } 
+
+    /** Metodo para simular el turno de un jugador
+     *  @param playerAct jugador en el turno actual.
+     *  @param num el turno que tiene el jugador actual (la posicion en la cola turnos)
+     */
+    public void turno(Player playerAct,int num){
+        // Primero se avisa que es su turno
+        System.out.println(blue+playerAct.name+ white + " es tu turno 🔮 ");
+        // Despues se muestra las cartas del jugador a la derecha numeradas
+        Player jD=turnos.get(num+1);  // obtenemos al jugador de la derecha
+        this.volteaTodasReves(jD); // volteamos las cartas del jugador a la derecha 
+        //
+        System.out.println(white+"Puedes robarle una carta a "+yellow+jD.name+ white);
+        // Si el del turno es el usuario
+        if(playerAct==usuario){
+          muestraCartasNumeradas(jD); // le mostramos al jugador las opciones
+          // Creamos el scanner y el boolean aux
+          Scanner sc = new Scanner(System.in);
+          boolean aux=true;
+          int eleccion;
+          // Se hace la elección de la carta a robar
+          try{
+            System.out.println(purple+"¿Qué carta quieres robar? "+white);
+            while(aux){
+              eleccion = sc.nextInt();
+              if(1>aux || aux> jD.cartsOfThePlayer.size()){
+                  System.out.println(red+ "No elegiste una carta valida, intenta de nuevo"+white);
+                  continue;
+                }
+                aux=false;
+            }
+          }catch (InputMismatchException ime) {
+            System.out.println(red+ "\tNo ingresaste un entero" + white);
+            System.out.print(green+"\tIntenta de nuevo:)"+white+"\n\n");
+            sc.nextLine();
+            continue;
+          }catch(Exception e){
+            System.out.print(red+"\n\tLo siento,ocurrio un error inesperado");
+            System.out.print(green+"\n\tIntenta de nuevo:)"+white+"\n\n");
+            sc.nextLine();
+            continue;
+            }
+          sc.nextLine();
+          System.out.println();
+          // Se hace el robo 
+          this.robar(playerAct, jD, eleccion);
+          // AQUI IRIA UNA GUARDADA EN EL HISTORIAL
+
+          // Se le muestran sus cartas al jugador
+          volteaTodasFrente(playerAct);
+          System.out.println(playerAct.toString());
+          // Si se hace un par se descarta y se le avisa al usuario.
+            if(playerAct.descartarPar()){
+              System.out.println(green+ "Yeii , hiciste un par 💯 "+white);
+              // AQUI IRIA UNA GUARDADA EN EL HISTORIAL
+            }
+          // Se checa si el jugador actual ya gano 
+          if(playerAct.cartsOfThePlayer.isEmpty()){
+              Sytem.out.println("El jugador "+blue+playerAct.name+white + "sale del juego"+ "\n"+ purple+"🐙 : EALEEEE LA MÁS GANADORA"+white);
+              // se elimina de la lista turnos
+              turnos.remove(num);
+              // AQUI IRIA UNA GUARDADA EN EL HISTORIAL
+              //Si el jugador ya gano pues ya acaba su turno 
+              return;
+          }
+          // Se le pregunta al usuario si quiere mover sus cartas
+          String respuesta;
+          boolean aux2=true;
+          int c1;
+          int c2;
+          aux=true;
+          try{
+            while(aux2){
+            System.out.println("Antes de que acabe tu turno ¿quieres hacer algún cambio en tus cartas?"+white);
+            respuesta=sc.nextLine;
+            respuesta.toUpperCase(); // Pasa la respuesta a mayusculas
+            if(respuesta.contains("SI")|| Respuesta.contains("SÍ")){
+              while(aux){
+                // Se le muestra al usuario sus cartas numeradas
+                muestraCartasNumeradas(playerAct);
+                System.out.println("Escribe el número de la primera carta "); 
+                c1 = sc.nextInt();
+                sc.nextLine();
+                if(1>aux || aux> jD.cartsOfThePlayer.size()){
+                    System.out.println(red+ "No elegiste cartas validas, intenta de nuevo"+white);
+                    continue;
+                  }
+                  aux=false;
+              }
+            }
+            if(respuesta.contains("NO")){
+              return; //SE ACABA EL TURNO
+            }
+            System.out.println(red+"No entiendo a que te refieres, trata responder sí o no "+white)
+          }
+
+            
+          }catch (InputMismatchException ime) {
+            System.out.println(red+ "\tNo ingresaste un entero" + white);
+            System.out.print(green+"\tIntenta de nuevo:)"+white+"\n\n");
+            sc.nextLine();
+            continue;
+          }catch(Exception e){
+            System.out.print(red+"\n\tLo siento,ocurrio un error inesperado");
+            System.out.print(green+"\n\tIntenta de nuevo:)"+white+"\n\n");
+            sc.nextLine();
+            continue;
+            }
+          sc.nextLine();
+          System.out.println();
+        }
+        // Si el del turno es un jugador artificial.
+        else{ 
+          // Se hace la eleccion de carta a robar de manera random
+            Random random=new Random();
+            int pos=random.nextInt(pD.cartsOfThePlayer.size());
+          // Se hace el robo 
+            this.robar(playerAct, jD, pos+1);
+            // AQUI IRIA UNA GUARDADA EN EL HISTORIAL
+          // Si se hace un par se descarta y se guarda en el historial
+            if(playerAct.descartarPar()){
+              // AQUI IRIA UNA GUARDADA EN EL HISTORIAL
+            }
+          // Se checa si el jugador actual ya gano 
+            if(playerAct.cartsOfThePlayer.isEmpty()){
+              Sytem.out.println("El jugador "+blue+playerAct.name+white + "sale del juego"+ "\n"+ purple+"🐙 : EALEEEE LA MÁS GANADORA"+white);
+              // se elimina de la lista turnos
+              turnos.remove(num);
+              // AQUI TAMBIEN FALTA GUARDAR EN EL HISTORIAL
+            }
+        }
+        
+        // Se agrega al historial la info del turno
+
+
+    }
+
     public static void main(String[] args){
       // COLORES                                                               
         String green = "\033[32m";
@@ -350,12 +487,12 @@ public class Partida{
               while(aux){
                 System.out.println(purple+"¿Cuál es tu nombre? "+white+"\n");
                 nombre=sc.nextLine();
-                System.out.println(purple+ "🐙 : Entonces tu nombre es "+green+nombre+" ¿cierto?"+white+"\n");
+                System.out.println(purple+ "🐙 : Entonces tu nombre es "+green+nombre+purple+" ¿cierto?"+white+"\n");
                 System.out.println(white+"Responde"+ green+ "SI" +white
                 +" para continuar o"+red+" NO"+white+" para cambiar tu nombre."+white+"\n");
                 String confirmacion=sc.nextLine();
                 if(confirmacion.equals("SI")){
-                  System.out.println(purple+"🐙 : Wow que lindo nombre, un placer conocerte"+green+
+                  System.out.println(purple+"🐙 : Wow que lindo nombre, un placer conocerte "+green+
                   nombre+white+"\n");
                   aux=false; 
                   continue; //salimos del ciclo.
@@ -364,8 +501,8 @@ public class Partida{
                   System.out.print(purple+"🐙 : Lo siento, quiza entendí mal, ");
                   continue; //continuamos en el ciclo.
                 }
-                System.out.println(purple+"🐙:" +red+" AL PARECER NO SABES LEER INSTRUCCIONES"+
-                " ASI QUE TE DARE UNA OPORTUNIDAD MÁS 😡");
+                System.out.println(purple+"🐙 :" +red+" AL PARECER NO SABES LEER INSTRUCCIONES"+
+                " ASI QUE TE DARE UNA OPORTUNIDAD MÁS 😡"+white);
               }
               System.out.println(purple+"🐙 : Ahora dime ¿cuántos jugadores quieres que haya en el juego?,por cierto recuerda que solo puedes elegir entre 2 a 10 jugadores"+white+"\n");
 
@@ -406,7 +543,7 @@ public class Partida{
                 // Creamos la partida
                 //Thread t = new Thread(); 
                 Partida p1 =new Partida(m1,cantJugadores,playerReal); 
-								System.out.println(purple+"🐙 : Estamos listos y listas para inciar🎉🎉"+white+"\n");
+								System.out.println(purple+"🐙 : Estamos listos y listas para inciar 🎉 🎉 "+white+"\n");
                 System.out.println("jugaremos con baraja inglesa 🙊 🙉\n");
                 System.out.println(p1.mazoDelJuego.cartasMazo);
                 try{
@@ -423,7 +560,7 @@ public class Partida{
                 System.out.println("\nBarajeando...\n");
 
                 try{
-                  Thread.sleep(1000);
+                  Thread.sleep(9000);
                   }catch(Exception e){
                     System.out.println(e);
                   }
@@ -433,7 +570,7 @@ public class Partida{
 
                  // System.out.println(p1.mazoDelJuego.cartasBarajeado);
                  System.out.println(p1.mazoDelJuego.cartasMazo);
-                  System.out.println("\nA continuación se retirara una carta y se repartiran las cartas entre todos los jugadores y se descartaran todas sus cartas pares\n");
+                  System.out.println(white+"\nA continuación se retirara una carta y se repartiran las cartas entre todos los jugadores y se descartaran todas sus cartas pares\n");
                  try{
                   Thread.sleep(100);
                   }catch(Exception e){
