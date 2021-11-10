@@ -295,13 +295,13 @@ public class Partida{
           // Creamos el scanner y el boolean aux
           Scanner sc = new Scanner(System.in);
           boolean aux=true;
-          int eleccion;
+          int eleccion=0;
           // Se hace la elección de la carta a robar
           try{
             System.out.println(purple+"¿Qué carta quieres robar? "+white);
             while(aux){
               eleccion = sc.nextInt();
-              if(1>aux || aux> jD.cartsOfThePlayer.size()){
+              if(1>eleccion || eleccion> jD.cartsOfThePlayer.size()){
                   System.out.println(red+ "No elegiste una carta valida, intenta de nuevo"+white);
                   continue;
                 }
@@ -311,12 +311,10 @@ public class Partida{
             System.out.println(red+ "\tNo ingresaste un entero" + white);
             System.out.print(green+"\tIntenta de nuevo:)"+white+"\n\n");
             sc.nextLine();
-            continue;
           }catch(Exception e){
             System.out.print(red+"\n\tLo siento,ocurrio un error inesperado");
             System.out.print(green+"\n\tIntenta de nuevo:)"+white+"\n\n");
             sc.nextLine();
-            continue;
             }
           sc.nextLine();
           System.out.println();
@@ -334,7 +332,7 @@ public class Partida{
             }
           // Se checa si el jugador actual ya gano 
           if(playerAct.cartsOfThePlayer.isEmpty()){
-              Sytem.out.println("El jugador "+blue+playerAct.name+white + "sale del juego"+ "\n"+ purple+"🐙 : EALEEEE LA MÁS GANADORA"+white);
+              System.out.println("El jugador "+blue+playerAct.name+white + "sale del juego"+ "\n"+ purple+"🐙 : EALEEEE LA MÁS GANADORA"+white);
               // se elimina de la lista turnos
               turnos.remove(num);
               // AQUI IRIA UNA GUARDADA EN EL HISTORIAL
@@ -348,50 +346,62 @@ public class Partida{
           int c2;
           aux=true;
           try{
-            while(aux2){
+            //while(aux2){
             System.out.println("Antes de que acabe tu turno ¿quieres hacer algún cambio en tus cartas?"+white);
-            respuesta=sc.nextLine;
+            respuesta=sc.nextLine();
             respuesta.toUpperCase(); // Pasa la respuesta a mayusculas
-            if(respuesta.contains("SI")|| Respuesta.contains("SÍ")){
+            if(respuesta.contains("SI")|| respuesta.contains("SÍ")){
               while(aux){
                 // Se le muestra al usuario sus cartas numeradas
                 muestraCartasNumeradas(playerAct);
                 System.out.println("Escribe el número de la primera carta "); 
                 c1 = sc.nextInt();
                 sc.nextLine();
-                if(1>aux || aux> jD.cartsOfThePlayer.size()){
+                System.out.println("Escribe el número de la segunda carta "); 
+                c2 = sc.nextInt();
+                sc.nextLine();
+                if(1>c1|| 1>c2 || c1> playerAct.cartsOfThePlayer.size()|| c2> playerAct.cartsOfThePlayer.size()){
                     System.out.println(red+ "No elegiste cartas validas, intenta de nuevo"+white);
                     continue;
                   }
+                //Se hace el cambio
+                this.reacomodarCartas(c1-1,c2-1,playerAct);
+                //
+                System.out.println("¿Quieres hacer otro cambio?");
+                respuesta=sc.nextLine();
+                respuesta.toUpperCase(); // Pasa la respuesta a mayusculas
+                if(respuesta.contains("SI")|| respuesta.contains("SÍ")){
+                  continue;
+                }
+                else{
                   aux=false;
+                }
               }
             }
             if(respuesta.contains("NO")){
               return; //SE ACABA EL TURNO
             }
-            System.out.println(red+"No entiendo a que te refieres, trata responder sí o no "+white)
-          }
-
-            
+            System.out.println(red+"No entiendo a que te refieres, trata responder sí o no "+white);
           }catch (InputMismatchException ime) {
             System.out.println(red+ "\tNo ingresaste un entero" + white);
             System.out.print(green+"\tIntenta de nuevo:)"+white+"\n\n");
             sc.nextLine();
-            continue;
+            
           }catch(Exception e){
             System.out.print(red+"\n\tLo siento,ocurrio un error inesperado");
             System.out.print(green+"\n\tIntenta de nuevo:)"+white+"\n\n");
             sc.nextLine();
-            continue;
+            
             }
           sc.nextLine();
           System.out.println();
+          aux2=false;
         }
         // Si el del turno es un jugador artificial.
         else{ 
           // Se hace la eleccion de carta a robar de manera random
             Random random=new Random();
-            int pos=random.nextInt(pD.cartsOfThePlayer.size());
+            int pos=random.nextInt(jD.cartsOfThePlayer.size());
           // Se hace el robo 
             this.robar(playerAct, jD, pos+1);
             // AQUI IRIA UNA GUARDADA EN EL HISTORIAL
@@ -401,7 +411,7 @@ public class Partida{
             }
           // Se checa si el jugador actual ya gano 
             if(playerAct.cartsOfThePlayer.isEmpty()){
-              Sytem.out.println("El jugador "+blue+playerAct.name+white + "sale del juego"+ "\n"+ purple+"🐙 : EALEEEE LA MÁS GANADORA"+white);
+              System.out.println("El jugador "+blue+playerAct.name+white + "sale del juego"+ "\n"+ purple+"🐙 : EALEEEE LA MÁS GANADORA"+white);
               // se elimina de la lista turnos
               turnos.remove(num);
               // AQUI TAMBIEN FALTA GUARDAR EN EL HISTORIAL
