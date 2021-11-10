@@ -92,31 +92,6 @@ public class Sorter{
 	}
 
 	/**
-	 * Ordena un arreglo de forma ascendente con insertion sort.
-	 * @param arr el arreglo a ordenar.
-	 */
-	public static void insertionSort(int[] arr){
-		for(int i = 0; i < arr.length-1; i++)
-			for(int j = i+1; j>0 && arr[j-1]>arr[j]; j--)
-				swap(arr, j, j-1);
-	}
-
-	/**
-	 * Ordena un arreglo de forma ascendente con selection sort.
-	 * @param arr el arreglo a ordenar.
-	 */
-	public static void selectionSort(int[] arr){
-		for(int i = arr.length-1; i > 0 ; i--){
-			int max = 0;
-			for(int j = 1; j<=i; j++){
-				if(arr[j] > arr[max])
-					max = j;
-			}
-			swap(arr, max, i);
-		}
-	} // El peor caso es tener el arreglo ordenado descendentemente
-	
-	/**
 	 * Mezcla dos arreglos, ordenando de menor a mayor.
 	 * @param arr el arreglo con los elementos a modificar.
 	 * @param lo el inicio de la primera mitad.
@@ -146,9 +121,36 @@ public class Sorter{
 				arr[k] = aux[i++];
 		}
 	}
+	/**
+	 * Ordena un arreglo de forma ascendente con insertion sort.
+	 * @param arr el arreglo a ordenar.
+	 */
+	public static void insertionSort(int[] arr){
+		for(int i = 0; i < arr.length-1; i++)
+			for(int j = i+1; j>0 && arr[j-1]>arr[j]; j--)
+				swap(arr, j, j-1);
+	}
+
+	/**
+	 * Ordena un arreglo de forma ascendente con selection sort.
+	 * @param arr el arreglo a ordenar.
+	 */
+	public static void selectionSort(int[] arr){
+		for(int i = arr.length-1; i > 0 ; i--){
+			int max = 0;
+			for(int j = 1; j<=i; j++){
+				if(arr[j] > arr[max])
+					max = j;
+			}
+			swap(arr, max, i);
+		}
+	} // El peor caso es tener el arreglo ordenado descendentemente
+	
+
+	
 
 	// desde aqui empieza el mergeoptimizado
-	static void mergeSort2(int[] A) {
+	/* static void mergeSort2(int[] A) {
         if (A.length > 1) {
             int q = A.length/2;
 
@@ -201,7 +203,38 @@ public class Sorter{
         }
         //return a;
 
-    }
+    } */
+
+	/**
+	 * Ordena un arreglo de forma ascendente con merge sort.
+	 * @param arr el arreglo a ordenar.
+	 */
+	public static void mergeSortOptimizado(int[] arr){
+		mergeSortOptimizado(arr, 0, arr.length-1);
+	}
+
+	/**
+	 * Auxiliar de mergeSort para dividir y mezclar. OPTIMIZADO
+	 * @param arr el arreglo con los elementos a dividir y mezclar.
+	 * @param lo el índice de inicio a modificación.
+	 * @param hi el índice del último elemento a modificación.
+	 */
+	private static void mergeSortOptimizado(int[] arr, int lo, int hi){
+		// Cuando ya esta ordenado el fragmento de lo hasta hi
+		if(hi <= lo)
+			return;
+
+		// La mitad del corte del arreglo
+		int mid = lo + (hi-lo) / 2;
+
+		mergeSortOptimizado(arr, lo, mid);
+		mergeSortOptimizado(arr, mid+1, hi);
+
+		merge(arr, lo, mid, hi);
+	}
+
+
+
 
 
     /**

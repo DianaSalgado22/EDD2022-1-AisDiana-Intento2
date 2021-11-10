@@ -433,6 +433,7 @@ public class Partida{
 
                  // System.out.println(p1.mazoDelJuego.cartasBarajeado);
                  System.out.println(p1.mazoDelJuego.cartasMazo);
+                
                   System.out.println("\nA continuación se retirara una carta y se repartiran las cartas entre todos los jugadores y se descartaran todas sus cartas pares\n");
                  try{
                   Thread.sleep(100);
@@ -458,7 +459,18 @@ public class Partida{
 
             //opcion 2 (REGLAS)
             case 2:
-            
+                 System.out.println("𝕽𝖊𝖌𝖑𝖆𝖘 𝖉𝖊𝖑 𝖏𝖚𝖊𝖌𝖔 " );
+                  System.out.println(red+"1."+white+"Solo pueden haber de 2 a 10 jugadores, no más ni menos\n"
+                  +red+"2."+white+"El mazo debe barajearse antes de repartirse entre los jugadores\n"+red+
+                  "3."+white+"Se retirara una carta sin enseñarsela a los jugadores\n"
+                  +red+"4."+white+"Se reparte de manera uniforma las cartas, puede ocurrir que algunos jugadores comiencen con mas cartas que otros\n"
+                  +red+"5."+white+"Cuando le sean repartidas la cartas se descartaran automaticamente todos los pares que tenga.\n"+
+                   "Se descartan solo los pares, no las tercias, esto es, si tiene tres cartas de igual denominación,se descartan solo dos de ellas.\n"
+                   +red+"6."+white+"tu querido usuaro seras el primero en empezar.\n"
+                   +red+"7."+white+"En su turno, cada jugador le debe robar una carta al jugador que tenga a laderecha. Si logra formar un par, puede descartarlo. Si se queda sin cartas,"+
+                   "abandona la partida.\n"
+                   +red+"8."+white+"No se debe la mano del jugador a su derecha. La carta que escoja debe estar boca abajo.\n"
+                   +red+"9."+white+"Cuando quede solo un jugador en la partida termina el juego. Ese jugador es el perdedor.");
             break;
             
             // opcion 3 (salir)
@@ -471,7 +483,7 @@ public class Partida{
             System.out.println();
             
         } //final do .. while principal
-        while(eleccion!=3);
+        while(eleccion!=3); 
 
 
 
