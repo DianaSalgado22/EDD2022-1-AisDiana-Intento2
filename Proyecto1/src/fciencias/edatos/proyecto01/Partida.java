@@ -580,12 +580,12 @@ public class Partida{
 
                  // System.out.println(p1.mazoDelJuego.cartasBarajeado);
                  System.out.println(p1.mazoDelJuego.cartasMazo);
-<<<<<<< HEAD
+//<<<<<<< HEAD
                 
                   System.out.println("\nA continuación se retirara una carta y se repartiran las cartas entre todos los jugadores y se descartaran todas sus cartas pares\n");
-=======
-                  System.out.println(white+"\nA continuación se retirara una carta y se repartiran las cartas entre todos los jugadores y se descartaran todas sus cartas pares\n");
->>>>>>> b03875727fccc8ba8039797bd92800cffa8b11b8
+//=======
+  //                System.out.println(white+"\nA continuación se retirara una carta y se repartiran las cartas entre todos los jugadores y se descartaran todas sus cartas pares\n");
+//>>>>>>> b03875727fccc8ba8039797bd92800cffa8b11b8
                  try{
                   Thread.sleep(100);
                   }catch(Exception e){
