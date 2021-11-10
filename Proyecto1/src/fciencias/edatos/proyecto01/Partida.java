@@ -434,30 +434,36 @@ public class Partida{
         String black = "\033[30m";
         Mazo m=new Mazo();
         Player player1 = new Player("Aislinn ");   
-        Partida p =new Partida(m,4,player1); 
+        Partida p =new Partida(m,4,player1);
+        p.preGame();
+        System.out.println(p.turnos.get(0)+"\n");
+	      System.out.println(p.turnos.get(1)+"\n");
+	      System.out.println(p.turnos.get(2)+"\n");
+	      System.out.println(p.turnos.get(3)+"\n");
+        p.turno(player1,0); 
          //System.out.println(p1.listaPlayers.get(0)+"\n");
 	      //System.out.println(p1.listaPlayers.get(1)+"\n");
 	      //System.out.println(p1.listaPlayers.get(2)+"\n");
 	      //System.out.println(p1.listaPlayers.get(3)+"\n");
-        p.preGame();
-				p.muestraCartas();
-        p.reacomodarCartas(4,5,player1);
-				p.muestraRobables(player1);
-				p.muestraCartas();
-				Player player2= p.listaPlayers.get(2);
-				p.muestraCartasNumeradas(player2);
-				System.out.println("Se hace un robo de la carta [2] \n");
-				p.robar(player1,player2,2); 
-				System.out.println(player1);
-				System.out.println("Se elimina si hubo par \n");
-				player1.descartarPar();
-				System.out.println(player1);
-	      // System.out.println(p1.listaPlayers.get(0)+"\n");
-	      // System.out.println(p1.listaPlayers.get(1)+"\n");
-	      // System.out.println(p1.listaPlayers.get(2)+"\n");
-	      // System.out.println(p1.listaPlayers.get(3)+"\n");
-        TDAList<String> historial= new DoubleLinkedList<>();
-
+      //  p.preGame();
+			//	p.muestraCartas();
+      //  p.reacomodarCartas(4,5,player1);
+			//	p.muestraRobables(player1);
+			//	p.muestraCartas();
+			//	Player player2= p.listaPlayers.get(2);
+			//	p.muestraCartasNumeradas(player2);
+			//	System.out.println("Se hace un robo de la carta [2] \n");
+			//	p.robar(player1,player2,2); 
+			//	System.out.println(player1);
+			//	System.out.println("Se elimina si hubo par \n");
+			//	player1.descartarPar();
+			//	System.out.println(player1);
+	    //  // System.out.println(p1.listaPlayers.get(0)+"\n");
+	    //  // System.out.println(p1.listaPlayers.get(1)+"\n");
+	    //  // System.out.println(p1.listaPlayers.get(2)+"\n");
+	    //  // System.out.println(p1.listaPlayers.get(3)+"\n");
+      //  TDAList<String> historial= new DoubleLinkedList<>();
+//
 				
         // INICIO DEL MENU
         Scanner sc = new Scanner(System.in); //Objeto para usar la clase Scanner
