@@ -315,6 +315,7 @@ public class Partida{
           this.robar(playerAct, jD, eleccion);
           // AQUI IRIA UNA GUARDADA EN EL HISTORIAL
 
+          //eleccion=eleccion-1;
           playerAct.historial +="𝖑𝖆 𝖈𝖆𝖗𝖙𝖆 𝖖𝖚𝖊 𝖗𝖔𝖇ó 𝖊𝖓 𝖊𝖘𝖙𝖊 𝖙𝖚𝖗𝖓𝖔 𝖊𝖘:"+jD.cartsOfThePlayer.get(eleccion-1).toString();
 
           // Se le muestran sus cartas al jugador
@@ -322,25 +323,25 @@ public class Partida{
           System.out.println(playerAct.toString());
           // Si se hace un par se descarta y se le avisa al usuario.
             if(playerAct.descartarPar()){
-<<<<<<< HEAD
-              System.out.println(green+ "Yeii , hiciste un par 💯 "+white);
+//<<<<<<< HEAD
+   //           System.out.println(green+ "Yeii , hiciste un par 💯 "+white);
               playerAct.historial+="\n𝕰𝖓 𝖊𝖘𝖙𝖆 𝖕𝖆𝖗𝖙𝖎𝖉𝖆 𝖑𝖔𝖌𝖗ó 𝖍𝖆𝖈𝖊𝖗 𝖚𝖓 𝖕𝖆𝖗 𝖉𝖊 𝖈𝖆𝖗𝖙𝖆𝖘 🥳S\n"; 
-=======
+//=======
               System.out.println(green+ "Yeii , hiciste un par 💯 "+white+"\n");
               System.out.println( "Ahora tus cartas son estas: "+white+"\n");
               System.out.println(playerAct.toString());
->>>>>>> dac5f90bf31d21161546e29c42f4a2bf44d7bc87
+//>>>>>>> dac5f90bf31d21161546e29c42f4a2bf44d7bc87
               // AQUI IRIA UNA GUARDADA EN EL HISTORIAL
             }else{
               playerAct.historial+= "\n𝕰𝖓 𝖊𝖘𝖙𝖆 𝖕𝖆𝖗𝖙𝖎𝖉𝖆 𝖓𝖔 𝖑𝖔𝖌𝖗ó 𝖍𝖆𝖈𝖊𝖗 𝖚𝖓 𝖕𝖆𝖗 𝖉𝖊 𝖈𝖆𝖗𝖙𝖆𝖘 🥺\n";
             }
 
-<<<<<<< HEAD
+//<<<<<<< HEAD
            /*  if(!(playerAct.descartarPar())){
             playerAct.historial+= "\n𝕰𝖓 𝖊𝖘𝖙𝖆 𝖕𝖆𝖗𝖙𝖎𝖉𝖆 𝖓𝖔 𝖑𝖔𝖌𝖗ó 𝖍𝖆𝖈𝖊𝖗 𝖚𝖓 𝖕𝖆𝖗 𝖉𝖊 𝖈𝖆𝖗𝖙𝖆𝖘 🥺\n";
             } */
-=======
->>>>>>> dac5f90bf31d21161546e29c42f4a2bf44d7bc87
+//=======
+//>>>>>>> dac5f90bf31d21161546e29c42f4a2bf44d7bc87
           // Se checa si el jugador actual ya gano 
           if(playerAct.cartsOfThePlayer.isEmpty()){
               System.out.println("El jugador "+blue+playerAct.name+white + "sale del juego"+ "\n"+ purple+"🐙 : EALEEEE LA MÁS GANADORA"+white);
@@ -462,7 +463,7 @@ public class Partida{
         String yellow= "\033[33m";
         String red =  "\u001B[31m";  
         String black = "\033[30m";
-<<<<<<< HEAD
+//<<<<<<< HEAD
         Mazo m=new Mazo();
         Player player1 = new Player("Aislinn ");   
         Partida p =new Partida(m,4,player1);
@@ -498,9 +499,9 @@ public class Partida{
 	    //  // System.out.println(p1.listaPlayers.get(3)+"\n");
       //  TDAList<String> historial= new DoubleLinkedList<>();
 //
-=======
+//=======
       
->>>>>>> dac5f90bf31d21161546e29c42f4a2bf44d7bc87
+//>>>>>>> dac5f90bf31d21161546e29c42f4a2bf44d7bc87
 				
         // INICIO DEL MENU
         Scanner sc = new Scanner(System.in); //Objeto para usar la clase Scanner
@@ -618,16 +619,16 @@ public class Partida{
                 p1.volteaTodasRev();
                 // 
                  System.out.println(p1.mazoDelJuego.cartasMazo);
-<<<<<<< HEAD
+//<<<<<<< HEAD
 //<<<<<<< HEAD
                 
                   System.out.println("\nA continuación se retirara una carta y se repartiran las cartas entre todos los jugadores y se descartaran todas sus cartas pares\n");
 //=======
   //                System.out.println(white+"\nA continuación se retirara una carta y se repartiran las cartas entre todos los jugadores y se descartaran todas sus cartas pares\n");
 //>>>>>>> b03875727fccc8ba8039797bd92800cffa8b11b8
-=======
-                  System.out.println(white+"\nA continuación se retirara una carta y se repartiran las cartas entre todos los jugadores \n además se descartaran todas sus cartas pares\n");
->>>>>>> dac5f90bf31d21161546e29c42f4a2bf44d7bc87
+//=======
+        //          System.out.println(white+"\nA continuación se retirara una carta y se repartiran las cartas entre todos los jugadores \n además se descartaran todas sus cartas pares\n");
+//>>>>>>> dac5f90bf31d21161546e29c42f4a2bf44d7bc87
                  try{
                   Thread.sleep(100);
                   }catch(Exception e){
