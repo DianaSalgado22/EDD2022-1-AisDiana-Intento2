@@ -78,7 +78,8 @@ public class Partida{
 
       // Se checa si la carta a agregar puede ser par con alguna de las cartas del jugador
       TDAList<Carta> cartasPlayer= listaPlayers.get(aux).cartsOfThePlayer;
-      
+      listaPlayers.get(aux).cartsOfThePlayerInTheBeginning.add(0,cartaAagregar);
+
       // si el jugador no tiene ninguna carta se agrega sin necesidad de comparar.
       if(cartasPlayer.size()==0){
         cartasPlayer.add(0,cartaAagregar);
@@ -100,12 +101,14 @@ public class Partida{
         }
       }
     }
+      //listaPlayer.get(aux).historial =""+ System.out    
       // Se suma para para pasar al siguiente jugador
       aux++;
       //esto es para que se vuelva a regresar a repartir desde el jugador 0
       if(aux == listaPlayers.size())
         aux=0; 
     } 
+    
   }
 
     /** Metodo que crea los demas jugadores no reales,es decir artificiales.
@@ -266,6 +269,8 @@ public class Partida{
      *  @param num el turno que tiene el jugador actual (la posicion en la cola turnos)
      */
     public void turno(Player playerAct,int num){
+      //playerAct.historialDeCartas.add(0,playerAct.cartsOfThePlayer);
+        playerAct.historial+= "\n𝕮𝖆𝖗𝖙𝖆𝖘 𝖈𝖔𝖓 𝖑𝖆𝖘 𝖖𝖚𝖊 𝖎𝖓𝖎𝖈𝖎𝖔 𝖊𝖘𝖙𝖊 𝖙𝖚𝖗𝖓𝖔:"+playerAct.cartsOfThePlayer.toString()+"\n";
         // Primero se avisa que es su turno
         System.out.println(blue+playerAct.name+ white + " es tu turno 🔮 "+"\n");
         // Despues se muestra las cartas del jugador a la derecha numeradas
@@ -305,7 +310,9 @@ public class Partida{
           // Se regresan al estado incial las cartas del jugador a la derecha
           this.volteaTodasFrente(jD);
           // Se hace el robo 
+          playerAct.historial +="𝖑𝖆 𝖈𝖆𝖗𝖙𝖆 𝖖𝖚𝖊 𝖗𝖔𝖇ó 𝖊𝖓 𝖊𝖘𝖙𝖊 𝖙𝖚𝖗𝖓𝖔 𝖊𝖘:"+jD.cartsOfThePlayer.get(eleccion-1).toString();
           this.robar(playerAct, jD, eleccion);
+          
           // AQUI IRIA UNA GUARDADA EN EL HISTORIAL
           
           // Si la carta que se roba es la unica que queda el jugador de la derecha sale del juego
@@ -317,25 +324,44 @@ public class Partida{
         }
 
 
+          //eleccion=eleccion-1;
+        //  playerAct.historial +="𝖑𝖆 𝖈𝖆𝖗𝖙𝖆 𝖖𝖚𝖊 𝖗𝖔𝖇ó 𝖊𝖓 𝖊𝖘𝖙𝖊 𝖙𝖚𝖗𝖓𝖔 𝖊𝖘:"+jD.cartsOfThePlayer.get(eleccion-1).toString();
+
           // Se le muestran sus cartas al jugador
           
           System.out.println(playerAct.toString());
           // Si se hace un par se descarta y se le avisa al usuario.
             if(playerAct.descartarPar()){
+//<<<<<<< HEAD
+   //           System.out.println(green+ "Yeii , hiciste un par 💯 "+white);
+              playerAct.historial+="\n𝕰𝖓 𝖊𝖘𝖙𝖆 𝖕𝖆𝖗𝖙𝖎𝖉𝖆 𝖑𝖔𝖌𝖗ó 𝖍𝖆𝖈𝖊𝖗 𝖚𝖓 𝖕𝖆𝖗 𝖉𝖊 𝖈𝖆𝖗𝖙𝖆𝖘 🥳S\n"; 
+//=======
               System.out.println(green+ "Yeii , hiciste un par 💯 "+white+"\n");
               System.out.println( "Ahora tus cartas son estas: "+white+"\n");
               System.out.println(playerAct.toString());
+//>>>>>>> dac5f90bf31d21161546e29c42f4a2bf44d7bc87
               // AQUI IRIA UNA GUARDADA EN EL HISTORIAL
+            }else{
+              playerAct.historial+= "\n𝕰𝖓 𝖊𝖘𝖙𝖆 𝖕𝖆𝖗𝖙𝖎𝖉𝖆 𝖓𝖔 𝖑𝖔𝖌𝖗ó 𝖍𝖆𝖈𝖊𝖗 𝖚𝖓 𝖕𝖆𝖗 𝖉𝖊 𝖈𝖆𝖗𝖙𝖆𝖘 🥺\n";
             }
 
+//<<<<<<< HEAD
+           /*  if(!(playerAct.descartarPar())){
+            playerAct.historial+= "\n𝕰𝖓 𝖊𝖘𝖙𝖆 𝖕𝖆𝖗𝖙𝖎𝖉𝖆 𝖓𝖔 𝖑𝖔𝖌𝖗ó 𝖍𝖆𝖈𝖊𝖗 𝖚𝖓 𝖕𝖆𝖗 𝖉𝖊 𝖈𝖆𝖗𝖙𝖆𝖘 🥺\n";
+            } */
+//=======
+//>>>>>>> dac5f90bf31d21161546e29c42f4a2bf44d7bc87
           // Se checa si el jugador actual ya gano 
           if(playerAct.cartsOfThePlayer.isEmpty()){
               System.out.println("El jugador "+blue+playerAct.name+white + "sale del juego"+ "\n"+ purple+"🐙 : EALEEEE LA MÁS GANADORA"+white);
               // se elimina de la lista turnos
               turnos.remove(num);
+              playerAct.historial+= "𝕰𝖓 𝖊𝖘𝖙𝖊 𝖙𝖚𝖗𝖓𝖔 𝖊𝖑 𝖏𝖚𝖌𝖆𝖉𝖔𝖗 𝖘𝖊 𝖖𝖚𝖊𝖉ó 𝖘𝖎𝖓 𝖈𝖆𝖗𝖙𝖆𝖘 ⭐\n";
               // AQUI IRIA UNA GUARDADA EN EL HISTORIAL
               //Si el jugador ya gano pues ya acaba su turno 
               return;
+          }else{
+            playerAct.historial+= "𝕰𝖓 𝖊𝖘𝖙𝖊 𝖙𝖚𝖗𝖓𝖔 𝖊𝖑 𝖏𝖚𝖌𝖆𝖉𝖔𝖗 𝖘𝖎𝖌𝖚𝖊 𝖈𝖔𝖓 𝖈𝖆𝖗𝖙𝖆𝖘\n";
           }
           
           // Se le pregunta al usuario si quiere mover sus cartas
@@ -441,9 +467,17 @@ public class Partida{
         this.turnos.add(posF,p2);
         this.volteaTodasFrente(jD);
         // Se agrega al historial la info del turno
-
+        playerAct.historial += "\n";
 
     }
+
+   /*  public void historial(){
+      for(i int=0;i< listaPlayers.size();i++){
+          System.out.println(listaPlayers.get(aux),cartsOfThePlayerInTheBeginning);
+      }
+    } */
+
+    
 
     public static void main(String[] args){
       
@@ -455,7 +489,45 @@ public class Partida{
         String yellow= "\033[33m";
         String red =  "\u001B[31m";  
         String black = "\033[30m";
+//<<<<<<< HEAD
+        Mazo m=new Mazo();
+        Player player1 = new Player("Aislinn ");   
+        Partida p =new Partida(m,4,player1);
+        p.preGame();
+        System.out.println(p.turnos.get(0)+"\n");
+	      System.out.println(p.turnos.get(1)+"\n");
+	      System.out.println(p.turnos.get(2)+"\n");
+	      System.out.println(p.turnos.get(3)+"\n");
+        p.turno(player1,0); 
+        p.turno(player1,0); 
+        System.out.println(player1.historial);
+       // System.out.println("F"+player1.historialDeCartas.get(0));
+         //System.out.println(p1.listaPlayers.get(0)+"\n");
+	      //System.out.println(p1.listaPlayers.get(1)+"\n");
+	      //System.out.println(p1.listaPlayers.get(2)+"\n");
+	      //System.out.println(p1.listaPlayers.get(3)+"\n");
+      //  p.preGame();
+			//	p.muestraCartas();
+      //  p.reacomodarCartas(4,5,player1);
+			//	p.muestraRobables(player1);
+			//	p.muestraCartas();
+			//	Player player2= p.listaPlayers.get(2);
+			//	p.muestraCartasNumeradas(player2);
+			//	System.out.println("Se hace un robo de la carta [2] \n");
+			//	p.robar(player1,player2,2); 
+			//	System.out.println(player1);
+			//	System.out.println("Se elimina si hubo par \n");
+			//	player1.descartarPar();
+			//	System.out.println(player1);
+	    //  // System.out.println(p1.listaPlayers.get(0)+"\n");
+	    //  // System.out.println(p1.listaPlayers.get(1)+"\n");
+	    //  // System.out.println(p1.listaPlayers.get(2)+"\n");
+	    //  // System.out.println(p1.listaPlayers.get(3)+"\n");
+      //  TDAList<String> historial= new DoubleLinkedList<>();
+//
+//=======
       
+//>>>>>>> dac5f90bf31d21161546e29c42f4a2bf44d7bc87
 				
         // INICIO DEL MENU
         Scanner sc = new Scanner(System.in); //Objeto para usar la clase Scanner
@@ -573,7 +645,16 @@ public class Partida{
                 //p1.volteaTodasRev();
                 // 
                  System.out.println(p1.mazoDelJuego.cartasMazo);
-                  System.out.println(white+"\nA continuación se retirara una carta y se repartiran las cartas entre todos los jugadores \n además se descartaran todas sus cartas pares\n");
+//<<<<<<< HEAD
+//<<<<<<< HEAD
+                
+                  System.out.println("\nA continuación se retirara una carta y se repartiran las cartas entre todos los jugadores y se descartaran todas sus cartas pares\n");
+//=======
+  //                System.out.println(white+"\nA continuación se retirara una carta y se repartiran las cartas entre todos los jugadores y se descartaran todas sus cartas pares\n");
+//>>>>>>> b03875727fccc8ba8039797bd92800cffa8b11b8
+//=======
+        //          System.out.println(white+"\nA continuación se retirara una carta y se repartiran las cartas entre todos los jugadores \n además se descartaran todas sus cartas pares\n");
+//>>>>>>> dac5f90bf31d21161546e29c42f4a2bf44d7bc87
                  try{
                   Thread.sleep(100);
                   }catch(Exception e){
@@ -595,7 +676,18 @@ public class Partida{
 
             //opcion 2 (REGLAS)
             case 2:
-            
+                 System.out.println("𝕽𝖊𝖌𝖑𝖆𝖘 𝖉𝖊𝖑 𝖏𝖚𝖊𝖌𝖔 " );
+                  System.out.println(red+"1."+white+"Solo pueden haber de 2 a 10 jugadores, no más ni menos\n"
+                  +red+"2."+white+"El mazo debe barajearse antes de repartirse entre los jugadores\n"+red+
+                  "3."+white+"Se retirara una carta sin enseñarsela a los jugadores\n"
+                  +red+"4."+white+"Se reparte de manera uniforma las cartas, puede ocurrir que algunos jugadores comiencen con mas cartas que otros\n"
+                  +red+"5."+white+"Cuando le sean repartidas la cartas se descartaran automaticamente todos los pares que tenga.\n"+
+                   "Se descartan solo los pares, no las tercias, esto es, si tiene tres cartas de igual denominación,se descartan solo dos de ellas.\n"
+                   +red+"6."+white+"tu querido usuaro seras el primero en empezar.\n"
+                   +red+"7."+white+"En su turno, cada jugador le debe robar una carta al jugador que tenga a laderecha. Si logra formar un par, puede descartarlo. Si se queda sin cartas,"+
+                   "abandona la partida.\n"
+                   +red+"8."+white+"No se debe la mano del jugador a su derecha. La carta que escoja debe estar boca abajo.\n"
+                   +red+"9."+white+"Cuando quede solo un jugador en la partida termina el juego. Ese jugador es el perdedor.");
             break;
             
             // opcion 3 (salir)
@@ -608,7 +700,7 @@ public class Partida{
             System.out.println();
             
         } //final do .. while principal
-        while(eleccion!=3);
+        while(eleccion!=3); 
 
 
 

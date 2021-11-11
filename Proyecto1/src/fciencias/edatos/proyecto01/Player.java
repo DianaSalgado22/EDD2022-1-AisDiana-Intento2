@@ -30,6 +30,14 @@ public class Player{
 
     boolean sigueJugando;
 
+    String historial="";
+
+    DoubleLinkedList<Carta> cartsOfThePlayerInTheBeginning= new DoubleLinkedList<>();
+
+    DoubleLinkedList<DoubleLinkedList<Carta>> historialDeCartas = new DoubleLinkedList<>();
+
+   // int 
+
 
     /** Metodo para crear a un jugador
      *  @param name nombre del jugador 
