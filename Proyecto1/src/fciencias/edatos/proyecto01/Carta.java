@@ -26,7 +26,7 @@ public class Carta{
     int valor=0; 
     // Representación de la carta en consola
     String rep="";
-    // Representacio de la carta por delante, esta nunca cambi
+    // Representacio de la carta por delante, esta nunca cambia
     String repFija="";
     // Posible valores del palo
     String posiblesPalos="Picas,Corazones,Diamantes,Treboles";
@@ -279,16 +279,16 @@ public class Carta{
      *  @return true si esta volteado false si no.
      */
     public boolean isFlip(){
-        return rep.equals("🂠");
+        return this.rep.contains("🂠");
     }
 
     /** Método para voltear una carta  
      */
     public void voltear(){
         // Si esta volteado quiere decir que tiene rep=🂠
-        if(this.isFlip()){
+        if(this.isFlip()){ 
             // Para cambiar a la representacion de frente
-            this.setRep(repFija);
+            this.setRep(this.repFija);
         }else{
             // Si la representación no es rep=🂠
         this.setRep(green+"🂠"+white);  // La volteamos
