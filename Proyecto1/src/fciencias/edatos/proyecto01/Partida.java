@@ -489,7 +489,7 @@ public class Partida{
         String yellow= "\033[33m";
         String red =  "\u001B[31m";  
         String black = "\033[30m";
-//<<<<<<< HEAD
+/*
         Mazo m=new Mazo();
         Player player1 = new Player("Aislinn ");   
         Partida p =new Partida(m,4,player1);
@@ -501,33 +501,8 @@ public class Partida{
         p.turno(player1,0); 
         p.turno(player1,0); 
         System.out.println(player1.historial);
-       // System.out.println("F"+player1.historialDeCartas.get(0));
-         //System.out.println(p1.listaPlayers.get(0)+"\n");
-	      //System.out.println(p1.listaPlayers.get(1)+"\n");
-	      //System.out.println(p1.listaPlayers.get(2)+"\n");
-	      //System.out.println(p1.listaPlayers.get(3)+"\n");
-      //  p.preGame();
-			//	p.muestraCartas();
-      //  p.reacomodarCartas(4,5,player1);
-			//	p.muestraRobables(player1);
-			//	p.muestraCartas();
-			//	Player player2= p.listaPlayers.get(2);
-			//	p.muestraCartasNumeradas(player2);
-			//	System.out.println("Se hace un robo de la carta [2] \n");
-			//	p.robar(player1,player2,2); 
-			//	System.out.println(player1);
-			//	System.out.println("Se elimina si hubo par \n");
-			//	player1.descartarPar();
-			//	System.out.println(player1);
-	    //  // System.out.println(p1.listaPlayers.get(0)+"\n");
-	    //  // System.out.println(p1.listaPlayers.get(1)+"\n");
-	    //  // System.out.println(p1.listaPlayers.get(2)+"\n");
-	    //  // System.out.println(p1.listaPlayers.get(3)+"\n");
-      //  TDAList<String> historial= new DoubleLinkedList<>();
-//
-//=======
-      
-//>>>>>>> dac5f90bf31d21161546e29c42f4a2bf44d7bc87
+       */
+	      
 				
         // INICIO DEL MENU
         Scanner sc = new Scanner(System.in); //Objeto para usar la clase Scanner
@@ -644,17 +619,9 @@ public class Partida{
                   }
                 //p1.volteaTodasRev();
                 // 
-                 System.out.println(p1.mazoDelJuego.cartasMazo);
-//<<<<<<< HEAD
-//<<<<<<< HEAD
+                 //System.out.println(p1.mazoDelJuego.cartasMazo);
                 
                   System.out.println("\nA continuación se retirara una carta y se repartiran las cartas entre todos los jugadores y se descartaran todas sus cartas pares\n");
-//=======
-  //                System.out.println(white+"\nA continuación se retirara una carta y se repartiran las cartas entre todos los jugadores y se descartaran todas sus cartas pares\n");
-//>>>>>>> b03875727fccc8ba8039797bd92800cffa8b11b8
-//=======
-        //          System.out.println(white+"\nA continuación se retirara una carta y se repartiran las cartas entre todos los jugadores \n además se descartaran todas sus cartas pares\n");
-//>>>>>>> dac5f90bf31d21161546e29c42f4a2bf44d7bc87
                  try{
                   Thread.sleep(100);
                   }catch(Exception e){
@@ -664,6 +631,8 @@ public class Partida{
                 p1.preGame();
                 int numTurno=1;
                 // Aqui ya empiezan los turnos
+                //System.out.println(p1.turnos.size());
+                //System.out.println(p1.turnos.toString());
                 do{
                   p1.turno(p1.turnos.get(0),0);
                 }
