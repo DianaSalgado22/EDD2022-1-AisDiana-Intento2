@@ -247,8 +247,6 @@ public class Partida{
 				int pos=num-1 ;// se le resta 1 pq al usuario se le muestra numerado del 1-n 
 				// Primero removemos a la carta robada
 				Carta cartaRobada= p2.cartsOfThePlayer.remove(pos);
-				// volteamos al frente l carta robada
-				//cartaRobada.voltear();
 				// Agregamos la carta robada en la poscición 0 de la lista de cartas del p1.
 				p1.cartsOfThePlayer.add(0,cartaRobada);
 		}
@@ -374,6 +372,10 @@ public class Partida{
               }
             }
             if(respuesta.contains("NO")){
+              Player p1= this.turnos.remove(0);
+              int posF=this.turnos.size()-1;
+              this.turnos.add(posF,p1);
+              
 
               return; //SE ACABA EL TURNO
             }
@@ -416,6 +418,10 @@ public class Partida{
             }
         }
         
+        Player p2= this.turnos.remove(0);
+        int posF=this.turnos.size()-1;
+        this.turnos.add(posF,p2);
+        this.volteaTodasFrente(jD);
         // Se agrega al historial la info del turno
 
 
@@ -437,7 +443,7 @@ public class Partida{
         Scanner sc = new Scanner(System.in); //Objeto para usar la clase Scanner
 
         
-        System.out.println(blue+"🃏 Bienvenido al juego Solterona 🃏"+white+"\n");
+        System.out.println(blue+"🃏  Bienvenido al juego Solterona 🃏"+white+"\n");
         int eleccion= 0;
         do{
             System.out.println(yellow+"Elige algunas de las siguientes opciones:"+white);
@@ -546,7 +552,7 @@ public class Partida{
                   }catch(Exception e){
                     System.out.println(e);
                   }
-                p1.volteaTodasRev();
+                //p1.volteaTodasRev();
                 // 
                  System.out.println(p1.mazoDelJuego.cartasMazo);
                   System.out.println(white+"\nA continuación se retirara una carta y se repartiran las cartas entre todos los jugadores \n además se descartaran todas sus cartas pares\n");
@@ -557,13 +563,13 @@ public class Partida{
                   }
 
                 p1.preGame();
-							
-                System.out.println(purple+"\n🐙 :"+white+" La solterona en esta partida es "+p1.solterona.toString()+white+"\n");
+                int numTurno=1;
+                // Aqui ya empiezan los turnos
+                do{
+                  p1.turno(p1.turnos.get(0),0);
+                }
+                while(p1.turnos.size()!=1); // la partida no acaba hasta que solo quede un jugador con cartas
                 
-
-                  System.out.println("Primero te toca a ti 🙉. Roba una carta a tu contrincante del lado derecho:D\n Escoge el indice de la carta que quieres robar\n");
-
-                  p1.muestraCartasNumeradas(p1.turnos.get(1));
 
 
 
