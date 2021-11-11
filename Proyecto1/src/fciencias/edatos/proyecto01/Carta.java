@@ -291,7 +291,7 @@ public class Carta{
             this.setRep(repFija);
         }else{
             // Si la representación no es rep=🂠
-        this.setRep(green+"🂠");  // La volteamos
+        this.setRep(green+"🂠"+white);  // La volteamos
         }
     }
  

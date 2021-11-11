@@ -78,7 +78,8 @@ public class Partida{
 
       // Se checa si la carta a agregar puede ser par con alguna de las cartas del jugador
       TDAList<Carta> cartasPlayer= listaPlayers.get(aux).cartsOfThePlayer;
-      
+      listaPlayers.get(aux).cartsOfThePlayerInTheBeginning.add(0,cartaAagregar);
+
       // si el jugador no tiene ninguna carta se agrega sin necesidad de comparar.
       if(cartasPlayer.size()==0){
         cartasPlayer.add(0,cartaAagregar);
@@ -100,12 +101,14 @@ public class Partida{
         }
       }
     }
+      //listaPlayer.get(aux).historial =""+ System.out    
       // Se suma para para pasar al siguiente jugador
       aux++;
       //esto es para que se vuelva a regresar a repartir desde el jugador 0
       if(aux == listaPlayers.size())
         aux=0; 
     } 
+    
   }
 
     /** Metodo que crea los demas jugadores no reales,es decir artificiales.
@@ -282,6 +285,8 @@ public class Partida{
      *  @param num el turno que tiene el jugador actual (la posicion en la cola turnos)
      */
     public void turno(Player playerAct,int num){
+      //playerAct.historialDeCartas.add(0,playerAct.cartsOfThePlayer);
+        playerAct.historial+= "\n𝕮𝖆𝖗𝖙𝖆𝖘 𝖈𝖔𝖓 𝖑𝖆𝖘 𝖖𝖚𝖊 𝖎𝖓𝖎𝖈𝖎𝖔 𝖊𝖘𝖙𝖊 𝖙𝖚𝖗𝖓𝖔:"+playerAct.cartsOfThePlayer.toString()+"\n";
         // Primero se avisa que es su turno
         System.out.println(blue+playerAct.name+ white + " es tu turno 🔮 ");
         // Despues se muestra las cartas del jugador a la derecha numeradas
@@ -322,22 +327,34 @@ public class Partida{
           this.robar(playerAct, jD, eleccion);
           // AQUI IRIA UNA GUARDADA EN EL HISTORIAL
 
+          playerAct.historial +="𝖑𝖆 𝖈𝖆𝖗𝖙𝖆 𝖖𝖚𝖊 𝖗𝖔𝖇ó 𝖊𝖓 𝖊𝖘𝖙𝖊 𝖙𝖚𝖗𝖓𝖔 𝖊𝖘:"+jD.cartsOfThePlayer.get(eleccion-1).toString();
+
           // Se le muestran sus cartas al jugador
           volteaTodasFrente(playerAct);
           System.out.println(playerAct.toString());
           // Si se hace un par se descarta y se le avisa al usuario.
             if(playerAct.descartarPar()){
               System.out.println(green+ "Yeii , hiciste un par 💯 "+white);
+              playerAct.historial+="\n𝕰𝖓 𝖊𝖘𝖙𝖆 𝖕𝖆𝖗𝖙𝖎𝖉𝖆 𝖑𝖔𝖌𝖗ó 𝖍𝖆𝖈𝖊𝖗 𝖚𝖓 𝖕𝖆𝖗 𝖉𝖊 𝖈𝖆𝖗𝖙𝖆𝖘 🥳S\n"; 
               // AQUI IRIA UNA GUARDADA EN EL HISTORIAL
+            }else{
+              playerAct.historial+= "\n𝕰𝖓 𝖊𝖘𝖙𝖆 𝖕𝖆𝖗𝖙𝖎𝖉𝖆 𝖓𝖔 𝖑𝖔𝖌𝖗ó 𝖍𝖆𝖈𝖊𝖗 𝖚𝖓 𝖕𝖆𝖗 𝖉𝖊 𝖈𝖆𝖗𝖙𝖆𝖘 🥺\n";
             }
+
+           /*  if(!(playerAct.descartarPar())){
+            playerAct.historial+= "\n𝕰𝖓 𝖊𝖘𝖙𝖆 𝖕𝖆𝖗𝖙𝖎𝖉𝖆 𝖓𝖔 𝖑𝖔𝖌𝖗ó 𝖍𝖆𝖈𝖊𝖗 𝖚𝖓 𝖕𝖆𝖗 𝖉𝖊 𝖈𝖆𝖗𝖙𝖆𝖘 🥺\n";
+            } */
           // Se checa si el jugador actual ya gano 
           if(playerAct.cartsOfThePlayer.isEmpty()){
               System.out.println("El jugador "+blue+playerAct.name+white + "sale del juego"+ "\n"+ purple+"🐙 : EALEEEE LA MÁS GANADORA"+white);
               // se elimina de la lista turnos
               turnos.remove(num);
+              playerAct.historial+= "𝕰𝖓 𝖊𝖘𝖙𝖊 𝖙𝖚𝖗𝖓𝖔 𝖊𝖑 𝖏𝖚𝖌𝖆𝖉𝖔𝖗 𝖘𝖊 𝖖𝖚𝖊𝖉ó 𝖘𝖎𝖓 𝖈𝖆𝖗𝖙𝖆𝖘 ⭐\n";
               // AQUI IRIA UNA GUARDADA EN EL HISTORIAL
               //Si el jugador ya gano pues ya acaba su turno 
               return;
+          }else{
+            playerAct.historial+= "𝕰𝖓 𝖊𝖘𝖙𝖊 𝖙𝖚𝖗𝖓𝖔 𝖊𝖑 𝖏𝖚𝖌𝖆𝖉𝖔𝖗 𝖘𝖎𝖌𝖚𝖊 𝖈𝖔𝖓 𝖈𝖆𝖗𝖙𝖆𝖘\n";
           }
           // Se le pregunta al usuario si quiere mover sus cartas
           String respuesta;
@@ -419,9 +436,17 @@ public class Partida{
         }
         
         // Se agrega al historial la info del turno
-
+        playerAct.historial += "\n";
 
     }
+
+   /*  public void historial(){
+      for(i int=0;i< listaPlayers.size();i++){
+          System.out.println(listaPlayers.get(aux),cartsOfThePlayerInTheBeginning);
+      }
+    } */
+
+    
 
     public static void main(String[] args){
       // COLORES                                                               
@@ -441,6 +466,9 @@ public class Partida{
 	      System.out.println(p.turnos.get(2)+"\n");
 	      System.out.println(p.turnos.get(3)+"\n");
         p.turno(player1,0); 
+        p.turno(player1,0); 
+        System.out.println(player1.historial);
+       // System.out.println("F"+player1.historialDeCartas.get(0));
          //System.out.println(p1.listaPlayers.get(0)+"\n");
 	      //System.out.println(p1.listaPlayers.get(1)+"\n");
 	      //System.out.println(p1.listaPlayers.get(2)+"\n");
