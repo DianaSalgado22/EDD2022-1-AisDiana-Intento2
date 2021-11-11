@@ -23,7 +23,6 @@ public class Player{
     // Nombre del jugador
     String name="";
     // Mazo del jugador
-    //??
     DoubleLinkedList<Carta> cartsOfThePlayer= new DoubleLinkedList<>();
     //atributo que se le asignara al final de la partida pero por default se inicializa en false
     // true si es loser osea perdedor jeje y falso si no es loser osea ganador jeje
