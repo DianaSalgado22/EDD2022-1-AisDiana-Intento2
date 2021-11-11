@@ -55,11 +55,11 @@ public class Partida{
     public void preGame(){
 	  // El mazo del juego ahora esta barajeado, al hacer la igualdad
 	  mazoDelJuego.cartasMazo = mazoDelJuego.mazoCompletoBarajeado();
-    //mazoDelJuego.cartasBarajeado=mazoDelJuego.mazoCompletoBarajeado();
+    
 
 	  // Se guarda a la solterona y se elimina una carta del mazo
 	  this.solterona = mazoDelJuego.eliminarUnaCarta();
-
+    
 	  // Se genera a los jugadores artificiales.
 	  generaJugadores();
 
@@ -78,10 +78,10 @@ public class Partida{
 
       // Se checa si la carta a agregar puede ser par con alguna de las cartas del jugador
       TDAList<Carta> cartasPlayer= listaPlayers.get(aux).cartsOfThePlayer;
-      listaPlayers.get(aux).cartsOfThePlayerInTheBeginning.add(0,cartaAagregar);
+      
 
       // si el jugador no tiene ninguna carta se agrega sin necesidad de comparar.
-      if(cartasPlayer.size()==0){
+      if(cartasPlayer.isEmpty()){
         cartasPlayer.add(0,cartaAagregar);
       }else{
       for(int c=0;c<cartasPlayer.size();c++){
@@ -286,8 +286,9 @@ public class Partida{
           boolean aux=true;
           int eleccion=0;
           // Se hace la elección de la carta a robar
+          while(aux){
           try{
-            while(aux){
+            
               System.out.println("\n"+purple+"¿Qué carta quieres robar? "+white+"\n");
               eleccion = sc.nextInt();
               if(1>eleccion || eleccion> jD.cartsOfThePlayer.size()){
@@ -295,16 +296,19 @@ public class Partida{
                   continue;
                 }
                 aux=false;
-            }
+            
           }catch (InputMismatchException ime) {
             System.out.println(red+ "\tNo ingresaste un entero" + white);
             System.out.print(green+"\tIntenta de nuevo:)"+white+"\n\n");
             sc.nextLine();
+            continue;
           }catch(Exception e){
             System.out.print(red+"\n\tLo siento,ocurrio un error inesperado");
             System.out.print(green+"\n\tIntenta de nuevo:)"+white+"\n\n");
             sc.nextLine();
+            continue;
             }
+          }
           sc.nextLine();
           System.out.println();
           // Se regresan al estado incial las cartas del jugador a la derecha
@@ -317,47 +321,43 @@ public class Partida{
           
           // Si la carta que se roba es la unica que queda el jugador de la derecha sale del juego
           if(jD.cartsOfThePlayer.isEmpty()){
-            System.out.println("El jugador "+blue+jD.name+white + "sale del juego"+ "\n"+ purple+"🐙 : EALEEEE LA MÁS GANADORA"+white);
+            System.out.println("El jugador "+blue+jD.name+white + "sale del juego"+ "\n"+ purple+"🐙 : EALEEEE LA MÁS GANADORA"+white+"\n");
             // se elimina de la lista turnos
             turnos.remove(num+1);
+            playerAct.historial+= "𝕰𝖓 𝖊𝖘𝖙𝖊 𝖙𝖚𝖗𝖓𝖔 𝖊𝖑 𝖏𝖚𝖌𝖆𝖉𝖔𝖗 𝖘𝖊 𝖖𝖚𝖊𝖉ó 𝖘𝖎𝖓 𝖈𝖆𝖗𝖙𝖆𝖘 ⭐\n";
+            if(turnos.size()==1){
+              return;  
+            }
             // AQUI IRIA UNA GUARDADA EN EL HISTORIAL
         }
 
 
-          //eleccion=eleccion-1;
-        //  playerAct.historial +="𝖑𝖆 𝖈𝖆𝖗𝖙𝖆 𝖖𝖚𝖊 𝖗𝖔𝖇ó 𝖊𝖓 𝖊𝖘𝖙𝖊 𝖙𝖚𝖗𝖓𝖔 𝖊𝖘:"+jD.cartsOfThePlayer.get(eleccion-1).toString();
-
+    
           // Se le muestran sus cartas al jugador
           
           System.out.println(playerAct.toString());
           // Si se hace un par se descarta y se le avisa al usuario.
             if(playerAct.descartarPar()){
-//<<<<<<< HEAD
-   //           System.out.println(green+ "Yeii , hiciste un par 💯 "+white);
+
+   
               playerAct.historial+="\n𝕰𝖓 𝖊𝖘𝖙𝖆 𝖕𝖆𝖗𝖙𝖎𝖉𝖆 𝖑𝖔𝖌𝖗ó 𝖍𝖆𝖈𝖊𝖗 𝖚𝖓 𝖕𝖆𝖗 𝖉𝖊 𝖈𝖆𝖗𝖙𝖆𝖘 🥳S\n"; 
-//=======
+
               System.out.println(green+ "Yeii , hiciste un par 💯 "+white+"\n");
               System.out.println( "Ahora tus cartas son estas: "+white+"\n");
               System.out.println(playerAct.toString());
-//>>>>>>> dac5f90bf31d21161546e29c42f4a2bf44d7bc87
-              // AQUI IRIA UNA GUARDADA EN EL HISTORIAL
             }else{
               playerAct.historial+= "\n𝕰𝖓 𝖊𝖘𝖙𝖆 𝖕𝖆𝖗𝖙𝖎𝖉𝖆 𝖓𝖔 𝖑𝖔𝖌𝖗ó 𝖍𝖆𝖈𝖊𝖗 𝖚𝖓 𝖕𝖆𝖗 𝖉𝖊 𝖈𝖆𝖗𝖙𝖆𝖘 🥺\n";
             }
 
-//<<<<<<< HEAD
-           /*  if(!(playerAct.descartarPar())){
-            playerAct.historial+= "\n𝕰𝖓 𝖊𝖘𝖙𝖆 𝖕𝖆𝖗𝖙𝖎𝖉𝖆 𝖓𝖔 𝖑𝖔𝖌𝖗ó 𝖍𝖆𝖈𝖊𝖗 𝖚𝖓 𝖕𝖆𝖗 𝖉𝖊 𝖈𝖆𝖗𝖙𝖆𝖘 🥺\n";
-            } */
-//=======
-//>>>>>>> dac5f90bf31d21161546e29c42f4a2bf44d7bc87
+
+
           // Se checa si el jugador actual ya gano 
           if(playerAct.cartsOfThePlayer.isEmpty()){
-              System.out.println("El jugador "+blue+playerAct.name+white + "sale del juego"+ "\n"+ purple+"🐙 : EALEEEE LA MÁS GANADORA"+white);
+              System.out.println("El jugador "+blue+playerAct.name+white + " sale del juego"+ "\n"+ purple+"🐙 : EALEEEE LA MÁS GANADORA"+white);
               // se elimina de la lista turnos
               turnos.remove(num);
               playerAct.historial+= "𝕰𝖓 𝖊𝖘𝖙𝖊 𝖙𝖚𝖗𝖓𝖔 𝖊𝖑 𝖏𝖚𝖌𝖆𝖉𝖔𝖗 𝖘𝖊 𝖖𝖚𝖊𝖉ó 𝖘𝖎𝖓 𝖈𝖆𝖗𝖙𝖆𝖘 ⭐\n";
-              // AQUI IRIA UNA GUARDADA EN EL HISTORIAL
+            
               //Si el jugador ya gano pues ya acaba su turno 
               return;
           }else{
@@ -409,10 +409,8 @@ public class Partida{
             }
             if(respuesta.contains("NO")){
               Player p1= this.turnos.remove(0);
-              int posF=this.turnos.size()-1;
+              int posF=this.turnos.size();
               this.turnos.add(posF,p1);
-              
-
               return; //SE ACABA EL TURNO
             }
             System.out.println(red+"No entiendo a que te refieres, trata responder sí o no "+white);
@@ -440,7 +438,9 @@ public class Partida{
             int pos=random.nextInt(jD.cartsOfThePlayer.size());
             this.volteaTodasFrente(jD);
           // Se hace el robo 
-            this.robar(playerAct, jD, pos+1);
+          playerAct.historial +="𝖑𝖆 𝖈𝖆𝖗𝖙𝖆 𝖖𝖚𝖊 𝖗𝖔𝖇ó 𝖊𝖓 𝖊𝖘𝖙𝖊 𝖙𝖚𝖗𝖓𝖔 𝖊𝖘:"+jD.cartsOfThePlayer.get(pos).toString();
+          this.robar(playerAct, jD, pos+1);
+            
             // AQUI IRIA UNA GUARDADA EN EL HISTORIAL
           // Si la carta que se roba es la unica que queda el jugador de la derecha sale del juego
           if(jD.cartsOfThePlayer.isEmpty()){
@@ -448,22 +448,34 @@ public class Partida{
             // se elimina de la lista turnos
             turnos.remove(num+1);
             // AQUI IRIA UNA GUARDADA EN EL HISTORIAL
+            if(turnos.size()==1){
+              return; 
+            }
         }
           // Si se hace un par se descarta y se guarda en el historial
             if(playerAct.descartarPar()){
-              // AQUI IRIA UNA GUARDADA EN EL HISTORIAL
+
+              playerAct.historial+="\n𝕰𝖓 𝖊𝖘𝖙𝖆 𝖕𝖆𝖗𝖙𝖎𝖉𝖆 𝖑𝖔𝖌𝖗ó 𝖍𝖆𝖈𝖊𝖗 𝖚𝖓 𝖕𝖆𝖗 𝖉𝖊 𝖈𝖆𝖗𝖙𝖆𝖘 🥳S\n"; 
+            }else{
+              playerAct.historial+= "\n𝕰𝖓 𝖊𝖘𝖙𝖆 𝖕𝖆𝖗𝖙𝖎𝖉𝖆 𝖓𝖔 𝖑𝖔𝖌𝖗ó 𝖍𝖆𝖈𝖊𝖗 𝖚𝖓 𝖕𝖆𝖗 𝖉𝖊 𝖈𝖆𝖗𝖙𝖆𝖘 🥺\n";
             }
           // Se checa si el jugador actual ya gano 
-            if(playerAct.cartsOfThePlayer.isEmpty()){
-              System.out.println("El jugador "+blue+playerAct.name+white + " sale del juego"+ "\n"+ purple+"🐙 : EALEEEE LA MÁS GANADORA"+white);
-              // se elimina de la lista turnos
-              turnos.remove(num);
-              // AQUI TAMBIEN FALTA GUARDAR EN EL HISTORIAL
-            }
+          if(playerAct.cartsOfThePlayer.isEmpty()){
+            System.out.println("El jugador "+blue+playerAct.name+white + " sale del juego"+ "\n"+ purple+"🐙 : EALEEEE LA MÁS GANADORA"+white);
+            // se elimina de la lista turnos
+            turnos.remove(num);
+            playerAct.historial+= "𝕰𝖓 𝖊𝖘𝖙𝖊 𝖙𝖚𝖗𝖓𝖔 𝖊𝖑 𝖏𝖚𝖌𝖆𝖉𝖔𝖗 𝖘𝖊 𝖖𝖚𝖊𝖉ó 𝖘𝖎𝖓 𝖈𝖆𝖗𝖙𝖆𝖘 ⭐\n";
+          
+            //Si el jugador ya gano pues ya acaba su turno 
+            return;
+        }else{
+          playerAct.historial+= "𝕰𝖓 𝖊𝖘𝖙𝖊 𝖙𝖚𝖗𝖓𝖔 𝖊𝖑 𝖏𝖚𝖌𝖆𝖉𝖔𝖗 𝖘𝖎𝖌𝖚𝖊 𝖈𝖔𝖓 𝖈𝖆𝖗𝖙𝖆𝖘\n";
+        }
+      
         }
         
         Player p2= this.turnos.remove(0);
-        int posF=this.turnos.size()-1;
+        int posF=this.turnos.size();
         this.turnos.add(posF,p2);
         this.volteaTodasFrente(jD);
         // Se agrega al historial la info del turno
@@ -471,11 +483,7 @@ public class Partida{
 
     }
 
-   /*  public void historial(){
-      for(i int=0;i< listaPlayers.size();i++){
-          System.out.println(listaPlayers.get(aux),cartsOfThePlayerInTheBeginning);
-      }
-    } */
+   
 
     
 
@@ -489,20 +497,8 @@ public class Partida{
         String yellow= "\033[33m";
         String red =  "\u001B[31m";  
         String black = "\033[30m";
-/*
-        Mazo m=new Mazo();
-        Player player1 = new Player("Aislinn ");   
-        Partida p =new Partida(m,4,player1);
-        p.preGame();
-        System.out.println(p.turnos.get(0)+"\n");
-	      System.out.println(p.turnos.get(1)+"\n");
-	      System.out.println(p.turnos.get(2)+"\n");
-	      System.out.println(p.turnos.get(3)+"\n");
-        p.turno(player1,0); 
-        p.turno(player1,0); 
-        System.out.println(player1.historial);
-       */
-	      
+
+
 				
         // INICIO DEL MENU
         Scanner sc = new Scanner(System.in); //Objeto para usar la clase Scanner
@@ -617,9 +613,7 @@ public class Partida{
                   }catch(Exception e){
                     System.out.println(e);
                   }
-                //p1.volteaTodasRev();
-                // 
-                 //System.out.println(p1.mazoDelJuego.cartasMazo);
+                
                 
                   System.out.println("\nA continuación se retirara una carta y se repartiran las cartas entre todos los jugadores y se descartaran todas sus cartas pares\n");
                  try{
@@ -629,16 +623,28 @@ public class Partida{
                   }
 
                 p1.preGame();
-                int numTurno=1;
-                // Aqui ya empiezan los turnos
-                //System.out.println(p1.turnos.size());
-                //System.out.println(p1.turnos.toString());
+                
+              
                 do{
                   p1.turno(p1.turnos.get(0),0);
                 }
                 while(p1.turnos.size()!=1); // la partida no acaba hasta que solo quede un jugador con cartas
                 
+                System.out.println("\n El perdedor es "+p1.turnos.get(0).name);
+                System.out.println("Ya acabó la partida🌈, ¿deseas ver el historial?");
 
+                //sc.nextLine();
+                String confirmacion=sc.nextLine();
+                confirmacion=confirmacion.toUpperCase();
+                if(confirmacion.contains("SI")){
+                  System.out.println("prueba");
+                  for(int i = 0;i< p1.listaPlayers.size();i++){
+                    System.out.println(p1.listaPlayers.get(i).name +"\n"+p1.listaPlayers.get(i).historial+ "\n");
+                  }
+                }
+                if(confirmacion.contains("NO")){
+                  System.out.print(purple+"🐙 Sale ya nos vemos luego:)");
+                }
 
 
                 break;
@@ -661,7 +667,7 @@ public class Partida{
             
             // opcion 3 (salir)
             case 3:
-            System.out.println(white+"\n 🌈 " + red+" Gracias por usar el programa "+ white+ "🌈\n"+white);
+            System.out.println(white+"\n 🌈 " + red+" Gracias por jugar "+ white+ "🌈\n"+white);
             break;
     
             } // final switch principal 
