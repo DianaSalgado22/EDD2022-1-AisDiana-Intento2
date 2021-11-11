@@ -307,6 +307,15 @@ public class Partida{
           // Se hace el robo 
           this.robar(playerAct, jD, eleccion);
           // AQUI IRIA UNA GUARDADA EN EL HISTORIAL
+          
+          // Si la carta que se roba es la unica que queda el jugador de la derecha sale del juego
+          if(jD.cartsOfThePlayer.isEmpty()){
+            System.out.println("El jugador "+blue+jD.name+white + "sale del juego"+ "\n"+ purple+"🐙 : EALEEEE LA MÁS GANADORA"+white);
+            // se elimina de la lista turnos
+            turnos.remove(num+1);
+            // AQUI IRIA UNA GUARDADA EN EL HISTORIAL
+        }
+
 
           // Se le muestran sus cartas al jugador
           
@@ -328,6 +337,7 @@ public class Partida{
               //Si el jugador ya gano pues ya acaba su turno 
               return;
           }
+          
           // Se le pregunta al usuario si quiere mover sus cartas
           String respuesta;
           boolean aux2=true;
@@ -402,16 +412,24 @@ public class Partida{
           // Se hace la eleccion de carta a robar de manera random
             Random random=new Random();
             int pos=random.nextInt(jD.cartsOfThePlayer.size());
+            this.volteaTodasFrente(jD);
           // Se hace el robo 
             this.robar(playerAct, jD, pos+1);
             // AQUI IRIA UNA GUARDADA EN EL HISTORIAL
+          // Si la carta que se roba es la unica que queda el jugador de la derecha sale del juego
+          if(jD.cartsOfThePlayer.isEmpty()){
+            System.out.println("El jugador "+blue+jD.name+white + " sale del juego"+ "\n"+ purple+"🐙 : EALEEEE LA MÁS GANADORA"+white);
+            // se elimina de la lista turnos
+            turnos.remove(num+1);
+            // AQUI IRIA UNA GUARDADA EN EL HISTORIAL
+        }
           // Si se hace un par se descarta y se guarda en el historial
             if(playerAct.descartarPar()){
               // AQUI IRIA UNA GUARDADA EN EL HISTORIAL
             }
           // Se checa si el jugador actual ya gano 
             if(playerAct.cartsOfThePlayer.isEmpty()){
-              System.out.println("El jugador "+blue+playerAct.name+white + "sale del juego"+ "\n"+ purple+"🐙 : EALEEEE LA MÁS GANADORA"+white);
+              System.out.println("El jugador "+blue+playerAct.name+white + " sale del juego"+ "\n"+ purple+"🐙 : EALEEEE LA MÁS GANADORA"+white);
               // se elimina de la lista turnos
               turnos.remove(num);
               // AQUI TAMBIEN FALTA GUARDAR EN EL HISTORIAL
