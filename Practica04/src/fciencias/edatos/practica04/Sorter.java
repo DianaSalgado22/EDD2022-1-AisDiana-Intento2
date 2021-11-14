@@ -171,7 +171,7 @@ public class Sorter{
 		//int aux;
 		//arrAux= arr;
 		arrAux= Arrays.copyOf(arr, arr.length);
-
+		
 		//nos permite recorrer los elementos q queremos ordena
 		for(int k = lo ; k <= hi; k++){
 			//System.out.println("prueba"+Arrays.toString(arr)+Arrays.toString(arrAux));
