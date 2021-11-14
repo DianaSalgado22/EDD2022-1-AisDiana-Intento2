@@ -68,16 +68,18 @@ public class Sorter{
 	 * @param arr el arreglo a ordenar.
 	 */
 	public static void mergeSort(int[] arr){
-		mergeSort(arr, 0, arr.length-1);
+		int[] aux = new int[arr.length];
+		aux=arr;
+		mergeSort(arr, 0, arr.length-1,aux);
 	}
 
 	/**
-	 * Auxiliar de mergeSort para dividir y mezclar. OPTIMIZADO
+	 * Auxiliar de mergeSort para dividir y mezclar.
 	 * @param arr el arreglo con los elementos a dividir y mezclar.
 	 * @param lo el índice de inicio a modificación.
 	 * @param hi el índice del último elemento a modificación.
 	 */
-	private static void mergeSort(int[] arr, int lo, int hi){
+	private static void mergeSort(int[] arr, int lo, int hi,int[] arrAux){
 		// Cuando ya esta ordenado el fragmento de lo hasta hi
 		if(hi <= lo)
 			return;
@@ -85,10 +87,11 @@ public class Sorter{
 		// La mitad del corte del arreglo
 		int mid = lo + (hi-lo) / 2;
 
-		mergeSort(arr, lo, mid);
-		mergeSort(arr, mid+1, hi);
+		mergeSort(arr, lo, mid,arrAux);
+		mergeSort(arr, mid+1, hi,arrAux);
 
-		merge(arr, lo, mid, hi);
+		merge(arr, lo, mid, hi,arrAux);
+		//merge hara la mezcla
 	}
 
 	/**
@@ -97,30 +100,98 @@ public class Sorter{
 	 * @param lo el inicio de la primera mitad.
 	 * @param mid el índice de la mitad del subarreglo.
 	 * @param hi el índice del último elemento.
+	 * 
 	 */
-	private static void merge(int[] arr, int lo, int mid, int hi){
-		// Copiamos solo de lo hasta hi (el +1 es por como esta definido copy of range)
-		int[] aux = Arrays.copyOfRange(arr,lo,hi+1);
-		// El inicio del primer sub-arreglo (del ya subarreglo de arr lo-hi)
-		// (La posición 0 del aux,es decir el elemento en la posicion lo de arr)
-		int i = 0; 
-		/* El inicio del segundo sub-arreglo (del ya subarreglo de arr lo-hi)
-		 * seria la mitad de aux+1, que seria (aux.length-1)+1/2
-		*/
-		int j = aux.length/2;
+	
+	private static void merge(int[] arr, int lo, int mid, int hi,int[] arrAux){
+		int i = lo;
+		int j = mid+1;
+
+		//int[] aux = Arrays.copyOf(arr, arr.length);
+		//System.out.println("prueba"+Arrays.toString(aux));
 		
+
+		//nos permite recorrer los elementos q queremos ordena
 		for(int k = lo ; k <= hi; k++){
 			// Si ya nos acabamos los elementos de la primera mitad
-			if(i > (mid-lo))
-				arr[k] = aux[j++];
-			else if((j +lo)> hi) // Si ya nos acabamos la segunda mitad
-				arr[k] = aux[i++];
-			else if(aux[j] < aux[i]) // El menor está en la primera mitad
-				arr[k] = aux[j++];
-			else // El menor está en la segunda mitad
-				arr[k] = aux[i++];
+			if(i > mid){
+			//entonces recorremos la segunda mitad
+				arr[k] = arrAux[j];
+				arrAux[j++]=arr[k];
+			}
+			else if(j > hi){ // Si ya nos acabamos la segunda mitad
+				arr[k] = arrAux[i];
+				arrAux[i++]=arr[k];
+			}
+			else if(arrAux[j] < arrAux[i]){ // El menor está en la primera mitad
+				arr[k] = arrAux[j];
+				arrAux[j++]=arr[k];
+			}
+			else{ // El manor está en la segunda mitad
+				arr[k] = arrAux[i];
+				arrAux[i++]=arr[k];
+			}
+			//arrAux[k]=arr[k];
 		}
 	}
+	// /**
+	//  * Ordena un arreglo de forma ascendente con merge sort.
+	//  * @param arr el arreglo a ordenar.
+	//  */
+	// public static void mergeSort(int[] arr){
+	// 	mergeSort(arr, 0, arr.length-1);
+	// }
+
+	// /**
+	//  * Auxiliar de mergeSort para dividir y mezclar. OPTIMIZADO
+	//  * @param arr el arreglo con los elementos a dividir y mezclar.
+	//  * @param lo el índice de inicio a modificación.
+	//  * @param hi el índice del último elemento a modificación.
+	//  */
+	// private static void mergeSort(int[] arr, int lo, int hi){
+	// 	// Cuando ya esta ordenado el fragmento de lo hasta hi
+	// 	if(hi <= lo)
+	// 		return;
+
+	// 	// La mitad del corte del arreglo
+	// 	int mid = lo + (hi-lo) / 2;
+
+	// 	mergeSort(arr, lo, mid);
+	// 	mergeSort(arr, mid+1, hi);
+
+	// 	merge(arr, lo, mid, hi);
+	// }
+
+	// /**
+	//  * Mezcla dos arreglos, ordenando de menor a mayor.
+	//  * @param arr el arreglo con los elementos a modificar.
+	//  * @param lo el inicio de la primera mitad.
+	//  * @param mid el índice de la mitad del subarreglo.
+	//  * @param hi el índice del último elemento.
+	//  */
+	// private static void merge(int[] arr, int lo, int mid, int hi){
+	// 	// Copiamos solo de lo hasta hi (el +1 es por como esta definido copy of range)
+	// 	int[] aux = Arrays.copyOfRange(arr,lo,hi+1);
+	// 	// El inicio del primer sub-arreglo (del ya subarreglo de arr lo-hi)
+	// 	// (La posición 0 del aux,es decir el elemento en la posicion lo de arr)
+	// 	int i = 0; 
+	// 	/* El inicio del segundo sub-arreglo (del ya subarreglo de arr lo-hi)
+	// 	 * seria la mitad de aux+1, que seria (aux.length-1)+1/2
+	// 	*/
+	// 	int j = aux.length/2;
+		
+	// 	for(int k = lo ; k <= hi; k++){
+	// 		// Si ya nos acabamos los elementos de la primera mitad
+	// 		if(i > (mid-lo))
+	// 			arr[k] = aux[j++];
+	// 		else if((j +lo)> hi) // Si ya nos acabamos la segunda mitad
+	// 			arr[k] = aux[i++];
+	// 		else if(aux[j] < aux[i]) // El menor está en la primera mitad
+	// 			arr[k] = aux[j++];
+	// 		else // El menor está en la segunda mitad
+	// 			arr[k] = aux[i++];
+	// 	}
+	// }
 	/**
 	 * Ordena un arreglo de forma ascendente con insertion sort.
 	 * @param arr el arreglo a ordenar.
@@ -205,34 +276,34 @@ public class Sorter{
 
     } */
 
-	/**
+	 /**
 	 * Ordena un arreglo de forma ascendente con merge sort.
 	 * @param arr el arreglo a ordenar.
 	 */
-	public static void mergeSortOptimizado(int[] arr){
-		mergeSortOptimizado(arr, 0, arr.length-1);
-	}
+	// public static void mergeSortOptimizado(int[] arr){
+	// 	mergeSortOptimizado(arr, 0, arr.length-1);
+	// }
 
-	/**
-	 * Auxiliar de mergeSort para dividir y mezclar. OPTIMIZADO
-	 * @param arr el arreglo con los elementos a dividir y mezclar.
-	 * @param lo el índice de inicio a modificación.
-	 * @param hi el índice del último elemento a modificación.
-	 */
-	private static void mergeSortOptimizado(int[] arr, int lo, int hi){
-		// Cuando ya esta ordenado el fragmento de lo hasta hi
-		if(hi <= lo)
-			return;
+	// /**
+	//  * Auxiliar de mergeSort para dividir y mezclar. OPTIMIZADO
+	//  * @param arr el arreglo con los elementos a dividir y mezclar.
+	//  * @param lo el índice de inicio a modificación.
+	//  * @param hi el índice del último elemento a modificación.
+	//  */
+	// private static void mergeSortOptimizado(int[] arr, int lo, int hi){
+	// 	// Cuando ya esta ordenado el fragmento de lo hasta hi
+	// 	if(hi <= lo)
+	// 		return;
 
-		// La mitad del corte del arreglo
-		int mid = lo + (hi-lo) / 2;
+	// 	// La mitad del corte del arreglo
+	// 	int mid = lo + (hi-lo) / 2;
 
-		mergeSortOptimizado(arr, lo, mid);
-		mergeSortOptimizado(arr, mid+1, hi);
+	// 	mergeSortOptimizado(arr, lo, mid);
+	// 	mergeSortOptimizado(arr, mid+1, hi);
 
-		merge(arr, lo, mid, hi);
-	}
-
+	// 	merge(arr, lo, mid, hi);
+	// }
+ 
 
 
 
