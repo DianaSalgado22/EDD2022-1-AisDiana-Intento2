@@ -409,7 +409,7 @@ public class Partida{
             }
             if(respuesta.contains("NO")){
               Player p1= this.turnos.remove(0);
-              int posF=this.turnos.size()-1;
+              int posF=this.turnos.size();
               this.turnos.add(posF,p1);
               
 
@@ -463,7 +463,7 @@ public class Partida{
         }
         
         Player p2= this.turnos.remove(0);
-        int posF=this.turnos.size()-1;
+        int posF=this.turnos.size();
         this.turnos.add(posF,p2);
         this.volteaTodasFrente(jD);
         // Se agrega al historial la info del turno
@@ -637,9 +637,26 @@ public class Partida{
                   p1.turno(p1.turnos.get(0),0);
                 }
                 while(p1.turnos.size()!=1); // la partida no acaba hasta que solo quede un jugador con cartas
+                System.out.println("El perdedor es"+ p1.turnos.get(0).name + "y sus cartas son:"+p1.turnos.get(0).cartsOfThePlayer.toString());
+                System.out.println("Ya acabó la partida🌈, ¿deseas ver el historial?");
+
+                //sc.nextLine();
+                String confirmacion=sc.nextLine();
                 
+                if(confirmacion.contains("SI")){
+                  System.out.println("prueba");
+                  for(int i = 0;i> p1.listaPlayers.size();i++){
+                    System.out.println("G"+p1.listaPlayers.get(i).historial+ "\n");
+                  }
+                }
+                if(confirmacion.contains("NO")){
+                  System.out.print(purple+"🐙 Sale ya nos vemos luego:)");
+                }
 
-
+                 /* for(int i = 0;i> p1.listaPlayers.size();i++){
+                   System.out.println(p1.listaPlayers.get(i).historial+ "\n");
+                 }
+ */
 
                 break;
 
