@@ -67,6 +67,60 @@ public class Sorter{
 	 * Ordena un arreglo de forma ascendente con merge sort.
 	 * @param arr el arreglo a ordenar.
 	 */
+	public static void mergeSortMalo(int[] arr){
+		mergeSortMalo(arr, 0, arr.length-1);
+	}
+
+	/**
+	 * Auxiliar de mergeSort para dividir y mezclar.
+	 * @param arr el arreglo con los elementos a dividir y mezclar.
+	 * @param lo el índice de inicio a modificación.
+	 * @param hi el índice del último elemento a modificación.
+	 */
+	private static void mergeSortMalo(int[] arr, int lo, int hi){
+		// Cuando ya esta ordenado el fragmento de lo hasta hi
+		if(hi <= lo)
+			return;
+
+		// La mitad del corte del arreglo
+		int mid = lo + (hi-lo) / 2;
+
+		mergeSortMalo(arr, lo, mid);
+		mergeSortMalo(arr, mid+1, hi);
+
+		mergeMalo(arr, lo, mid, hi);
+	}
+
+	/**
+	 * Mezcla dos arreglos, ordenando de menor a mayor.
+	 * @param arr el arreglo con los elementos a modificar.
+	 * @param lo el inicio de la primera mitad.
+	 * @param mid el índice de la mitad del subarreglo.
+	 * @param hi el índice del último elemento.
+	 */
+	private static void mergeMalo(int[] arr, int lo, int mid, int hi){
+		int i = lo;
+		int j = mid+1;
+		int[] aux = Arrays.copyOf(arr, arr.length);
+		System.out.println("prueba"+Arrays.toString(arr)+Arrays.toString(aux));
+
+
+		for(int k = lo ; k <= hi; k++){
+			// Si ya nos acabamos los elementos de la primera mitad
+			if(i > mid)
+				arr[k] = aux[j++];
+			else if(j > hi) // Si ya nos acabamos la segunda mitad
+				arr[k] = aux[i++];
+			else if(aux[j] < aux[i]) // El menor está en la primera mitad
+				arr[k] = aux[j++];
+			else // El manor está en la segunda mitad
+				arr[k] = aux[i++];
+		}
+	}
+	/**
+	 * Ordena un arreglo de forma ascendente con merge sort.
+	 * @param arr el arreglo a ordenar.
+	 */
 	public static void mergeSort(int[] arr){
 		int[] aux = new int[arr.length];
 		aux=arr;
@@ -107,32 +161,79 @@ public class Sorter{
 		int i = lo;
 		int j = mid+1;
 
-		//int[] aux = Arrays.copyOf(arr, arr.length);
-		//System.out.println("prueba"+Arrays.toString(aux));
+		int aux;
 		
+		//int[] aux = Arrays.copyOf(arr, arr.length);
+		System.out.println("prueba"+Arrays.toString(arr)+Arrays.toString(arrAux));
+		
+		/* int tmp = arr[i];
+		arr[i] = arr[j];
+		arr[j] = tmp; */
 
 		//nos permite recorrer los elementos q queremos ordena
 		for(int k = lo ; k <= hi; k++){
+			aux= arr[k];
 			// Si ya nos acabamos los elementos de la primera mitad
 			if(i > mid){
 			//entonces recorremos la segunda mitad
-				arr[k] = arrAux[j];
-				arrAux[j++]=arr[k];
+			//arrAux[j]= arr[k];
+				arr[k] = arrAux[j++];
+				
+				//arrAux[k]= arr[k];
+				// arr[j] = aux;
+				// arrAux[j++] = aux;
+				//arrAux[j++]=arr[k];
+				//arrAux[k] = arr[k];
+				// arr[j]=	aux;
+				// arrAux[j++]= aux;
 			}
 			else if(j > hi){ // Si ya nos acabamos la segunda mitad
-				arr[k] = arrAux[i];
-				arrAux[i++]=arr[k];
+				//arrAux[i]= arr[k];
+				arr[k] = arrAux[i++];
+				//arrAux[i++]=arr[k];
+				//arrAux[k] = arr[k];
+				// arr[i] = aux;
+				// arrAux[i++] = aux;
+				// arr[i]=	aux;
+				// arrAux[i++]= aux;
 			}
 			else if(arrAux[j] < arrAux[i]){ // El menor está en la primera mitad
-				arr[k] = arrAux[j];
-				arrAux[j++]=arr[k];
+				//arrAux[j]= arr[k];
+				arr[k] = arrAux[j++];
+				//arrAux[k] = arr[k];
+				// arr[j] = aux;
+				// arrAux[j++] = aux;
+				// arr[j]=	aux;
+				// arrAux[j++]= aux;
+				//arrAux[j++]=arr[k];
+				//arr[j++]=	aux;
 			}
 			else{ // El manor está en la segunda mitad
-				arr[k] = arrAux[i];
-				arrAux[i++]=arr[k];
+				//aux= arr[k];
+				//arrAux[i]= arr[k];
+				arr[k] = arrAux[i++];
+				//arrAux[k] = arr[k];
+				// arr[i] = aux;
+				// arrAux[i++] = aux;
+				// arr[i]=	aux;
+				// arrAux[i++]= aux;
+				//arrAux[i++]= aux;
+
+				//arr[k+1] = aux;
+				//arrAux[k+1] = aux;
+
+
+				//arr[k-1]=aux;
+				//arrAux[i++]=arr[k];
+				// arr[j] = aux;
+				// arrAux[j]= aux;
+				//arrAux[-1+i++]= aux;
+				
 			}
 			//arrAux[k]=arr[k];
 		}
+
+		arrAux= arr;
 	}
 	// /**
 	//  * Ordena un arreglo de forma ascendente con merge sort.
@@ -368,18 +469,28 @@ public class Sorter{
 	}
 
 	public static void main(String[] args) {
-		int[] arr1 = generate(150, 15);
+		int[] arr1 = generate(8, 15);
+		//int[] arr1={5, 10, 14, 10, 1};
+		//int[] arr2p= {5, 10, 14, 10, 1};
 		int[] arr2 = Arrays.copyOf(arr1, arr1.length);
 		int[] arr3 = Arrays.copyOf(arr1, arr1.length);
 		int[] arr4 = Arrays.copyOf(arr1, arr1.length);
 		//System.out.println("No ordenado: " + Arrays.toString(arr1));
-		
+		//int[] arr1={5, 10, 14, 10, 1};
 		System.out.println("Arreglo No ordenado: "+Arrays.toString(arr1));
 		long inicio = System.currentTimeMillis();
 		mergeSort(arr1);
 		long fin = System.currentTimeMillis();
 		System.out.println("Arreglo ordenado: "+Arrays.toString(arr1));
 		System.out.println("Ordenado con mergeSort tardó: " + (fin - inicio) + " milisegundos");
+	
+		System.out.println("Arreglo No ordenado: "+Arrays.toString(arr2));
+		inicio = System.currentTimeMillis();
+		mergeSortMalo(arr2);
+		fin = System.currentTimeMillis();
+		System.out.println("Arreglo ordenado: "+Arrays.toString(arr2));
+		System.out.println("Ordenado con mergeSort tardó: " + (fin - inicio) + " milisegundos");
+
 		System.out.println("¿En qué posición se encuentra el elemento 5? " + find(arr1,5)+"\n");
 
 
