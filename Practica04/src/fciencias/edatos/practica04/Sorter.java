@@ -118,7 +118,7 @@ public class Sorter{
 		}
 	}
 	/**
-	 * Ordena un arreglo de forma ascendente con merge sort.
+	 * Ordena un arreglo de forma ascendente con merge sort OPTIMIZADO.
 	 * @param arr el arreglo a ordenar.
 	 */
 	public static void mergeSort(int[] arr){
@@ -170,7 +170,11 @@ public class Sorter{
 
 		//int aux;
 		//arrAux= arr;
-		arrAux= Arrays.copyOf(arr, arr.length);
+		//arrAux= Arrays.copyOf(lo, hi);
+		for(int p=lo;p<=hi;p++){
+			arrAux[p]=arr[p];
+		}
+
 		
 		//nos permite recorrer los elementos q queremos ordena
 		for(int k = lo ; k <= hi; k++){
@@ -365,7 +369,7 @@ public class Sorter{
 	}
 
 	public static void main(String[] args) {
-		int[] arr1 = generate(15, 15);
+		int[] arr1 = generate(150, 15);
 		//int[] arr1p = generate(300, 15);
 		//int[] arr1={5, 10, 14, 10, 1};
 		//int[] arr2p= {5, 10, 14, 10, 1};
@@ -376,13 +380,6 @@ public class Sorter{
 		//int[] arr1={5, 10, 14, 10, 1};
 		long inicio;
 		long fin;
-		System.out.println("Arreglo No ordenado: "+Arrays.toString(arr1));
-		inicio = System.currentTimeMillis();
-		mergeSort(arr1);
-		fin = System.currentTimeMillis();
-		System.out.println("Arreglo ordenado: "+Arrays.toString(arr1));
-		System.out.println("Ordenado con mergeSort tardó: " + (fin - inicio) + " milisegundos");
-	
 		System.out.println("Arreglo No ordenado: "+Arrays.toString(arr2));
 		inicio = System.currentTimeMillis();
 		mergeSortMalo(arr2);
@@ -391,6 +388,21 @@ public class Sorter{
 		System.out.println("Ordenado con mergeSortMalo tardó: " + (fin - inicio) + " milisegundos");
 
 		System.out.println("¿En qué posición se encuentra el elemento 5? " + find(arr1,5)+"\n");
+		System.out.println("Arreglo No ordenado: "+Arrays.toString(arr1));
+		inicio = System.currentTimeMillis();
+		mergeSort(arr1);
+		fin = System.currentTimeMillis();
+		System.out.println("Arreglo ordenado: "+Arrays.toString(arr1));
+		System.out.println("Ordenado con mergeSort tardó: " + (fin - inicio) + " milisegundos");
+	
+		// System.out.println("Arreglo No ordenado: "+Arrays.toString(arr2));
+		// inicio = System.currentTimeMillis();
+		// mergeSortMalo(arr2);
+		// fin = System.currentTimeMillis();
+		// System.out.println("Arreglo ordenado: "+Arrays.toString(arr2));
+		// System.out.println("Ordenado con mergeSortMalo tardó: " + (fin - inicio) + " milisegundos");
+
+		// System.out.println("¿En qué posición se encuentra el elemento 5? " + find(arr1,5)+"\n");
 
 
 		System.out.println("Arreglo No ordenado: "+Arrays.toString(arr2));
