@@ -74,13 +74,6 @@ public class BinarySearchTree<K extends Comparable<K>, T> implements TDABinarySe
 		}
 	}
 
-    /** Metodo para saber si un arbol es vacio (si la raiz es null)
-     *  @return true si es vacio , false si no
-     */
-    public boolean isEmpty(){
-        return this.root==null // si root es igual a null esto es true y es true que es vacio.
-    }
-
 	@Override
 	public void insert(T e, K k){
 		// Si es vacío 
@@ -130,23 +123,38 @@ public class BinarySearchTree<K extends Comparable<K>, T> implements TDABinarySe
 
 	@Override
 	public T delete(K k){
-		// retieve(root, k)
-		// Si ese resultado es null -> regresar null
-		// Crear una variable que almacene el elemento en retrieve
-
-		// Cuando tiene dos hijos
-		// Buscamos al maximo de los mínimos
-		// hacemos un swap actual con el maximo de los mínimos
-		// eliminar el nodo con el que se hizo swap
-
-		// Cuando no tiene hijos
-		// Verificar si es hijo izquierdo o es hijo derecho
-		// Si es hijo izquiero hacer null el izquierdo del padre
-		// Si es hijo derecho hacer null el derecho del padre
+		// Se busca al nodo en el arbol con el metodo retireve.
+		BinaryNode nodoPorBorrar=retrieve(root,k); // regresa el nodo con la clave k o null.
+		if(nodoPorBorrar==null){
+			/* Si el resultado de retrieve es null el elemento que 
+			 * se quiere robar no se encuentrar en el arbol asi que 
+			 * se regresa null. */
+			return null;
+		}
+		// Variable que almacena al elemento con la clave k
+		T elemento= nodoPorBorrar.element;
 		
-		// Cuando solo tiene un hijo
-		// Swap con el hijo, ya sea derecho o izquierdo
-		// Borramos al hijo con el que se hizo swap. Podemos hacer null a ambos hijos
+		// Casos que puede tener el nodo por borrar:
+		
+		//Cuando tiene dos hijos (Ninguno de sus hijos es null).
+		if(nodoPorBorrar.left!=null && nodoPorBorrar.rigth!=null){
+			// Buscamos al maximo de los mínimos
+			// hacemos un swap actual con el maximo de los mínimos
+			// eliminar el nodo con el que se hizo swap
+		}
+
+		// Cuando no tiene hijos (Ambos hijos son null).
+		if(nodoPorBorrar.left==null && nodoPorBorrar.rigth==null){
+			// Verificar si es hijo izquierdo o es hijo derecho
+			// Si es hijo izquiero hacer null el izquierdo del padre
+			// Si es hijo derecho hacer null el derecho del padre
+		}
+		
+		// Cuando solo tiene un hijo (Si uno de los dos no es null)
+		if(nodoPorBorrar.left!=null || nodoPorBorrar.rigth!=null){
+			// Swap con el hijo, ya sea derecho o izquierdo
+			// Borramos al hijo con el que se hizo swap. Podemos hacer null a ambos hijos
+		}
 		return null;
 	}
 
@@ -175,6 +183,11 @@ public class BinarySearchTree<K extends Comparable<K>, T> implements TDABinarySe
 
 	@Override
 	public void postorden(){}
+
+	@Override 
+    public boolean isEmpty(){
+        return this.root==null // si root es igual a null esto es true y es true que es vacio.
+    }
 
 	public static void main(String[] args) {
 
