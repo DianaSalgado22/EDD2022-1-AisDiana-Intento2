@@ -629,23 +629,39 @@ public class Partida{
                   p1.turno(p1.turnos.get(0),0);
                 }
                 while(p1.turnos.size()!=1); // la partida no acaba hasta que solo quede un jugador con cartas
+<<<<<<< HEAD:Proyecto1/src/fciencias/edatos/proyecto01/Partida.java
+                System.out.println("El perdedor es"+ p1.turnos.get(0).name + "y sus cartas son:"+p1.turnos.get(0).cartsOfThePlayer.toString());
+=======
                 
                 System.out.println("\n El perdedor es "+p1.turnos.get(0).name);
+>>>>>>> 518d4f3e57e92ee28e1963dac36a23768c590206:Proyecto01LiahutCelicSalgadoDiana/src/fciencias/edatos/proyecto01/Partida.java
                 System.out.println("Ya acabó la partida🌈, ¿deseas ver el historial?");
 
                 //sc.nextLine();
                 String confirmacion=sc.nextLine();
+<<<<<<< HEAD:Proyecto1/src/fciencias/edatos/proyecto01/Partida.java
+                
+                if(confirmacion.contains("SI")){
+                  System.out.println("prueba");
+                  for(int i = 0;i> p1.listaPlayers.size();i++){
+                    System.out.println("G"+p1.listaPlayers.get(i).historial+ "\n");
+=======
                 confirmacion=confirmacion.toUpperCase();
                 if(confirmacion.contains("SI")){
                   System.out.println("prueba");
                   for(int i = 0;i< p1.listaPlayers.size();i++){
                     System.out.println(p1.listaPlayers.get(i).name +"\n"+p1.listaPlayers.get(i).historial+ "\n");
+>>>>>>> 518d4f3e57e92ee28e1963dac36a23768c590206:Proyecto01LiahutCelicSalgadoDiana/src/fciencias/edatos/proyecto01/Partida.java
                   }
                 }
                 if(confirmacion.contains("NO")){
                   System.out.print(purple+"🐙 Sale ya nos vemos luego:)");
                 }
 
+                 /* for(int i = 0;i> p1.listaPlayers.size();i++){
+                   System.out.println(p1.listaPlayers.get(i).historial+ "\n");
+                 }
+ */
 
                 break;
 
