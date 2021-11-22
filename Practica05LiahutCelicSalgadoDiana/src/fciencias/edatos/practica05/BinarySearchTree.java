@@ -39,6 +39,25 @@ public class BinarySearchTree<K extends Comparable<K>, T> implements TDABinarySe
 			this.element = element;
 			this.parent = parent;
 		}
+
+		/** Metodo para intercambiar el elemento de un nodo.
+		 *  @param e elemento por el que se cambiara.
+		 */
+		public void setElement(T e){
+			this.element=e;
+		}
+
+		/** Metodo que intercambia los elementos de dos nodos
+		 *  @param a nodo a intercambiar con this.
+		 */
+		public void swap(BinaryNode a){
+			// Variable auxiliar que guarda al elemento del nodo a.
+			T elemA= a.element;
+			// Se cambia el elemento del nodo a por el elemento del nodo con el que se llama.
+			a.setElement(this.element);
+			// Se cambia el elemento del nodo con el que se llama por el elemento del nodo a.
+			this.setElement(elemA);
+		}
 	}
 
 	/** Root */
@@ -139,23 +158,44 @@ public class BinarySearchTree<K extends Comparable<K>, T> implements TDABinarySe
 		//Cuando tiene dos hijos (Ninguno de sus hijos es null).
 		if(nodoPorBorrar.left!=null && nodoPorBorrar.rigth!=null){
 			// Buscamos al maximo de los mínimos
+			BinaryNode maxDmin= findMax(nodoPorBorrar.left);
+			// To me: recuerda que finMin regresa T, se necesita adaptar para que regrese un node
 			// hacemos un swap actual con el maximo de los mínimos
+			nodoPorBorrar.swap(maxDmin);
 			// eliminar el nodo con el que se hizo swap
+			remove(maxDmin); // TO ME: esto no me convence al 100%
 		}
 
 		// Cuando no tiene hijos (Ambos hijos son null).
 		if(nodoPorBorrar.left==null && nodoPorBorrar.rigth==null){
 			// Verificar si es hijo izquierdo o es hijo derecho
-			// Si es hijo izquiero hacer null el izquierdo del padre
-			// Si es hijo derecho hacer null el derecho del padre
+			BinaryNode padre=nodoPorBorrar.parent; // Primero obtenemos al padre
+			/* Si el nodo que se quiere borrar 
+			 * es el unico nodo en el arbol,
+			 * entonces al borrarlo quedara un arbol vacio.
+			 */
+			if(padre==null){
+				this.root=null; // En este caso root==nodoPorBorrar.
+			}
+			// Si es hijo izquierdo:
+			if(padre.left==nodoPorBorrar)
+				padre.left=null; // hacer null el izquierdo del padre
+			// Si es hijo derecho
+			if(padre.rigth==nodoPorBorrar)
+				padre.rigth=null;// hacer null el derecho del padre
 		}
 		
 		// Cuando solo tiene un hijo (Si uno de los dos no es null)
 		if(nodoPorBorrar.left!=null || nodoPorBorrar.rigth!=null){
-			// Swap con el hijo, ya sea derecho o izquierdo
+			// Checamos con el operador ternario si tiene hijo izq o derecho:
+			// Si el hijo izquierdo es null entonces tiene hijo derecho y se hace swap con él
+			// Si el hijo izquierdo no es null entonces tiene hijo izq y se hace swap con él
+			nodoPorBorrar.left==null ? nodoPorBorrar.swap(nodoPorBorrar.rigth) : nodoPorBorrar.swap(nodoPorBorrar.left);
 			// Borramos al hijo con el que se hizo swap. Podemos hacer null a ambos hijos
+			nodoPorBorrar.left=null;
+			nodoPorBorrar.rigth=null;
 		}
-		return null;
+		return elemento;
 	}
 
 	@Override
