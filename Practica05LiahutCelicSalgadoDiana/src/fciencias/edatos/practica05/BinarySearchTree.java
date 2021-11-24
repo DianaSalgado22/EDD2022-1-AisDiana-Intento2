@@ -276,13 +276,31 @@ public class BinarySearchTree<K extends Comparable<K>, T> implements TDABinarySe
 
 	@Override
 	public void preorden(){
-		// Primero verifica la raiz
-		// Aplica preorden al izquierdo
+		
 		// Aplica preorden al derecho
+		preOrdenAux(this.root);
+	}
+
+	public void preOrdenAux(BinaryNode actual){
+		//mientras el nodo actual no sea null
+		if(actual != null){
+			// Primero verifica la raiz
+			System.out.println(actual.element);
+			// Aplica preorden al izquierdo
+			preOrdenAux(actual.left);
+			// Aplica preorden al derecho
+			preOrdenAux(actual.rigth);
+		}
 	}
 
 	@Override
-	public void inorden(){}
+	public void inorden(){
+		//Aplica inorden al izquierdo
+		//verifica la raiz
+		//Aplica inorden al derecho
+	}
+
+
 
 	@Override
 	public void postorden(){}

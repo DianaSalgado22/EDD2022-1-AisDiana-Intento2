@@ -30,7 +30,7 @@ import java.util.InputMismatchException;
 
         System.out.println("elemento izquirdo de la raiz:"+a1.getRoot().left.element);
       //  System.out.println(a1.retrieve(1));
-        System.out.println(a1.findMin());
+        System.out.println("el elemento asociado a la clave minima es:"+a1.findMin());
         System.out.println(a1.findMax());
          // COLORES                                                               
     String green = "\033[32m";
