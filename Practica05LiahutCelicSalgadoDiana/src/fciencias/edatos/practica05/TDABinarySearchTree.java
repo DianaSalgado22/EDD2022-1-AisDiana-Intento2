@@ -28,7 +28,7 @@ public interface TDABinarySearchTree<K extends Comparable, T>{
 	* @return el elemento almacenado en el nodo a eliminar.
 	* null si el nodo con clave k no existe.
 	*/
-	public T delete(K k);
+	//public T delete(K k);
 
 	/**
 	* Encuentra la clave k con valor o peso mínimo del árbol.

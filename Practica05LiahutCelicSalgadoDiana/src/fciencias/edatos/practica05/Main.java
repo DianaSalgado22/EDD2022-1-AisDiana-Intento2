@@ -1,5 +1,6 @@
 package fciencias.edatos.practica05;
 import java.util.Scanner;
+import java.util.InputMismatchException;
 
 /**
  * Clase Main donde se encuentra un menú 
@@ -15,11 +16,29 @@ import java.util.Scanner;
     String green = "\033[32m";
     String white = "\u001B[0m";
     String purple = "\033[35m";
-    String blue = "\033[34m";
+    String azul = "\033[34m";
     String yellow= "\033[33m";
     String red =  "\u001B[31m"; 
     // Inicio Menu
     public static void main(String[] args) {
+        //BinaryNode n1 = new BinaryNode(1,"Dianita",null);
+        BinarySearchTree a1 = new BinarySearchTree();
+        a1.insert("Emma",1);
+        a1.insert("Diana",3);
+        a1.insert("Aislinn",2);
+     // a1.insert("persona",7);
+
+        System.out.println("elemento izquirdo de la raiz:"+a1.getRoot().left.element);
+      //  System.out.println(a1.retrieve(1));
+        System.out.println(a1.findMin());
+        System.out.println(a1.findMax());
+         // COLORES                                                               
+    String green = "\033[32m";
+    String white = "\u001B[0m";
+    String purple = "\033[35m";
+    String azul = "\033[34m";
+    String yellow= "\033[33m";
+    String red =  "\u001B[31m"; 
         Scanner sc = new Scanner(System.in); //Objeto para usar la clase Scanner
 
         // INICIO DEL MENU

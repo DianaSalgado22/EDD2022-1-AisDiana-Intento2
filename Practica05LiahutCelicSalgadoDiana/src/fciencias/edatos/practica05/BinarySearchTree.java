@@ -64,6 +64,13 @@ public class BinarySearchTree<K extends Comparable<K>, T> implements TDABinarySe
 	/** Root */
 	private BinaryNode root;
 
+	public T getRootElement(){
+		return root.element;
+	}
+
+	public BinaryNode getRoot(){
+		return root;
+	}
 	//retrieve es como get
 	@Override
 	public T retrieve(K k){
@@ -142,75 +149,129 @@ public class BinarySearchTree<K extends Comparable<K>, T> implements TDABinarySe
         }	
 	}
 
-	@Override
-	public T delete(K k){
-		// Se busca al nodo en el arbol con el metodo retireve.
-		BinaryNode nodoPorBorrar=retrieve(root,k); // regresa el nodo con la clave k o null.
-		if(nodoPorBorrar==null){
-			/* Si el resultado de retrieve es null el elemento que 
-			 * se quiere robar no se encuentrar en el arbol asi que 
-			 * se regresa null. */
-			return null;
-		}
-		// Variable que almacena al elemento con la clave k
-		T elemento= nodoPorBorrar.element;
+	//@Override
+	// public T delete(K k){
+	// 	// Se busca al nodo en el arbol con el metodo retireve.
+	// 	BinaryNode nodoPorBorrar=retrieve(root,k); // regresa el nodo con la clave k o null.
+	// 	if(nodoPorBorrar==null){
+	// 		/* Si el resultado de retrieve es null el elemento que 
+	// 		 * se quiere robar no se encuentrar en el arbol asi que 
+	// 		 * se regresa null. */
+	// 		return null;
+	// 	}
+	// 	// Variable que almacena al elemento con la clave k
+	// 	T elemento= nodoPorBorrar.element;
 		
-		// Casos que puede tener el nodo por borrar:
+	// 	// Casos que puede tener el nodo por borrar:
 		
-		//Cuando tiene dos hijos (Ninguno de sus hijos es null).
-		if(nodoPorBorrar.left!=null && nodoPorBorrar.rigth!=null){
-			// Buscamos al maximo de los mínimos
-			BinaryNode maxDmin= findMax(nodoPorBorrar.left);
-			// To me: recuerda que finMin regresa T, se necesita adaptar para que regrese un node
-			// hacemos un swap actual con el maximo de los mínimos
-			nodoPorBorrar.swap(maxDmin);
-			// eliminar el nodo con el que se hizo swap
-			remove(maxDmin); // TO ME: esto no me convence al 100%
-		}
+	// 	//Cuando tiene dos hijos (Ninguno de sus hijos es null).
+	// 	if(nodoPorBorrar.left!=null && nodoPorBorrar.rigth!=null){
+	// 		// Buscamos al maximo de los mínimos
+	// 		BinaryNode maxDmin= findMax(nodoPorBorrar.left);
+	// 		// To me: recuerda que finMin regresa T, se necesita adaptar para que regrese un node
+	// 		// hacemos un swap actual con el maximo de los mínimos
+	// 		nodoPorBorrar.swap(maxDmin);
+	// 		// eliminar el nodo con el que se hizo swap
+	// 		remove(maxDmin); // TO ME: esto no me convence al 100%
+	// 	}
 
-		// Cuando no tiene hijos (Ambos hijos son null).
-		if(nodoPorBorrar.left==null && nodoPorBorrar.rigth==null){
-			// Verificar si es hijo izquierdo o es hijo derecho
-			BinaryNode padre=nodoPorBorrar.parent; // Primero obtenemos al padre
-			/* Si el nodo que se quiere borrar 
-			 * es el unico nodo en el arbol,
-			 * entonces al borrarlo quedara un arbol vacio.
-			 */
-			if(padre==null){
-				this.root=null; // En este caso root==nodoPorBorrar.S
-			}
-			// Si es hijo izquierdo:
-			if(padre.left==nodoPorBorrar)
-				padre.left=null; // hacer null el izquierdo del padre
-			// Si es hijo derecho
-			if(padre.rigth==nodoPorBorrar)
-				padre.rigth=null;// hacer null el derecho del padre
-		}
+	// 	// Cuando no tiene hijos (Ambos hijos son null).
+	// 	if(nodoPorBorrar.left==null && nodoPorBorrar.rigth==null){
+	// 		// Verificar si es hijo izquierdo o es hijo derecho
+	// 		BinaryNode padre=nodoPorBorrar.parent; // Primero obtenemos al padre
+	// 		/* Si el nodo que se quiere borrar 
+	// 		 * es el unico nodo en el arbol,
+	// 		 * entonces al borrarlo quedara un arbol vacio.
+	// 		 */
+	// 		if(padre==null){
+	// 			this.root=null; // En este caso root==nodoPorBorrar.S
+	// 		}
+	// 		// Si es hijo izquierdo:
+	// 		if(padre.left==nodoPorBorrar)
+	// 			padre.left=null; // hacer null el izquierdo del padre
+	// 		// Si es hijo derecho
+	// 		if(padre.rigth==nodoPorBorrar)
+	// 			padre.rigth=null;// hacer null el derecho del padre
+	// 	}
 		
-		// Cuando solo tiene un hijo (Si uno de los dos no es null)
-		if(nodoPorBorrar.left!=null || nodoPorBorrar.rigth!=null){
-			// Checamos con el operador ternario si tiene hijo izq o derecho:
-			// Si el hijo izquierdo es null entonces tiene hijo derecho y se hace swap con él
-			// Si el hijo izquierdo no es null entonces tiene hijo izq y se hace swap con él
-			nodoPorBorrar.left==null ? nodoPorBorrar.swap(nodoPorBorrar.rigth) : nodoPorBorrar.swap(nodoPorBorrar.left);
-			// Borramos al hijo con el que se hizo swap. Podemos hacer null a ambos hijos
-			nodoPorBorrar.left=null;
-			nodoPorBorrar.rigth=null;
-		}
-		return elemento;
-	}
+	// 	// Cuando solo tiene un hijo (Si uno de los dos no es null)
+	// 	if(nodoPorBorrar.left!=null || nodoPorBorrar.rigth!=null){
+	// 		// Checamos con el operador ternario si tiene hijo izq o derecho:
+	// 		// Si el hijo izquierdo es null entonces tiene hijo derecho y se hace swap con él
+	// 		// Si el hijo izquierdo no es null entonces tiene hijo izq y se hace swap con él
+	// 		nodoPorBorrar.left=null ? nodoPorBorrar.swap(nodoPorBorrar.rigth) : nodoPorBorrar.swap(nodoPorBorrar.left);
+	// 		// Borramos al hijo con el que se hizo swap. Podemos hacer null a ambos hijos
+	// 		nodoPorBorrar.left=null;
+	// 		nodoPorBorrar.rigth=null;
+	// 	}
+	// 	return elemento;
+	// }
 
 	@Override
 	public T findMin(){
+
+		BinaryNode actual = root;
+		//System.out.println("p"+actual.element);
 		// Verificar que no sea vacío -> return null
+		if(this.root == null){
+			return null;
+		}
+		return findMinAux(actual);
+		//return actual;
+	
+	
+
+		
+	}
+
+	public T findMinAux(BinaryNode actual){
+		
+		// if(actual.left == null){
+		// 	return actual.element;
+		// }
 		// Mientras sí tenga hijo izquierdo -> Que actual se mueva al izquierdo
-		// Ya encontramos al nodo con clave menor
-		return null;
+		if(!(actual.left == null)){
+			//System.out.println("p"+actual.element);
+			//System.out.println("p");
+			actual = actual.left;
+			//System.out.println(actual.element);
+			findMinAux(actual);
+		}
+			// Ya encontramos al nodo con clave menor
+			return actual.element;
+		
+
 	}
 
 	@Override
 	public T findMax(){
-		return null;
+		BinaryNode actual = root;
+		
+		// Verificar que no sea vacío -> return null
+		if(this.root == null){
+			return null;
+		}
+		return findMaxAux(actual);
+		
+	}
+
+	public T findMaxAux(BinaryNode actual){
+		
+		// if(actual.left == null){
+		// 	return actual.element;
+		// }
+		// Mientras sí tenga hijo derecho -> Que actual se mueva al derechoo
+		if(!(actual.rigth == null)){
+			//System.out.println("p"+actual.element);
+			//System.out.println("p");
+			actual = actual.rigth;
+			//System.out.println(actual.element);
+			findMaxAux(actual);
+		}
+			// Ya encontramos al nodo con clave menor
+			return actual.element;
+		
+
 	}
 
 	@Override
@@ -228,7 +289,8 @@ public class BinarySearchTree<K extends Comparable<K>, T> implements TDABinarySe
 
 	@Override 
     public boolean isEmpty(){
-        return this.root==null // si root es igual a null esto es true y es true que es vacio.
+        return this.root==null;
+		// si root es igual a null esto es true y es true que es vacio.
     }
 
 	public static void main(String[] args) {
