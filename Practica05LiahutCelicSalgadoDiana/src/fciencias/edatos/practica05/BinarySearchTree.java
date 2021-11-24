@@ -71,6 +71,7 @@ public class BinarySearchTree<K extends Comparable<K>, T> implements TDABinarySe
 	public BinaryNode getRoot(){
 		return root;
 	}
+
 	//retrieve es como get
 	@Override
 	public T retrieve(K k){
@@ -125,8 +126,8 @@ public class BinarySearchTree<K extends Comparable<K>, T> implements TDABinarySe
 	private void insert(BinaryNode actual, T e, K k){
 		// Comparamos las claves: la clave de actual con k. Con compareTo
         int i = actual.key.compareTo(k);
-		// Si la clave es menor compareTo regresa un número negativo.
-        if(i<0){
+		// Si actualK >= k compareTo regresa un numero positivo o cero. SI K ES menor O = SE AGREGA A LA IZQ.
+        if(i>=0){
             // Verificamos si el hijo izquierdo es null
             if(actual.left==null){
                 // Si sí insertamos el nuevo elemento como hijo izquierdo del actual.
@@ -136,8 +137,8 @@ public class BinarySearchTree<K extends Comparable<K>, T> implements TDABinarySe
             // Si no es null continuamos con la recursión sobre el hijo izquierdo
             insert(actual.left,e,k);
         }
-		// Si la clave es mayor o igual compareTo regresa un numero positivo o cero
-        if(i>=0){
+		// Si actualK < k compareTo regresa un número negativo. SI K ES MAYOR SE AGREGA A LA DERECHA
+        if(i<0){
             // Verificamos si el hijo derecho es null
             if(actual.rigth==null){
                 // Si sí insertamos el nuevo elemento como hijo derecho del actual.
@@ -294,6 +295,27 @@ public class BinarySearchTree<K extends Comparable<K>, T> implements TDABinarySe
     }
 
 	public static void main(String[] args) {
+		// Creamos un BST
+		BinarySearchTree p1= new BinarySearchTree();
+		p1.insert("X",22);
+		p1.insert("A",90);
+		p1.insert("D",10);
+		p1.insert("Z",6);
+		p1.insert("T",15);
+		p1.insert("c",2);
+		p1.insert("R",65);
+		p1.insert("B",100);
+	System.out.println("La raiz tiene la clave: "+ p1.root.key);
+	System.out.println("La clave del hijo izq de la raiz : "+ p1.root.left.key);
+	System.out.println("La clave del hijo derecho de la raiz : "+ p1.root.rigth.key);
 
+	System.out.println("\n La clave del hijo izq de 10 : "+ p1.root.left.left.key);
+	System.out.println("La clave del hijo derecho de de 10 : "+ p1.root.left.rigth.key);
+	
+	System.out.println("\n La clave del hijo izq de 90 : "+ p1.root.rigth.left.key);
+	System.out.println("La clave del hijo derecho de de 90 : "+ p1.root.rigth.rigth.key);
+
+	System.out.println("\n La clave del hijo izq de 6 : "+ p1.root.left.left.left.key);
+	System.out.println("La clave del hijo derecho de de 6 : "+ p1.root.left.left.left.rigth);
 	}
 }
