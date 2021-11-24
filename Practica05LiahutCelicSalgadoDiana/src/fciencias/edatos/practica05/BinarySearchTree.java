@@ -63,6 +63,7 @@ public class BinarySearchTree<K extends Comparable<K>, T> implements TDABinarySe
 	/** Root */
 	private BinaryNode root;
 
+	//retrieve es como get
 	@Override
 	public T retrieve(K k){
 		BinaryNode node = retrieve(root, k);
