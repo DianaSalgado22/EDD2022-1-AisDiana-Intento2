@@ -1,3 +1,4 @@
+package fciencias.edatos.practica05;
 /**
  * Clase que implementa las operaciones sobre un arbol
  * binario de busqueda.
@@ -176,7 +177,7 @@ public class BinarySearchTree<K extends Comparable<K>, T> implements TDABinarySe
 			 * entonces al borrarlo quedara un arbol vacio.
 			 */
 			if(padre==null){
-				this.root=null; // En este caso root==nodoPorBorrar.
+				this.root=null; // En este caso root==nodoPorBorrar.S
 			}
 			// Si es hijo izquierdo:
 			if(padre.left==nodoPorBorrar)
