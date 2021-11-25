@@ -24,37 +24,6 @@ public class Main {
 
   // Inicio Menu
   public static void main(String[] args) {
-    // 	// Creamos un BST
-    // BinarySearchTree p1 = new BinarySearchTree();
-    // p1.insert("22", 22);
-    // p1.insert("90", 90);
-    // p1.insert("10", 10);
-    // p1.insert("6", 6);
-    // p1.insert("15", 15);
-    // p1.insert("2", 2);
-    // p1.insert("65", 65);
-    // p1.insert("100", 100);
-
-    // System.out.println(
-    //   "el elemento asociado a la clave minima es:" + p1.findMin()
-    // );
-    // System.out.println(p1.findMax());
-    // p1.preorden();
-    // System.out.println();
-    // p1.inorden();
-    // System.out.println();
-    // p1.postorden();
-    //BinaryNode n1 = new BinaryNode(1,"Dianita",null);
-    /*  BinarySearchTree a1 = new BinarySearchTree();
-        a1.insert("Emma",1);
-        a1.insert("Diana",3);
-        a1.insert("Aislinn",2); */
-    // a1.insert("persona",7);
-
-    //System.out.println("elemento izquirdo de la raiz:"+a1.getRoot().left.element);
-    //  System.out.println(a1.retrieve(1));
-    //     System.out.println("el elemento asociado a la clave minima es:"+a1.findMin());
-    //   System.out.println(a1.findMax());
     // COLORES
     String green = "\033[32m";
     String white = "\u001B[0m";
@@ -183,6 +152,25 @@ public class Main {
           break;
         // opcion 3 (salir)
         case 3:
+          try {
+            System.out.println(
+              "ingresa la edad del familiar que quieres eliminar 🥺"
+            );
+            aux = sc.nextInt();
+            sc.nextLine();
+            a1.delete(aux);
+          } catch (InputMismatchException ime) {
+            System.out.println(red + "\tNo ingresaste un entero" + white);
+            System.out.print(green + "\tIntenta de nuevo:)" + white + "\n\n");
+            sc.nextLine();
+            continue;
+          } catch (Exception e) {
+            System.out.print(red + "\n\tLo siento,ocurrio un error inesperado");
+            System.out.print(green + "\n\tIntenta de nuevo:)" + white + "\n\n");
+            sc.nextLine();
+            continue;
+          }
+
           break;
         case 4:
           if (a1.findMax() == null) {
@@ -248,7 +236,7 @@ public class Main {
             System.out.println("Este arbol esta vacio, F loser 🤪\n");
             break;
           } else {
-            System.out.println("Este arbolno esta vacio 🙊");
+            System.out.println("Este arbol no esta vacio 🙊");
           }
 
           //System.out.println(a1.root);
