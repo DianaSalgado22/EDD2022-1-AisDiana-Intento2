@@ -3,6 +3,9 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Calendar;
+import java.io.Serializable;
+import java.util.Scanner;
+
 /**
  * Clase que implementa las operaciones sobre un arbol
  * binario que se utilizara especificamente para el 
@@ -12,12 +15,12 @@ import java.util.Calendar;
  * @author Celic Aislinn Liahut Ley
  * @since Estructuras de Datos 2022-1
  */
-public class BinaryTree{
+public class BinaryTree implements Serializable{
 
 	/**
 	 * Nodo para un árbol binario.
 	 */
-	public class Node{
+	public class Node implements Serializable{
 
 		/** Elemento. */
 		public String element;
@@ -69,10 +72,26 @@ public class BinaryTree{
 		public String getHoraFecha(){
 			return new SimpleDateFormat("yyyy/MM/dd HH:mm:ss").format(Calendar.getInstance().getTime());
 		}
+
+
+		/** Metodo para saber si un nodo es una hoja o no
+		 *  @return un booleano true si es hoja, false en otro caso
+		 */
+		public boolean isLeaf(){
+			return this.left==null && this.rigth==null;
+		}
 	}
 
+	// COLORES
+  String green = "\033[32m";
+  String white = "\u001B[0m";
+  String purple = "\033[35m";
+  String azul = "\033[34m";
+  String yellow = "\033[33m";
+  String red = "\u001B[31m";
+
 	/** Root */
-	private Node root;
+	public Node root;
 
 	/** Metodo para obtener la el elemento de la raiz
 	 *  @return El elemento
@@ -134,7 +153,56 @@ public class BinaryTree{
 		}
 
 	}
-	
+
+
+	/** Metodo que hace el camino en un arbol
+	 *  @param 
+	 *  @return ultNode el nodo donde termino el camino
+	 */
+	public void recorrido()throws Exception{
+		Node actual= this.root;
+		// Mientras actual no sea una hoja
+		while(!actual.isLeaf()){
+			Scanner sc = new Scanner(System.in); //Objeto para usar la clase Scanner
+			String eleccion; 
+			// Le preguntamos al usuario
+			System.out.println(actual.element);
+			// Obtenemos la respuesta del usuario (con scanner)
+			try {
+				 eleccion = sc.nextLine();
+			  } catch (Exception e) {
+				System.out.print(red + "\n\tLo siento,ocurrio un error inesperado");
+				System.out.print(green + "\n\tIntenta de nuevo:)" + white + "\n\n");
+				sc.nextLine();
+				continue;
+			  }
+			  sc.nextLine();
+			  System.out.println();
+			  // si el usuario respondio true
+			  if(eleccion.equals("true")){
+				// Pasamos al actual del lado izq
+				actual=actual.left;
+				continue;
+			  }
+			  // si el usuario respondio false
+			  if(!eleccion.equals("false")){
+				// Pasamos al actual del lado derecho
+				actual=actual.rigth;
+				continue;
+			  }
+			  // Para cuando el usuario no responde true o false
+			  else{
+					//avisar al usuario que no contesto como esperaba entonces 
+					System.out.println("Recuerda responder true o false, para poder avanzar a la siguiente pregunta ;)");
+			  }
+		}
+	}
+
+	/** Metodo que ordena una lista alfabeticamente
+	 * 
+	 */ 
+
+
 	/**
 	 * Recorre el árbol en preorden.
 	 */
@@ -202,12 +270,5 @@ public class BinaryTree{
   	  }
   	}
 	
-	public static void main(String[] args) {
-		BinaryTree p1= new BinaryTree();
-		p1.insertFirst("¿La persona en la que piensas forma parte de un grupo o banda?","Tyler Joseph","Ariana Grande");
-		Node actual= p1.root.rigth;
-		p1.insert(actual,"¿Canta pop?","Bad bunny",false);
-		p1.preorden();
-		System.out.println(actual.horaFecha);
-	}
+	
 }

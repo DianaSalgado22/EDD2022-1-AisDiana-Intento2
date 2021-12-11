@@ -32,7 +32,7 @@ Contiene los siguientes comandos:
       <manifest >
 	<attribute name="DependencyFinder" value="main" />
      <!-- El value no tiene src porque ant da como default que vendra en src-->
-	<attribute name="Main-Class" value="fciencias.edatos.proyecto02.BinaryTree" />
+	<attribute name="Main-Class" value="fciencias.edatos.proyecto02.Partida20Q" />
       </manifest >
     </jar >
   </target>
