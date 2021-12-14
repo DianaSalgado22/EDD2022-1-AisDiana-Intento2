@@ -17,71 +17,6 @@ import java.util.Scanner;
  */
 public class BinaryTree implements Serializable{
 
-	/**
-	 * Nodo para un árbol binario.
-	 */
-	public class Node implements Serializable{
-
-		/** Elemento. */
-		public String element;
-
-		/** Padre del nodo. */
-		public Node parent;
-
-		/** Hijo izquierdo. */
-		public Node left;
-
-		/** Hijo derecho. */
-		public Node rigth;
-
-		/** Hora y fecha de creación del nodo */
-		public String horaFecha;
-
-		/**
-		 * Crea un nuevo nodo.
-		 * @param element el elemento a almacenar.
-		 * @param parent el padre del nodo.
-		 */
-		public Node(String element, Node parent){
-			this.element = element;
-			this.parent = parent;
-			this.horaFecha=getHoraFecha();
-		}
-
-		/** Metodo para intercambiar el elemento de un nodo.
-		 *  @param e elemento por el que se cambiara.
-		 */
-		public void setElement(String e){
-			this.element=e;
-		}
-
-		/** Metodo que intercambia los elementos de dos nodos
-		 *  @param a nodo a intercambiar con this.
-		 */
-		public void swap(Node a){
-			// Variable auxiliar que guarda al elemento del nodo a.
-			String elemA= a.element;
-			// Se cambia el elemento  del nodo a por el elemento del nodo con el que se llama.
-			a.setElement(this.element);
-			// Se cambia el elemento del nodo con el que se llama por el elemento del nodo a.
-			this.setElement(elemA);
-		}
-
-		/** MEtodo que obtien la fecha y la hora actual
-		 *  @return horaFecha */
-		public String getHoraFecha(){
-			return new SimpleDateFormat("yyyy/MM/dd HH:mm:ss").format(Calendar.getInstance().getTime());
-		}
-
-
-		/** Metodo para saber si un nodo es una hoja o no
-		 *  @return un booleano true si es hoja, false en otro caso
-		 */
-		public boolean isLeaf(){
-			return this.left==null && this.rigth==null;
-		}
-	}
-
 	// COLORES
   String green = "\033[32m";
   String white = "\u001B[0m";
@@ -130,7 +65,7 @@ public class BinaryTree implements Serializable{
 	public void insert(Node actual, String pregunta, String respuesta,boolean siOno ){
 		//Creamos a los nodos nuevos
 		Node nPregunta= new Node(pregunta,actual.parent); // el nuevo nodo con la pregunta
-		Node nHoja= new Node("¿Es "+respuesta+"?",nPregunta); // El nuevo animal agregado
+		Node nHoja= new Node("¿Es "+respuesta+"?",nPregunta); // El nuevo cantante agregado
 
 		// AHORA TENEMOS QUE ACOMODARLOS EN EL ARBOL 
 
@@ -138,11 +73,15 @@ public class BinaryTree implements Serializable{
 		if(actual.parent.left==actual){ 
 			// Entonces se asigna a la nueva pregunta como el nuevo hijo izq del padre de actual
 			actual.parent.left=nPregunta;
+			// System.out.println("SE ASIGNO A "+nPregunta.element+" COMO HIZQ DE  "+actual.parent.element);
+			// System.out.println("Hijo derecho de "+actual.parent.element+" es  "+actual.parent.rigth.element);
 		}
-		else{ // Si es hijo derecho 
+		if(actual.parent.rigth==actual){ // Si es hijo derecho 
 			// Entonces se asigna a la nueva pregunta como el nuevo hijo derecho del padre de actual
 			actual.parent.rigth=nPregunta;
 		}
+		// hacemos que el padre del actual sea el nuevo nodo 
+		actual.parent=nPregunta;
 		// Ahora tenemos que asignar a las respuestas en el lugar correcto
 		if(siOno){
 		nPregunta.left=nHoja;
@@ -155,48 +94,7 @@ public class BinaryTree implements Serializable{
 	}
 
 
-	/** Metodo que hace el camino en un arbol
-	 *  @param 
-	 *  @return ultNode el nodo donde termino el camino
-	 */
-	public void recorrido()throws Exception{
-		Node actual= this.root;
-		// Mientras actual no sea una hoja
-		while(!actual.isLeaf()){
-			Scanner sc = new Scanner(System.in); //Objeto para usar la clase Scanner
-			String eleccion; 
-			// Le preguntamos al usuario
-			System.out.println(actual.element);
-			// Obtenemos la respuesta del usuario (con scanner)
-			try {
-				 eleccion = sc.nextLine();
-			  } catch (Exception e) {
-				System.out.print(red + "\n\tLo siento,ocurrio un error inesperado");
-				System.out.print(green + "\n\tIntenta de nuevo:)" + white + "\n\n");
-				sc.nextLine();
-				continue;
-			  }
-			  sc.nextLine();
-			  System.out.println();
-			  // si el usuario respondio true
-			  if(eleccion.equals("true")){
-				// Pasamos al actual del lado izq
-				actual=actual.left;
-				continue;
-			  }
-			  // si el usuario respondio false
-			  if(!eleccion.equals("false")){
-				// Pasamos al actual del lado derecho
-				actual=actual.rigth;
-				continue;
-			  }
-			  // Para cuando el usuario no responde true o false
-			  else{
-					//avisar al usuario que no contesto como esperaba entonces 
-					System.out.println("Recuerda responder true o false, para poder avanzar a la siguiente pregunta ;)");
-			  }
-		}
-	}
+	
 
 	/** Metodo que ordena una lista alfabeticamente
 	 * 
