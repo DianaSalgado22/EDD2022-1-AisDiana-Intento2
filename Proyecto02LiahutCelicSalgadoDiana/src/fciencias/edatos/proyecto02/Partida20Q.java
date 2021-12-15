@@ -9,6 +9,7 @@ import java.io.FileNotFoundException;
 import java.io.ObjectOutputStream;
 import java.io.FileInputStream;
 import java.io.ObjectInputStream;
+import java.util.InputMismatchException;
 import java.io.IOException;
 import java.util.Scanner;
 
@@ -49,11 +50,37 @@ public class Partida20Q{
     }
   }
 
+  /** Metodo para usar al metodo recorrido 
+   *  el archivo ArbolCantantes
+   */
+  public void ejecutarPreguntas()throws FileNotFoundException,IOException,ClassNotFoundException{
+    try{
+      // Creamos a un objeto que tenga al aarchivo de nuestr arbol
+      FileInputStream fileIn=new FileInputStream("ArbolCantantes.ser");
+      // Este es el que procesa los datos
+      ObjectInputStream entrada=new ObjectInputStream(fileIn);
+      // Guardamos al arbol 
+      BinaryTree a1=(BinaryTree)entrada.readObject();
+      // Empezamos a hacer las preguntas al usuario con el metodo recorrido
+      this.recorrido(a1);
+      // Volvemos a escribir el archivo 
+      this.actualizarArchivo(a1);
+      // Cerramos 
+      entrada.close();
+    }catch(FileNotFoundException e){
+      e.printStackTrace();
+    }catch(IOException e){
+      e.printStackTrace();
+    }catch(ClassNotFoundException e){
+      e.printStackTrace();
+    }
+  }
+
   /** Metodo que hace el camino en un arbol (La partida basicamente)
 	 *  @param 
 	 *  @return ultNode el nodo donde termino el camino
 	 */
-	public Node recorrido(BinaryTree arbol)throws Exception{
+	public Node recorrido(BinaryTree arbol){
 		Node actual= arbol.root;
 		String eleccion=""; 
 		Scanner sc = new Scanner(System.in); //Objeto para usar la clase Scanner
@@ -62,21 +89,16 @@ public class Partida20Q{
 		while(!actual.isLeaf()){
       // Si ya llegamos a las 20 preguntas rompemos el ciclo y avisamos al jugador.
       if(contador==20){
-        System.out.println("No puede ser 😭, lo siento pero no tengo idea en quien piensas lo siento");
+        System.out.println(yellow+"No puede ser 😭, lo siento pero no pude adivinar en menos de 20 preguntas"+
+        ",Me declaro como perdedor 👉👈" +white+ "\n");
         this.terminada=true; // La partida ya termino pues no se logro adivinar
         return actual;
       }
 			// Le preguntamos al usuario
-			System.out.println(actual.element);
+			System.out.println(white+actual.element+blue);
 			// Obtenemos la respuesta del usuario (con scanner)
-			try {
-				 eleccion = sc.nextLine();
-			  } catch (Exception e) {
-				System.out.print(red + "\n\tLo siento,ocurrio un error inesperado");
-				System.out.print(green + "\n\tIntenta de nuevo:)" + white + "\n\n");
-				continue;
-			  }
-			  System.out.println();
+				eleccion = sc.nextLine();
+			  System.out.println(white);
 			  // si el usuario respondio true
 			  if(eleccion.equals("true")){
 				// Pasamos al actual del lado izq
@@ -96,27 +118,27 @@ public class Partida20Q{
 			  // Para cuando el usuario no responde true o false
 			  else{
 					//avisar al usuario que no contesto como esperaba entonces 
-					System.out.println("Recuerda solo responder true o false, para poder avanzar a la siguiente pregunta ;)");
+					System.out.println(red+"Recuerda solo responder true o false, para poder avanzar a la siguiente pregunta ;)"+white);
 			  }
 		}
 		// Cuando ya llegamos a una hoja preguntamos si adivinamos
     boolean aux=true;
     while(aux){
-      System.out.println(actual.element);
+      System.out.println(white+actual.element+blue);
       try {
         eleccion = sc.nextLine();
        } catch (Exception e) {
          System.out.print(red + "\n\tLo siento,ocurrio un error inesperado");
          System.out.print(green + "\n\tIntenta de nuevo:)" + white + "\n\n");
        }
-       System.out.println();
+       System.out.println(white);
        // si el usuario respondio true
        if(eleccion.equals("true")){
         // Ya se adivino en quien piensa y celebramos 
-        System.out.println(green+"Yeii Adivinator adivino en quien estabas pensando "+purple+"🔮"+white);
+        System.out.println(green+"Yeii Adivinator adivino en quien estabas pensando, lo siento pero perdisteee"+purple+"🔮"+white +"\n\n");
         return actual;
         }
-        // si el usuario respondio false
+        // si el usuario respondio false, no se pudo adivinar quien es entonces hay que agregar un nuevo nodo
         if(eleccion.equals("false")){
           //La pregunta nueva
           String pregunta;
@@ -124,22 +146,23 @@ public class Partida20Q{
           String cantante;
           // siOno
           boolean siOno;
-  
-          // No se pudo adivinar quien es entonces hay que agregar un nuevo nodo
-          System.out.println("oh oh creo que no sé en quien piensas 😥 \n Ayudame a mejorar 🙏");
+          
+          // preguntamos al usuario la info 
+          System.out.println(yellow+"oh oh creo que no sé en quien piensas 😥" +white+"\n\t"+purple+" Ayudame a mejorar 🙏"+white);
           // Obtenemos en quien pensaba
-          System.out.println("¿En quién estabas pensando?");
+          System.out.println("¿En quién estabas pensando?"+blue);
           cantante= sc.nextLine();
           // Pedimos la pregunta
-          System.out.println("Ingresa una pregunta que pueda identificar a "+cantante+
-           " y que se pueda responder con true o false: ");
+          System.out.println(white+"Ingresa una pregunta que pueda identificar a "+green+cantante+white+
+           " y que se pueda responder con true o false: "+blue);
           pregunta=sc.nextLine();
-          System.out.println("Ahora ayudame respondiendo la siguiente pregunta con true o false:\n"+cantante+
-          " cumple que "+pregunta);
+          System.out.println(white+"Ahora ayudame respondiendo la siguiente pregunta con true o false:\n"+green+cantante+
+          white+" cumple que "+purple+pregunta+blue);
           siOno=Boolean.parseBoolean(sc.nextLine());
           // Ahora insertamos la nueva pregunta
           arbol.insert(actual,pregunta,cantante,siOno);
         }
+
         // Para cuando el usuario no responde true o false
         else{
           //avisar al usuario que no contesto como esperaba entonces 
@@ -154,7 +177,112 @@ public class Partida20Q{
     
     public static void main(String[] args){
         // creamos una partida
-        Partida20Q p1=new Partida20Q();
+        Partida20Q partida=new Partida20Q();
+        // COLORES
+        String green = "\033[32m";
+        String white = "\u001B[0m";
+        String purple = "\033[35m";
+        String blue = "\033[34m";
+        String yellow = "\033[33m";
+        String red = "\u001B[31m";
+        // Empieza el menú
+        Scanner sc = new Scanner(System.in); //Objeto para usar la clase Scanner
+
+        // INICIO DEL MENU
+        System.out.println(yellow + "Bienvenido a Adivinator" + purple+"🔮" + white + "\n");
+        int eleccion = 0;
+        int aux = 0;
+        String aux2 = "";
+        do {
+          System.out.println(
+            blue + "Elige algunas de las siguientes opciones:" + white
+          );
+        
+          System.out.print( 
+            green +"[1]" +white +"Jugar\n" +
+            green +"[2]" +white +"Preguntas en orden alfabético\n" +
+            green +"[3]" +white +"Preguntas en el orden en que fueron agregadas\n" +
+            green +"[4]" +white +"Entes en orden alfabético\n" +
+            green +"[5]" +white +"Entes en el orden en que fueron agregados\n" +
+            green +"[6]" +white +"Salir\n" );
+          try {
+            eleccion = sc.nextInt();
+          } catch (InputMismatchException ime) {
+            System.out.println(red + "\tNo ingresaste un entero" + white);
+            System.out.print(green + "\tIntenta de nuevo:)" + white + "\n\n");
+            sc.nextLine();
+            continue;
+          } catch (Exception e) {
+            System.out.print(red + "\n\tLo siento,ocurrio un error inesperado");
+            System.out.print(green + "\n\tIntenta de nuevo:)" + white + "\n\n");
+            sc.nextLine();
+            continue;
+          }
+          sc.nextLine();
+          System.out.println();
+        
+          switch (eleccion) {
+            case 1:  // Jugar
+            String listo="";
+            System.out.println(yellow+"Holaa yo soy adivinator, piensa en un cantante y yo adivinare "+purple+"🔮"+white);
+            System.out.println(purple+"Contesta las  preguntas siguiendo estas pequeñas reglas:"+white);
+            System.out.print( 
+            green +"-" + white +"La persona en la que piensas tiene que ser un cantante 🎤\n" +
+            green +"-" +white +"Responder true si la respuesta es sí ✅ ,false si la respuesta es no ❎ \n" );
+            // loop para hacer robusto al listo para empezar
+            while(!(listo.equals("true"))){
+              System.out.println(purple+"\t ¿Listo para empezar?"+white);
+              try{
+                listo=sc.nextLine();
+                listo=listo.toLowerCase();
+
+              } catch (Exception e) {
+                System.out.print(red + "\n\tLo siento,ocurrio un error inesperado");
+                System.out.print(green + "\n\tIntenta de nuevo:)" + white + "\n\n");
+                sc.nextLine();
+                continue;
+              }
+            }
+            // Abrimos/Cargamos el archivo del arbol 
+            try{
+
+              partida.ejecutarPreguntas();
+
+            }catch(FileNotFoundException e){
+              e.printStackTrace();
+            }catch(IOException e){
+              e.printStackTrace();
+            }catch(ClassNotFoundException e){
+              e.printStackTrace();
+            }
+            
+            case 2: // Preguntas en orden alfabético
+              break;
+            
+            case 3: // Preguntas en el orden en que fueron agregadas
+              break;
+
+            case 4: // Entes en orden alfabético
+              break;
+
+            case 5: // Entes en el orden en que fueron agregadas
+                break;
+          } // final switch principal
+
+        } while (eleccion != 6); //final do .. while principal
+        System.out.print(
+          white +
+          "\n 🌈 " +
+          purple +
+          " Gracias por jugar Adivinator" +
+          white +
+          "🌈\n" +
+          white
+        );
+  }
+     // AUN NO BORRARE ESTO POR SI OCUPAMOS VOLVER A HACER EL ARBOL ANTES DE SUBIRLO 
+
+
       // esto es como para escribir en el doc y lo que use para crearlos
        /* 
         // Creamos al nuevo arbol
@@ -182,35 +310,4 @@ public class Partida20Q{
             e.printStackTrace();
           }
        */
-       ///*
-      // aqui es ya donde se pueden hacer cosas
-        try{
-            // Creamos a un objeto que tenga al aarchivo de nuestr arbol
-            FileInputStream fileIn=new FileInputStream("ArbolCantantes.ser");
-            // Este es el que procesa los datos
-            ObjectInputStream entrada=new ObjectInputStream(fileIn);
-            // Guardamos al arbol 
-            BinaryTree a1=(BinaryTree)entrada.readObject();
-            // Hacemos las operaciones que queremos
-            
-            System.out.println();
-            try{
-             p1.recorrido(a1);
-             }catch (Exception e) { }
-             a1.preorden();
-             // Volvemos a escribir el archivo 
-              p1.actualizarArchivo(a1);
-           
-            
-            // Cerramos 
-            entrada.close();
-        }catch(FileNotFoundException e){
-            e.printStackTrace();
-          }catch(IOException e){
-            e.printStackTrace();
-          }catch(ClassNotFoundException e){
-            e.printStackTrace();
-          }
-        // */
     }
-}
