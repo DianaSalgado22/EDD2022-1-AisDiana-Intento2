@@ -27,7 +27,7 @@ import java.util.Scanner;
 		public Node rigth;
 
 		/** Hora y fecha de creación del nodo */
-		public String horaFecha;
+		public String horaFecha="";
 
 		/**
 		 * Crea un nuevo nodo.
@@ -72,6 +72,8 @@ import java.util.Scanner;
 		public boolean isLeaf(){
 			return this.left==null && this.rigth==null;
 		}
+
+		
 	}
 
 	

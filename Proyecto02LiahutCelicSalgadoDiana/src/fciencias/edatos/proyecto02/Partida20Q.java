@@ -76,6 +76,105 @@ public class Partida20Q{
     }
   }
 
+  /** Metodo para usar al metodo de orden alfabetico
+   *  en el archivo ArbolCantantes
+   */
+  public void PreguntasOrdenAlfabetico()throws FileNotFoundException,IOException,ClassNotFoundException{
+    try{
+      // Creamos a un objeto que tenga al aarchivo de nuestr arbol
+      FileInputStream fileIn=new FileInputStream("ArbolCantantes.ser");
+      // Este es el que procesa los datos
+      ObjectInputStream entrada=new ObjectInputStream(fileIn);
+      // Guardamos al arbol 
+      BinaryTree a1=(BinaryTree)entrada.readObject();
+      // Usamos el metodo para regresar el orden alfabetico
+      a1.AlphabetizeTheQuestions();
+      // Cerramos 
+      entrada.close();
+    }catch(FileNotFoundException e){
+      e.printStackTrace();
+    }catch(IOException e){
+      e.printStackTrace();
+    }catch(ClassNotFoundException e){
+      e.printStackTrace();
+    }
+  }
+
+
+  /** Metodo para usar al metodo de orden en que llegaron
+   *  en el archivo ArbolCantantes
+   */
+  public void PreguntasOrdenAgregadas()throws FileNotFoundException,IOException,ClassNotFoundException{
+    try{
+      // Creamos a un objeto que tenga al aarchivo de nuestr arbol
+      FileInputStream fileIn=new FileInputStream("ArbolCantantes.ser");
+      // Este es el que procesa los datos
+      ObjectInputStream entrada=new ObjectInputStream(fileIn);
+      // Guardamos al arbol 
+      BinaryTree a1=(BinaryTree)entrada.readObject();
+      // Usamos el metodo para regresar el orden alfabetico
+      a1.imprimirEnOrdenEnQueLlegaronSinHojas();
+      // Cerramos 
+      entrada.close();
+    }catch(FileNotFoundException e){
+      e.printStackTrace();
+    }catch(IOException e){
+      e.printStackTrace();
+    }catch(ClassNotFoundException e){
+      e.printStackTrace();
+    }
+  }
+
+  /** Metodo para usar al metodo de orden alfabetico
+   *  en el archivo ArbolCantantes
+   */
+  public void RespuestasOrdenAlfabetico()throws FileNotFoundException,IOException,ClassNotFoundException{
+    try{
+      // Creamos a un objeto que tenga al aarchivo de nuestr arbol
+      FileInputStream fileIn=new FileInputStream("ArbolCantantes.ser");
+      // Este es el que procesa los datos
+      ObjectInputStream entrada=new ObjectInputStream(fileIn);
+      // Guardamos al arbol 
+      BinaryTree a1=(BinaryTree)entrada.readObject();
+      // Usamos el metodo para regresar el orden alfabetico
+      a1.AlphabetizeTheAnswers();
+      // Cerramos 
+      entrada.close();
+    }catch(FileNotFoundException e){
+      e.printStackTrace();
+    }catch(IOException e){
+      e.printStackTrace();
+    }catch(ClassNotFoundException e){
+      e.printStackTrace();
+    }
+  }
+
+
+  /** Metodo para usar al metodo de orden en que llegaron
+   *  en el archivo ArbolCantantes
+   */
+  public void RespuestasOrdenAgregadas()throws FileNotFoundException,IOException,ClassNotFoundException{
+    try{
+      // Creamos a un objeto que tenga al aarchivo de nuestr arbol
+      FileInputStream fileIn=new FileInputStream("ArbolCantantes.ser");
+      // Este es el que procesa los datos
+      ObjectInputStream entrada=new ObjectInputStream(fileIn);
+      // Guardamos al arbol 
+      BinaryTree a1=(BinaryTree)entrada.readObject();
+      // Usamos el metodo para regresar el orden alfabetico
+      a1.imprimirHojasEnOrdenEnQueLlegaron();
+      // Cerramos 
+      entrada.close();
+    }catch(FileNotFoundException e){
+      e.printStackTrace();
+    }catch(IOException e){
+      e.printStackTrace();
+    }catch(ClassNotFoundException e){
+      e.printStackTrace();
+    }
+  }
+
+
   /** Metodo que hace el camino en un arbol (La partida basicamente)
 	 *  @param 
 	 *  @return ultNode el nodo donde termino el camino
@@ -188,6 +287,7 @@ public class Partida20Q{
         // Empieza el menú
         Scanner sc = new Scanner(System.in); //Objeto para usar la clase Scanner
 
+        
         // INICIO DEL MENU
         System.out.println(yellow + "Bienvenido a Adivinator" + purple+"🔮" + white + "\n");
         int eleccion = 0;
@@ -255,18 +355,64 @@ public class Partida20Q{
             }catch(ClassNotFoundException e){
               e.printStackTrace();
             }
-            
+            break;
             case 2: // Preguntas en orden alfabético
+              try{
+
+                partida.PreguntasOrdenAlfabetico();
+
+              }catch(FileNotFoundException e){
+                e.printStackTrace();
+              }catch(IOException e){
+                e.printStackTrace();
+              }catch(ClassNotFoundException e){
+                e.printStackTrace();
+              }
               break;
             
             case 3: // Preguntas en el orden en que fueron agregadas
+              try{
+
+                partida.PreguntasOrdenAgregadas();
+
+              }catch(FileNotFoundException e){
+                e.printStackTrace();
+              }catch(IOException e){
+                e.printStackTrace();
+              }catch(ClassNotFoundException e){
+                e.printStackTrace();
+              }  
+            
               break;
 
             case 4: // Entes en orden alfabético
-              break;
+            try{
+
+              partida.RespuestasOrdenAlfabetico();
+
+            }catch(FileNotFoundException e){
+              e.printStackTrace();
+            }catch(IOException e){
+              e.printStackTrace();
+            }catch(ClassNotFoundException e){
+              e.printStackTrace();
+            }  
+            break;
 
             case 5: // Entes en el orden en que fueron agregadas
-                break;
+            try{
+
+              partida.RespuestasOrdenAgregadas();
+
+            }catch(FileNotFoundException e){
+              e.printStackTrace();
+            }catch(IOException e){
+              e.printStackTrace();
+            }catch(ClassNotFoundException e){
+              e.printStackTrace();
+            }    
+            
+            break;
           } // final switch principal
 
         } while (eleccion != 6); //final do .. while principal
@@ -280,16 +426,17 @@ public class Partida20Q{
           white
         );
   }
+  
      // AUN NO BORRARE ESTO POR SI OCUPAMOS VOLVER A HACER EL ARBOL ANTES DE SUBIRLO 
 
 
       // esto es como para escribir en el doc y lo que use para crearlos
-       /* 
+        /* 
         // Creamos al nuevo arbol
         BinaryTree a1= new BinaryTree();
         // Insertamos 
         a1.insertFirst("¿La persona en la que estas pensando forma parte de un grupo o banda?","Tyler Joseph","Ariana Grande");
-        a1.insert(a1.root.rigth,"¿Canta pop?","Bad buny",false);
+        a1.insert(a1.root.rigth,"¿Canta pop?","Bad bunny   ",false);
         a1.insert(a1.root.left,"¿Es mujer?","Lisa (Blackpink)",true);
         a1.insert(a1.root.rigth.left,"¿Tiene más de 21 años?","Olivia Rodrigo",false);
         a1.insert(a1.root.left.left,"¿Canta en español?","Melissa Robles",true);
@@ -297,7 +444,8 @@ public class Partida20Q{
         // System.out.println("El hijo derecho de la raiz  "+a1.root.rigth.element);
         // System.out.println("El hijo derecho de   "+a1.root.rigth.element+" es"+a1.root.rigth.rigth.element);
         // System.out.println("El hijo izq de   "+a1.root.rigth.element+" es"+a1.root.rigth.left.element);
-        a1.preorden();
+        //a1.preorden();
+        a1.AlphabetizeTheAnswers();
        // a1.postorden();
         try{
             FileOutputStream fs = new FileOutputStream("ArbolCantantes.ser");//Creamos el archivo
@@ -309,5 +457,31 @@ public class Partida20Q{
           }catch(IOException e){
             e.printStackTrace();
           }
-       */
-    }
+       
+
+      
+       try{
+        // Creamos a un objeto que tenga al aarchivo de nuestr arbol
+        FileInputStream fileIn=new FileInputStream("ArbolCantantes.ser");
+        // Este es el que procesa los datos
+        ObjectInputStream entrada=new ObjectInputStream(fileIn);
+        // Guardamos al arbol 
+        BinaryTree a1=(BinaryTree)entrada.readObject();
+        // Usamos el metodo para regresar el orden alfabetico
+        a1.insert(a1.root.rigth.left,"¿Tiene más de 21 años?","Olivia Rodrigo",false);
+        a1.insert(a1.root.left.left,"¿Canta en español?","Melissa Robles",true);
+        a1.imprimirHojasEnOrdenEnQueLlegaron();
+        partida.actualizarArchivo(a1);
+        // Cerramos 
+        entrada.close();
+      }catch(FileNotFoundException e){
+        e.printStackTrace();
+      }catch(IOException e){
+        e.printStackTrace();
+      }catch(ClassNotFoundException e){
+        e.printStackTrace();
+      }
+      
+       
+    }*/
+  }
