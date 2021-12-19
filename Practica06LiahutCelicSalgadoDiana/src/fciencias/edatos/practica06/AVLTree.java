@@ -1,5 +1,6 @@
 package fciencias.edatos.practica06;
-
+import java.util.InputMismatchException;
+import java.util.Scanner;
 /**
 * Implementación de árbol AVL
  * @version 1.0 Diciembre 2021.
@@ -73,7 +74,14 @@ public class AVLTree<K extends Comparable, T> implements TDABinarySearchTree<K, 
 
 	@Override
 	public T retrieve(K k){
-		return retrieve(k,raiz).element;
+		
+		AVLNode aux =retrieve(k,raiz);
+		if(aux ==null){
+			return null;
+		}else{
+			return aux.elemento;
+		}
+
 	}
 
 	/**
@@ -84,8 +92,9 @@ public class AVLTree<K extends Comparable, T> implements TDABinarySearchTree<K, 
 	 */
 	private AVLNode retrieve(K k, AVLNode actual){
 		// Verificamos que actual es null
-		if(actual == null)
+		if(actual == null){
 			return null;
+		}
 
 		int compare = k.compareTo(actual.clave);
 
@@ -185,11 +194,16 @@ public class AVLTree<K extends Comparable, T> implements TDABinarySearchTree<K, 
 
 	@Override
 	public T findMin(){
-		return AVLNode(raiz).element;
+
+		// if (this.raiz == null) {
+		// 	return null;
+		//   }
+		//return AVLNode(raiz).elemento;
+		return findMin(raiz).elemento;
 	}
 
 	/**
-	 * Obtiene al nodo con la menor clave 
+	 * Obtiene al nodo con la menor clave implementado de forma iterativa
 	 * @param actual el nodo actual
 	 * @return el nodo con clave la clave k de menor valor.
 	 */
@@ -199,12 +213,33 @@ public class AVLTree<K extends Comparable, T> implements TDABinarySearchTree<K, 
 		AVLNode iterador = actual;
 
 		while(iterador.izquierdo != null){
-			iterador = actual.izquierdo;
+			iterador =iterador.izquierdo;
 		}
 
 		return iterador;
+		// Mientras sí tenga hijo izquierdo -> Que actual se mueva al izquierdo
+		// if (!(actual.izquierdo == null)) {
+		// 	//System.out.println("p"+actual.element);
+		// 	//System.out.println("p");
+		// 	actual = actual.izquierdo;
+		// 	//System.out.println(actual.element);
+		// 	return findMin(actual);
+		//   }
+		//   // Ya encontramos al nodo con clave menor, asi que se regresa
+		//   return actual;
 	}
 
+	/* public T findMinIterativo(){
+
+		if (this.raiz == null) {
+			return null;
+		  }
+		//return AVLNode(raiz).elemento;
+		return findMin(raiz).elemento;
+	}
+	private AVLNode findMinIterativo(AVLNode actual){
+
+	} */
 	private void swap(AVLNode v, AVLNode w){
 		T value = v.elemento;
 		K clave = v.clave;
@@ -216,8 +251,22 @@ public class AVLTree<K extends Comparable, T> implements TDABinarySearchTree<K, 
 
 	@Override
 	public T findMax(){
-		return null;
+		return findMax(raiz).elemento;
+		//return null;
 	}
+
+	private AVLNode findMax(AVLNode actual){
+		if(actual == null)
+			return null;
+		AVLNode iterador = actual;
+
+		while(iterador.derecho != null){
+			iterador =iterador.derecho;
+		}
+
+		return iterador;
+	}
+
 
 	@Override
 	public void preorden(){
@@ -232,7 +281,7 @@ public class AVLTree<K extends Comparable, T> implements TDABinarySearchTree<K, 
 		if(actual==null)
 			return;
 
-		System.out.println(actual.elemento);
+		System.out.print(actual.elemento + " ");
 		preorden(actual.izquierdo);
 		preorden(actual.derecho);
 	}
@@ -251,7 +300,7 @@ public class AVLTree<K extends Comparable, T> implements TDABinarySearchTree<K, 
 			return;
 		
 		inorden(actual.izquierdo);
-		System.out.println(actual.elemento)
+		System.out.print(actual.elemento+ " ");
 		inorden(actual.derecho);
 	}
 
@@ -268,9 +317,9 @@ public class AVLTree<K extends Comparable, T> implements TDABinarySearchTree<K, 
 		if(actual==null)
 			return;
 		
-		posorden(actual.izquierdo);
-		posorden(actual.derecho);
-		System.out.println(actual.elemento);
+		postorden(actual.izquierdo);
+		postorden(actual.derecho);
+		System.out.print(actual.elemento+ " ");
 	}
 
 	@Override
@@ -279,26 +328,255 @@ public class AVLTree<K extends Comparable, T> implements TDABinarySearchTree<K, 
 	}
 
 	public static void main(String[] args) {
+		 // COLORES
+		 String green = "\033[32m";
+		 String white = "\u001B[0m";
+		 String purple = "\033[35m";
+		 String azul = "\033[34m";
+		 String yellow = "\033[33m";
+		 String red = "\u001B[31m";
 		AVLTree<Integer, Integer> arbol = new AVLTree<>();
+		AVLTree a1 = new AVLTree();
 
-		/*
 		arbol.insert(9, 9);
 		arbol.insert(12, 12);
 		arbol.insert(3, 3);
 		arbol.insert(4, 4);
 		arbol.insert(2, 2);
 		arbol.insert(5, 5);
-		arbol.insert(1, 1);
+		//arbol.insert(1, 1);
 		arbol.insert(11, 11);
 		arbol.insert(14, 14);
 		arbol.insert(15, 15);
 
-		arbol.delete(9);
-		arbol.delete(12);
-		arbol.delete(5);
+		System.out.println(arbol.findMin());
 
-		arbol.preorden();
-		*/
+		System.out.println(arbol.findMax());
+		Scanner sc = new Scanner(System.in); //Objeto para usar la clase Scanner
+		// INICIO DEL MENU
+		System.out.println(yellow + "Bienvenido al Menu ツ" + white + "\n");
+		int eleccion = 0;
+    	int aux = 0;
+    	//String aux2 = "";
+		int aux2;
+		do {
+			System.out.println(
+			  azul + "Elige algunas de las siguientes opciones:" + white
+			);
+	  
+			System.out.print(
+			  green +
+			  "[1]" +
+			  white +
+			  "Método retrieve: Buscar a un elemento a partir de su clave (key) \n" +
+			  green +
+			  "[2]" +
+			  white +
+			  "Insertar a un nuevo elemento al árbol\n" +
+			  green +
+			  "[3]" +
+			  white +
+			  "Eliminar un elemento del árbol\n" +
+			  green +
+			  "[4]" +
+			  white +
+			  "Encuentra el elemento con clave minima\n" +
+			  green +
+			  "[5]" +
+			  white +
+			  "Encontrar el elemento con clave máxima\n" +
+			  green +
+			  "[6]" +
+			  white +
+			  "Ordenar el árbol con preOrden\n" +
+			  green +
+			  "[7]" +
+			  white +
+			  "Ordenar el árbol con inOrden\n" +
+			  green +
+			  "[8]" +
+			  white +
+			  "Ordenar el árbol con postOrden\n" +
+			  green +
+			  "[9]" +
+			  white +
+			  "Saber si árbol esta vacio\n" +
+			  green +
+			  "[10]" +
+			  white +
+			  "Salir del menu\n"
+			);
+			try {
+			  eleccion = sc.nextInt();
+			} catch (InputMismatchException ime) {
+			  System.out.println(red + "\tNo ingresaste un entero" + white);
+			  System.out.print(green + "\tIntenta de nuevo:)" + white + "\n\n");
+			  sc.nextLine();
+			  continue;
+			} catch (Exception e) {
+			  System.out.print(red + "\n\tLo siento,ocurrio un error inesperado");
+			  System.out.print(green + "\n\tIntenta de nuevo:)" + white + "\n\n");
+			  sc.nextLine();
+			  continue;
+			}
+			sc.nextLine();
+			System.out.println();
+	  
+			switch (eleccion) {
+			  case 1:
+				try {
+				  System.out.println("ingresa la clave");
+				  aux = sc.nextInt();
+				  if(a1.retrieve(aux) == null){
+					System.out.println(red +"En el arbol no existe un nodo con tal clave 😩\n" +white);
+					break;
+				  }
+				  System.out.println("El elemento con esa clave es: " + a1.retrieve(aux));
+				} catch (InputMismatchException ime) {
+				  System.out.println(red + "\tNo ingresaste un entero" + white);
+				  System.out.print(green + "\tIntenta de nuevo:)" + white + "\n\n");
+				  sc.nextLine();
+				  continue;
+				} catch (Exception e) {
+				  System.out.print(red + "\n\tLo siento,ocurrio un error inesperado");
+				  System.out.print(green + "\n\tIntenta de nuevo:)" + white + "\n\n");
+				  sc.nextLine();
+				  continue;
+				}
+				break;
+			  case 2:
+				try {
+				  System.out.println("ingresa la clave");
+				  aux = sc.nextInt();
+				  sc.nextLine();
+				  System.out.println("ingresa el elemento, que sea un int");
+				  aux2 = sc.nextInt();
+				  a1.insert(aux2, aux);
+				} catch (InputMismatchException ime) {
+				  System.out.println(red + "\tNo ingresaste un entero" + white);
+				  System.out.print(green + "\tIntenta de nuevo:)" + white + "\n\n");
+				  sc.nextLine();
+				  continue;
+				} catch (Exception e) {
+				  System.out.print(red + "\n\tLo siento,ocurrio un error inesperado");
+				  System.out.print(green + "\n\tIntenta de nuevo:)" + white + "\n\n");
+				  sc.nextLine();
+				  continue;
+				}
+	  
+				break;
+			  // opcion 3 (salir)
+			  case 3:
+				try {
+				  System.out.println(
+					"ingresa la clave del elemento que quieres eliminar 🥺"
+				  );
+				  aux = sc.nextInt();
+				  sc.nextLine();
+				  a1.delete(aux);
+				} catch (InputMismatchException ime) {
+				  System.out.println(red + "\tNo ingresaste un entero" + white);
+				  System.out.print(green + "\tIntenta de nuevo:)" + white + "\n\n");
+				  sc.nextLine();
+				  continue;
+				} catch (Exception e) {
+				  System.out.print(red + "\n\tLo siento,ocurrio un error inesperado");
+				  System.out.print(green + "\n\tIntenta de nuevo:)" + white + "\n\n");
+				  sc.nextLine();
+				  continue;
+				}
+	  
+				break;
+			  case 4:
+				if (a1.findMax() == null) {
+				  System.out.println(
+					red +
+					"Este arbol  esta vacio, por lo que no se puede determinar el elemento con la clave mayor , F\n" +
+					white
+				  );
+				  break;
+				}
+				System.out.println(
+				  "En el arbol el elemento conclave máxima es: \n" +
+				  a1.findMax()
+				);
+				break;
+			  case 5:
+				if (a1.findMin() == null) {
+				  System.out.println(
+					red +
+					"Este arbol esta vacio, por lo que no se puede determinar cual es el elemento con la clave menor , F\n" +
+					white
+				  );
+				  break;
+				}
+				System.out.println(
+				  "En el arbol el elemento con la clave menor es: \n" +
+				  a1.findMin()
+				);
+				break;
+			  case 6:
+				if (a1.raiz == null) {
+				  System.out.println("Este arbol esta vacio, F loser 🤪\n");
+				  break;
+				}
+				System.out.print("El arbol ordenado en preorden es: \n");
+				a1.preorden();
+				System.out.println();
+				// System.out.println(a1.raiz);
+				break;
+			  case 7:
+				if (a1.raiz == null) {
+				  System.out.println("Este arbol esta vacio, F loser 🤪\n");
+				  break;
+				}
+				System.out.print("El arbol ordenado en inOrden es: \n");
+				a1.inorden();
+				System.out.println();
+				//System.out.println(a1.raiz);
+				break;
+			  case 8:
+				if (a1.raiz == null) {
+				  System.out.println("Este arbol esta vacio, F loser 🤪\n");
+				  break;
+				}
+				System.out.print("El arbol ordenado en postOrden es: \n");
+				a1.postorden();
+				System.out.println();
+	  
+				//System.out.println(a1.raiz);
+				break;
+			  case 9:
+				if (a1.isEmpty() == true) {
+				  System.out.println("Este arbol esta vacio, F loser 🤪\n");
+				  break;
+				} else {
+				  System.out.println("Este arbol no esta vacio 🙊");
+				}
+	  
+				//System.out.println(a1.raiz);
+				break;
+			} // final switch principal
+			//  System.out.println();
+	  
+			// System.out.print(white+"\n 🌈 " + red+" Gracias por usar el programa "+ white+ "🌈\n"+white);
+		  } while (eleccion != 10); //final do .. while principal
+		  System.out.print(
+			white +
+			"\n 🌈 " +
+			red +
+			" Gracias por usar el programa " +
+			white +
+			"🌈\n" +
+			white
+		  );
+	
+		// arbol.delete(9);
+		// arbol.delete(12);
+		// arbol.delete(5);
+
+		// arbol.preorden();
+		
 	}
 	
     
