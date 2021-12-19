@@ -2,10 +2,11 @@ package fciencias.edatos.practica06;
 
 /**
 * Implementación de árbol AVL
-* @author Emmanuel Cruz Hernández.
-* @version 3.0 Noviembre 2021 (Anterior 2.0 Julio 2021).
-* @since Estructuras de Datos 2022-1.
-*/
+ * @version 1.0 Diciembre 2021.
+ * @author Salgado Tirado Diana Laura
+ * @author Celic Aislinn Liahut Ley
+ * @since Estructuras de Datos 2022-1
+ */
 public class AVLTree<K extends Comparable, T> implements TDABinarySearchTree<K, T>{
 
 	/**
@@ -72,7 +73,7 @@ public class AVLTree<K extends Comparable, T> implements TDABinarySearchTree<K, 
 
 	@Override
 	public T retrieve(K k){
-		return null;
+		return retrieve(k,raiz).element;
 	}
 
 	/**
@@ -184,18 +185,14 @@ public class AVLTree<K extends Comparable, T> implements TDABinarySearchTree<K, 
 
 	@Override
 	public T findMin(){
-		return null;
+		return AVLNode(raiz).element;
 	}
 
-	private void swap(AVLNode v, AVLNode w){
-		T value = v.elemento;
-		K clave = v.clave;
-		v.elemento = w.elemento;
-		v.clave = w.clave;
-		w.elemento = value;
-		w.clave = clave;
-	}
-
+	/**
+	 * Obtiene al nodo con la menor clave 
+	 * @param actual el nodo actual
+	 * @return el nodo con clave la clave k de menor valor.
+	 */
 	private AVLNode findMin(AVLNode actual){
 		if(actual == null)
 			return null;
@@ -206,7 +203,15 @@ public class AVLTree<K extends Comparable, T> implements TDABinarySearchTree<K, 
 		}
 
 		return iterador;
+	}
 
+	private void swap(AVLNode v, AVLNode w){
+		T value = v.elemento;
+		K clave = v.clave;
+		v.elemento = w.elemento;
+		v.clave = w.clave;
+		w.elemento = value;
+		w.clave = clave;
 	}
 
 	@Override
@@ -219,6 +224,10 @@ public class AVLTree<K extends Comparable, T> implements TDABinarySearchTree<K, 
 		preorden(raiz);
 	}
 
+	/**
+	 * Metodo auxiliar del metodo preOrden
+	 * @param actual el nodo actual
+	 */
 	private void preorden(AVLNode actual){
 		if(actual==null)
 			return;
@@ -229,14 +238,50 @@ public class AVLTree<K extends Comparable, T> implements TDABinarySearchTree<K, 
 	}
 
 	@Override
-	public void inorden(){}
+	public void inorden(){
+		inorden(raiz);
+	}
+
+	/**
+	 * Metodo auxiliar del metodo inOrden
+	 * @param actual el nodo actual
+	 */
+	private void inorden(AVLNode actual){
+		if(actual==null)
+			return;
+		
+		inorden(actual.izquierdo);
+		System.out.println(actual.elemento)
+		inorden(actual.derecho);
+	}
 
 	@Override
-	public void postorden(){}
+	public void postorden(){
+		postorden(raiz);
+	}
+
+	/**
+	 * Metodo auxiliar del metodo postOrden
+	 * @param actual el nodo actual
+	 */
+	private void postorden(AVLNode actual){
+		if(actual==null)
+			return;
+		
+		posorden(actual.izquierdo);
+		posorden(actual.derecho);
+		System.out.println(actual.elemento);
+	}
+
+	@Override
+	public boolean isEmpty(){
+		return raiz==null; // si la raiz es null regresa true, false en otro caso.
+	}
 
 	public static void main(String[] args) {
 		AVLTree<Integer, Integer> arbol = new AVLTree<>();
 
+		/*
 		arbol.insert(9, 9);
 		arbol.insert(12, 12);
 		arbol.insert(3, 3);
@@ -253,7 +298,8 @@ public class AVLTree<K extends Comparable, T> implements TDABinarySearchTree<K, 
 		arbol.delete(5);
 
 		arbol.preorden();
+		*/
 	}
-}class AVL {
+	
     
 }
