@@ -81,22 +81,31 @@ public class AVLTree<K extends Comparable, T> implements TDABinarySearchTree<K, 
 	private AVLNode raiz;
 
 
-	 public void rebalancear(AVLNode actual){
+	 public AVLNode rebalancear(AVLNode actual){
 		//caso base cuando ya esta balanceado:
-		if(actual == null){
-			return;
-		}
+		 // if(actual == null){
+		// 	/*  System.out.print("hola");
+		// 	preorden(raiz);
+		//     preorden(actual); */
+		//  	return;
+		  //}
 		
-		
+		//System.out
 		actual.actualizaAltura();
 
 		if(actual.altura< 2){
+			if(actual.padre == null){
+			 
+				//this.raiz= actual;
+				return actual;
+			}
 			
-			rebalancear(actual.padre);
-			return;
+
+		return rebalancear(actual.padre);
+			//return;
 		}
 
-		System.out.println("p");
+		//System.out.println("p");
 		//En caso en que este desbalanceador entra al if para balancearlo
 		if( Math.abs(actual.izquierdo.getAltura() - actual.derecho.getAltura())> 1){
 
@@ -107,13 +116,16 @@ public class AVLTree<K extends Comparable, T> implements TDABinarySearchTree<K, 
 				//desbalance a la izquierda caso 1(linea recta)
 				if(actual.izquierdo.izquierdo.getAltura() >= actual.izquierdo.derecho.getAltura()){
 					//  se gira actual a la derecha
-					rotarALaDerecha(actual);
+					actual = rotarALaDerecha(actual);
+					preorden(actual);
+					System.out.println("a");
 				}
 				//caso 2 
 				//if(getAltura(actual.izquierdo.izquierdo) < getAltura(actual.left.right)
 				else{
-					rotarALaIzquierda(actual.izquierdo);
-					rotarALaDerecha(actual);
+					actual.izquierdo= rotarALaIzquierda(actual.izquierdo);
+					actual =rotarALaDerecha(actual);
+					System.out.println("b");
 				}
 
 			}
@@ -124,23 +136,36 @@ public class AVLTree<K extends Comparable, T> implements TDABinarySearchTree<K, 
 				//caso 3
 				//desbalance a la derecha caso 1 (linea recta)
 				if(actual.derecho.derecho.getAltura() >= actual.derecho.izquierdo.getAltura()){
-					rotarALaIzquierda(actual);
+					actual=rotarALaIzquierda(actual);
+					System.out.println("c");
 				}
 
 				else{
-                    rotarALaDerecha(actual.derecho);
-					rotarALaIzquierda(actual);
+                    actual.derecho=rotarALaDerecha(actual.derecho);
+					actual = rotarALaIzquierda(actual);
+					System.out.println("d");
 				}
 
 			}
 			
 
+			//rebalancear(actual.padre);
+			//return;
 
 		}
 
 		//actual.actualizaAltura();
 		//actual.actualizaAltura();
-		rebalancear(actual.padre);
+		// if(actual.padre == null){
+		// 	return actual;
+		// }
+		 if(actual.padre == null){
+			 
+			//this.raiz= actual;
+			return actual;
+		} 
+	
+		return rebalancear(actual.padre);
 		
 
 	}  
@@ -166,6 +191,8 @@ public class AVLTree<K extends Comparable, T> implements TDABinarySearchTree<K, 
 		AVLNode nuevo = actual.derecho;
         actual.derecho = nuevo.izquierdo;
         nuevo.izquierdo = actual;
+		actual.altura = Math.max(actual.izquierdo.getAltura(), actual.derecho.getAltura()) + 1;
+        nuevo.altura = Math.max(nuevo.izquierdo.getAltura(), nuevo.derecho.getAltura()) + 1;
 		actual= nuevo;
 		return actual;
 		// System.out.println(green+"");
@@ -193,6 +220,8 @@ public class AVLTree<K extends Comparable, T> implements TDABinarySearchTree<K, 
 		// AVLNode t2 = actual.derecho;
         // actual.derecho= t2.izquierdo;
         // t2.izquierdo = actual;
+		actual.altura = Math.max(actual.izquierdo.getAltura(), actual.derecho.getAltura()) + 1;
+        nuevo.altura = Math.max(nuevo.izquierdo.getAltura(),nuevo.derecho.getAltura()) + 1;
 		actual= nuevo;
 		return actual;
 		// System.out.println(azul+"");
@@ -267,10 +296,10 @@ public class AVLTree<K extends Comparable, T> implements TDABinarySearchTree<K, 
 	}
 
 	@Override
-	public AVLNode insert(T e, K k){
+	public void insert(T e, K k){
 		if(raiz == null){ // Arbol vacío
 			raiz = new AVLNode(e, k, null);
-			return raiz;
+			return;
 		}
 		AVLNode v = insert(e, k, raiz);
 
@@ -280,8 +309,8 @@ public class AVLTree<K extends Comparable, T> implements TDABinarySearchTree<K, 
 		
 		//v.actualizaAltura();
 		//return v;
-		rebalancear(v);
-		return v;
+		this.raiz =rebalancear(v);
+		//return raiz ;
 	}
 
 	/**
@@ -505,14 +534,16 @@ public class AVLTree<K extends Comparable, T> implements TDABinarySearchTree<K, 
 		arbol.insert(40, 40);
 		arbol.insert(45, 45);
         arbol.insert(35, 35);
+		arbol.insert(30, 30);
 
-		// arbol.preorden();
+		arbol.preorden();
 		// System.out.println("\n");
 		// //arbol.printTree();
 
-	    // arbol.rotarALaDerecha(arbol.retrieveNodo(50));
-		
-		// arbol.preorden();
+	  // arbol.raiz= arbol.rotarALaDerecha(arbol.retrieveNodo(50));
+
+		System.out.println(green+"p");
+		//arbol.preorden();
 
 		// AVLTree<Integer, Integer> arbol2 = new AVLTree<>();
 		// System.out.println(arbol2.insert(50, 50).altura);

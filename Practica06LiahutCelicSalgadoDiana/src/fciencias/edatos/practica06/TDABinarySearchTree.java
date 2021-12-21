@@ -23,7 +23,7 @@ public interface TDABinarySearchTree<K extends Comparable, T>{
 	* @param e el elemento a ingresar.
 	* @param k la clave del elemento a ingresar.
 	*/
-	public AVLNode insert(T e, K k);
+	public void insert(T e, K k);
 
 	/**
 	* Elimina el nodo con clave k del árbol.
