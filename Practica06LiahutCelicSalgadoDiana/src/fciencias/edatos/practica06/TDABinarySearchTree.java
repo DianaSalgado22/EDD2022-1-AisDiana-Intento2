@@ -1,4 +1,7 @@
 package fciencias.edatos.practica06;
+
+import fciencias.edatos.practica06.AVLTree.AVLNode;
+
 /**
 * Interfaz que define las operaciones sobre un arbol
 * binario de busqueda.
@@ -20,7 +23,7 @@ public interface TDABinarySearchTree<K extends Comparable, T>{
 	* @param e el elemento a ingresar.
 	* @param k la clave del elemento a ingresar.
 	*/
-	public void insert(T e, K k);
+	public AVLNode insert(T e, K k);
 
 	/**
 	* Elimina el nodo con clave k del árbol.

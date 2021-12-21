@@ -81,12 +81,22 @@ public class AVLTree<K extends Comparable, T> implements TDABinarySearchTree<K, 
 	private AVLNode raiz;
 
 
-	public void rebalancear(AVLNode actual){
+	 public void rebalancear(AVLNode actual){
 		//caso base cuando ya esta balanceado:
 		if(actual == null){
 			return;
 		}
 		
+		
+		actual.actualizaAltura();
+
+		if(actual.altura< 2){
+			
+			rebalancear(actual.padre);
+			return;
+		}
+
+		System.out.println("p");
 		//En caso en que este desbalanceador entra al if para balancearlo
 		if( Math.abs(actual.izquierdo.getAltura() - actual.derecho.getAltura())> 1){
 
@@ -128,11 +138,13 @@ public class AVLTree<K extends Comparable, T> implements TDABinarySearchTree<K, 
 
 		}
 
-		actual.actualizaAltura();
+		//actual.actualizaAltura();
+		//actual.actualizaAltura();
 		rebalancear(actual.padre);
+		
 
-	} 
-
+	}  
+/* 
 
 	public void rotarALaIzquierda(AVLNode actual){
 		// AVLNode child = actual.left;
@@ -145,9 +157,23 @@ public class AVLTree<K extends Comparable, T> implements TDABinarySearchTree<K, 
 		// System.out.println(green+"");
 		// preorden(actual);
 		// System.out.println(white+"");
-	}
+	} */
 
-	public void rotarALaDerecha(AVLNode actual){
+	public AVLNode rotarALaIzquierda(AVLNode actual){
+		// AVLNode child = actual.left;
+        // actual.left = child.right;
+        // child.right = actual;
+		AVLNode nuevo = actual.derecho;
+        actual.derecho = nuevo.izquierdo;
+        nuevo.izquierdo = actual;
+		actual= nuevo;
+		return actual;
+		// System.out.println(green+"");
+		// preorden(actual);
+		// System.out.println(white+"");
+	} 
+	
+	/* public void rotarALaDerecha(AVLNode actual){
 		AVLNode child = actual.izquierdo;
         actual.izquierdo = child.derecho;
         child.derecho= actual;
@@ -158,8 +184,21 @@ public class AVLTree<K extends Comparable, T> implements TDABinarySearchTree<K, 
 		// System.out.println(azul+"");
 		// preorden(actual);
 		// System.out.println(white+"");
-	}
+	} */
 
+	public AVLNode rotarALaDerecha(AVLNode actual){
+		AVLNode nuevo = actual.izquierdo;
+        actual.izquierdo = nuevo.derecho;
+        nuevo.derecho= actual;
+		// AVLNode t2 = actual.derecho;
+        // actual.derecho= t2.izquierdo;
+        // t2.izquierdo = actual;
+		actual= nuevo;
+		return actual;
+		// System.out.println(azul+"");
+		// preorden(actual);
+		// System.out.println(white+"");
+	} 
 	
 
 	public void printTree(){
@@ -228,15 +267,21 @@ public class AVLTree<K extends Comparable, T> implements TDABinarySearchTree<K, 
 	}
 
 	@Override
-	public void insert(T e, K k){
+	public AVLNode insert(T e, K k){
 		if(raiz == null){ // Arbol vacío
 			raiz = new AVLNode(e, k, null);
-			return;
+			return raiz;
 		}
 		AVLNode v = insert(e, k, raiz);
 
+
 		// Rebalancear a partir de v hasta raiz
-		//rebalancea(v);
+		//rebalancear(v);
+		
+		//v.actualizaAltura();
+		//return v;
+		rebalancear(v);
+		return v;
 	}
 
 	/**
@@ -280,6 +325,7 @@ public class AVLTree<K extends Comparable, T> implements TDABinarySearchTree<K, 
 
 		// Rebalancear
 		//rebalancea(w);
+		//rebalancear(w);
 
 		return eliminado;
 	}
@@ -460,20 +506,22 @@ public class AVLTree<K extends Comparable, T> implements TDABinarySearchTree<K, 
 		arbol.insert(45, 45);
         arbol.insert(35, 35);
 
-		arbol.preorden();
-		System.out.println("\n");
-		//arbol.printTree();
-	    arbol.rotarALaDerecha(arbol.retrieveNodo(50));
-		arbol.preorden();
+		// arbol.preorden();
+		// System.out.println("\n");
+		// //arbol.printTree();
 
-		AVLTree<Integer, Integer> arbol2 = new AVLTree<>();
-		arbol2.insert(50, 50);
-		arbol2.insert(40, 40);
-		arbol2.insert(70, 70);
-		arbol2.insert(60, 60);
-        arbol2.insert(80, 80);
-		arbol2.rotarALaIzquierda(arbol2.retrieveNodo(50));
-		System.out.println("\n");
+	    // arbol.rotarALaDerecha(arbol.retrieveNodo(50));
+		
+		// arbol.preorden();
+
+		// AVLTree<Integer, Integer> arbol2 = new AVLTree<>();
+		// System.out.println(arbol2.insert(50, 50).altura);
+		// arbol2.insert(40, 40);
+		// arbol2.insert(70, 70);
+		// arbol2.insert(60, 60);
+        // arbol2.insert(80, 80);
+		// arbol2.rotarALaIzquierda(arbol2.retrieveNodo(50));
+		// System.out.println("\n");
 		//arbol.preorden();
 
 		// arbol.insert(9, 9);
