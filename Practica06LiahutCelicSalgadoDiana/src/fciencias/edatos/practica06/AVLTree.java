@@ -1,6 +1,7 @@
 package fciencias.edatos.practica06;
 import java.util.InputMismatchException;
 import java.util.Scanner;
+import java.lang.Math;
 /**
 * Implementación de árbol AVL
  * @version 1.0 Diciembre 2021.
@@ -10,6 +11,13 @@ import java.util.Scanner;
  */
 public class AVLTree<K extends Comparable, T> implements TDABinarySearchTree<K, T>{
 
+	// COLORES
+	String green = "\033[32m";
+	String white = "\u001B[0m";
+	String purple = "\033[35m";
+	String azul = "\033[34m";
+	String yellow = "\033[33m";
+	String red = "\u001B[31m";
 	/**
 	 * Nodo de un arbol AVL.
 	 */
@@ -72,6 +80,104 @@ public class AVLTree<K extends Comparable, T> implements TDABinarySearchTree<K, 
 
 	private AVLNode raiz;
 
+
+	public void rebalancear(AVLNode actual){
+		//caso base cuando ya esta balanceado:
+		if(actual == null){
+			return;
+		}
+		
+		//En caso en que este desbalanceador entra al if para balancearlo
+		if( Math.abs(actual.izquierdo.getAltura() - actual.derecho.getAltura())> 1){
+
+			//desbalance a la izquierda
+			if(actual.izquierdo.getAltura() - actual.derecho.getAltura() > 1){
+
+				//caso 1
+				//desbalance a la izquierda caso 1(linea recta)
+				if(actual.izquierdo.izquierdo.getAltura() >= actual.izquierdo.derecho.getAltura()){
+					//  se gira actual a la derecha
+					rotarALaDerecha(actual);
+				}
+				//caso 2 
+				//if(getAltura(actual.izquierdo.izquierdo) < getAltura(actual.left.right)
+				else{
+					rotarALaIzquierda(actual.izquierdo);
+					rotarALaDerecha(actual);
+				}
+
+			}
+
+			//desbalance a la derecha
+			if (actual.derecho.getAltura() - actual.izquierdo.getAltura() > 1){
+
+				//caso 3
+				//desbalance a la derecha caso 1 (linea recta)
+				if(actual.derecho.derecho.getAltura() >= actual.derecho.izquierdo.getAltura()){
+					rotarALaIzquierda(actual);
+				}
+
+				else{
+                    rotarALaDerecha(actual.derecho);
+					rotarALaIzquierda(actual);
+				}
+
+			}
+			
+
+
+		}
+
+		actual.actualizaAltura();
+		rebalancear(actual.padre);
+
+	} 
+
+
+	public void rotarALaIzquierda(AVLNode actual){
+		// AVLNode child = actual.left;
+        // actual.left = child.right;
+        // child.right = actual;
+		AVLNode nuevo = actual.derecho;
+        actual.derecho = nuevo.izquierdo;
+        nuevo.izquierdo = actual;
+		actual= nuevo;
+		// System.out.println(green+"");
+		// preorden(actual);
+		// System.out.println(white+"");
+	}
+
+	public void rotarALaDerecha(AVLNode actual){
+		AVLNode child = actual.izquierdo;
+        actual.izquierdo = child.derecho;
+        child.derecho= actual;
+		// AVLNode t2 = actual.derecho;
+        // actual.derecho= t2.izquierdo;
+        // t2.izquierdo = actual;
+		actual= child;
+		// System.out.println(azul+"");
+		// preorden(actual);
+		// System.out.println(white+"");
+	}
+
+	
+
+	public void printTree(){
+        if(raiz == null){
+                         System.out.println ("árbol vacío");
+        } else {
+            printTree(raiz);
+        }
+    }
+
+    public void printTree(AVLNode t){
+        if(t != null){
+            printTree(t.izquierdo);
+            System.out.print(t.elemento + " ");
+            printTree(t.derecho);
+        }
+    }
+
 	@Override
 	public T retrieve(K k){
 		
@@ -80,6 +186,17 @@ public class AVLTree<K extends Comparable, T> implements TDABinarySearchTree<K, 
 			return null;
 		}else{
 			return aux.elemento;
+		}
+
+	}
+
+	public AVLNode retrieveNodo(K k){
+		
+		AVLNode aux =retrieve(k,raiz);
+		if(aux ==null){
+			return null;
+		}else{
+			return aux;
 		}
 
 	}
@@ -337,21 +454,47 @@ public class AVLTree<K extends Comparable, T> implements TDABinarySearchTree<K, 
 		 String red = "\u001B[31m";
 		AVLTree<Integer, Integer> arbol = new AVLTree<>();
 		AVLTree a1 = new AVLTree();
+		arbol.insert(50, 50);
+		arbol.insert(60, 60);
+		arbol.insert(40, 40);
+		arbol.insert(45, 45);
+        arbol.insert(35, 35);
 
-		arbol.insert(9, 9);
-		arbol.insert(12, 12);
-		arbol.insert(3, 3);
-		arbol.insert(4, 4);
-		arbol.insert(2, 2);
-		arbol.insert(5, 5);
-		//arbol.insert(1, 1);
-		arbol.insert(11, 11);
-		arbol.insert(14, 14);
-		arbol.insert(15, 15);
+		arbol.preorden();
+		System.out.println("\n");
+		//arbol.printTree();
+	    arbol.rotarALaDerecha(arbol.retrieveNodo(50));
+		arbol.preorden();
 
-		System.out.println(arbol.findMin());
+		AVLTree<Integer, Integer> arbol2 = new AVLTree<>();
+		arbol2.insert(50, 50);
+		arbol2.insert(40, 40);
+		arbol2.insert(70, 70);
+		arbol2.insert(60, 60);
+        arbol2.insert(80, 80);
+		arbol2.rotarALaIzquierda(arbol2.retrieveNodo(50));
+		System.out.println("\n");
+		//arbol.preorden();
 
-		System.out.println(arbol.findMax());
+		// arbol.insert(9, 9);
+		// arbol.insert(12, 12);
+		// arbol.insert(3, 3);
+		// arbol.insert(4, 4);
+        // arbol.insert(2, 2);
+		//System.out.println(arbol.retrieveNodo(12).getAltura());
+		//System.out.println(arbol.raiz.padre);
+
+		// arbol.insert(2, 2);
+		// arbol.insert(5, 5);
+		// //arbol.insert(1, 1);
+		// arbol.insert(11, 11);
+		// arbol.insert(14, 14);
+		// arbol.insert(15, 15);
+
+
+		//System.out.println(arbol.findMin());
+
+		//System.out.println(arbol.findMax());
 		Scanner sc = new Scanner(System.in); //Objeto para usar la clase Scanner
 		// INICIO DEL MENU
 		System.out.println(yellow + "Bienvenido al Menu ツ" + white + "\n");
