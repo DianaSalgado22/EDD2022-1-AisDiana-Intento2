@@ -2,6 +2,7 @@ package fciencias.edatos.practica06;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 import java.lang.Math;
+import java.text.BreakIterator;
 /**
 * Implementación de árbol AVL
  * @version 1.0 Diciembre 2021.
@@ -90,13 +91,14 @@ public class AVLTree<K extends Comparable, T> implements TDABinarySearchTree<K, 
 		//  	return;
 		  //}
 		
-		//System.out
+	//	System.out.print("pruebita");
 		actual.actualizaAltura();
 
 		if(actual.altura< 2){
 			if(actual.padre == null){
 			 
 				//this.raiz= actual;
+				System.out.println("prueba");
 				return actual;
 			}
 			
@@ -105,10 +107,46 @@ public class AVLTree<K extends Comparable, T> implements TDABinarySearchTree<K, 
 			//return;
 		}
 
-		//System.out.println("p");
+		
+		// if(actual.izquierdo == null){
+		// 	actual.izquierdo.altura = -1;
+		// }else{
+		// 	actual.izquierdo.actualizaAltura();
+		// }
+
+		// if(actual.derecho == null){
+		// 	actual.derecho.altura = -1;
+		// }else{
+		// 	actual.derecho.actualizaAltura();
+		// }
+
+		// if(actual.izquierdo.izquierdo ==null){
+		// 	actual.izquierdo.izquierdo.altura= -1;
+		// }else{
+		// 	actual.izquierdo.izquierdo.actualizaAltura();
+		// }
+
+		// if(actual.izquierdo.derecho == null){
+		// 	actual.izquierdo.derecho.altura = -1;
+		// }else{
+		// 	actual.izquierdo.derecho.actualizaAltura();
+		// }
+
+		// if(actual.derecho.derecho == null ){
+		// 	actual.derecho.derecho.altura = -1;
+		// }else{
+		// 	actual.derecho.derecho.actualizaAltura();
+		// }
+
+		// if(actual.derecho.izquierdo == null){
+		// 	actual.derecho.izquierdo.altura = -1;
+		// }else{
+		// 	actual.derecho.izquierdo.actualizaAltura();
+		// }
+
 		//En caso en que este desbalanceador entra al if para balancearlo
 		if( Math.abs(actual.izquierdo.getAltura() - actual.derecho.getAltura())> 1){
-
+			AVLNode nuevo=null;
 			//desbalance a la izquierda
 			if(actual.izquierdo.getAltura() - actual.derecho.getAltura() > 1){
 
@@ -116,16 +154,19 @@ public class AVLTree<K extends Comparable, T> implements TDABinarySearchTree<K, 
 				//desbalance a la izquierda caso 1(linea recta)
 				if(actual.izquierdo.izquierdo.getAltura() >= actual.izquierdo.derecho.getAltura()){
 					//  se gira actual a la derecha
-					actual = rotarALaDerecha(actual);
-					preorden(actual);
+				    nuevo= rotarALaDerecha(actual);
 					System.out.println("a");
+				
+							
 				}
 				//caso 2 
 				//if(getAltura(actual.izquierdo.izquierdo) < getAltura(actual.left.right)
 				else{
 					actual.izquierdo= rotarALaIzquierda(actual.izquierdo);
-					actual =rotarALaDerecha(actual);
+					rotarALaDerecha(actual);
+					nuevo=actual;
 					System.out.println("b");
+					//rebalancear(actual.padre);
 				}
 
 			}
@@ -136,24 +177,35 @@ public class AVLTree<K extends Comparable, T> implements TDABinarySearchTree<K, 
 				//caso 3
 				//desbalance a la derecha caso 1 (linea recta)
 				if(actual.derecho.derecho.getAltura() >= actual.derecho.izquierdo.getAltura()){
-					actual=rotarALaIzquierda(actual);
+					rotarALaIzquierda(actual);
+					nuevo = actual;
 					System.out.println("c");
+					//rebalancear(actual.padre);
 				}
 
 				else{
                     actual.derecho=rotarALaDerecha(actual.derecho);
-					actual = rotarALaIzquierda(actual);
+					rotarALaIzquierda(actual);
+					nuevo= actual;
 					System.out.println("d");
+					//rebalancear(actual.padre);
 				}
 
 			}
 			
 
+
 			//rebalancear(actual.padre);
 			//return;
+			if(actual.padre == null)
+					{
+						this.raiz = nuevo;
+						return raiz;
+					}
 
 		}
 
+		//preorden(nuevo);
 		//actual.actualizaAltura();
 		//actual.actualizaAltura();
 		// if(actual.padre == null){
@@ -162,6 +214,9 @@ public class AVLTree<K extends Comparable, T> implements TDABinarySearchTree<K, 
 		 if(actual.padre == null){
 			 
 			//this.raiz= actual;
+		//	System.out.print("prueba\n");
+		//	preorden(actual);
+		System.out.print("prueba2\n");
 			return actual;
 		} 
 	
@@ -191,8 +246,10 @@ public class AVLTree<K extends Comparable, T> implements TDABinarySearchTree<K, 
 		AVLNode nuevo = actual.derecho;
         actual.derecho = nuevo.izquierdo;
         nuevo.izquierdo = actual;
-		actual.altura = Math.max(actual.izquierdo.getAltura(), actual.derecho.getAltura()) + 1;
-        nuevo.altura = Math.max(nuevo.izquierdo.getAltura(), nuevo.derecho.getAltura()) + 1;
+		actual.actualizaAltura();
+		nuevo.actualizaAltura();
+		/* actual.altura = Math.max(actual.izquierdo.getAltura(), actual.derecho.getAltura()) + 1;
+        nuevo.altura = Math.max(nuevo.izquierdo.getAltura(), nuevo.derecho.getAltura()) + 1; */
 		actual= nuevo;
 		return actual;
 		// System.out.println(green+"");
@@ -220,12 +277,16 @@ public class AVLTree<K extends Comparable, T> implements TDABinarySearchTree<K, 
 		// AVLNode t2 = actual.derecho;
         // actual.derecho= t2.izquierdo;
         // t2.izquierdo = actual;
-		actual.altura = Math.max(actual.izquierdo.getAltura(), actual.derecho.getAltura()) + 1;
-        nuevo.altura = Math.max(nuevo.izquierdo.getAltura(),nuevo.derecho.getAltura()) + 1;
+		actual.actualizaAltura();
+		nuevo.actualizaAltura();
+		//actual.altura = Math.max(actual.izquierdo.getAltura(), actual.derecho.getAltura()) + 1;
+        //nuevo.altura = Math.max(nuevo.izquierdo.getAltura(),nuevo.derecho.getAltura()) + 1;
 		actual= nuevo;
+		System.out.println("\n");
+		//preorden(actual);
 		return actual;
 		// System.out.println(azul+"");
-		// preorden(actual);
+		
 		// System.out.println(white+"");
 	} 
 	
@@ -305,11 +366,11 @@ public class AVLTree<K extends Comparable, T> implements TDABinarySearchTree<K, 
 
 
 		// Rebalancear a partir de v hasta raiz
-		//rebalancear(v);
+		rebalancear(v);
 		
 		//v.actualizaAltura();
 		//return v;
-		this.raiz =rebalancear(v);
+		//this.raiz =rebalancear(v);
 		//return raiz ;
 	}
 
@@ -358,6 +419,7 @@ public class AVLTree<K extends Comparable, T> implements TDABinarySearchTree<K, 
 
 		return eliminado;
 	}
+
 
 	private AVLNode delete(AVLNode v){
 		if(v.izquierdo!=null && v.derecho!=null){ // Tiene dos hijos
@@ -530,15 +592,55 @@ public class AVLTree<K extends Comparable, T> implements TDABinarySearchTree<K, 
 		AVLTree<Integer, Integer> arbol = new AVLTree<>();
 		AVLTree a1 = new AVLTree();
 		arbol.insert(50, 50);
+		//System.out.println(green+"\n");
+		arbol.preorden();
 		arbol.insert(60, 60);
+		//System.out.println(green+"\n");
+		arbol.preorden();
 		arbol.insert(40, 40);
+		//System.out.println(green+"\n");
+		arbol.preorden();
 		arbol.insert(45, 45);
+		//System.out.println(green+"\n");
+		arbol.preorden();
+		//System.out.println(green+"\n");
         arbol.insert(35, 35);
+		//System.out.println(green+"\n");
+		arbol.preorden();
 		arbol.insert(30, 30);
-
+		arbol.preorden();
+		//arbol.insert(15, 15);
+		arbol.preorden();
+		System.out.println(arbol.raiz.elemento);
+		System.out.println("holis");
+		arbol.insert(42, 42);
+		
+		arbol.preorden();
+		arbol.insert(47, 47);
 		arbol.preorden();
 		// System.out.println("\n");
 		// //arbol.printTree();
+
+	//	arbol.insert(3, 3);
+		//System.out.println(green+"\n");
+		//arbol.preorden();
+	//	arbol.insert(2, 2);
+		//System.out.println(green+"\n");
+		//arbol.preorden();
+	//	arbol.insert(5, 5);
+		//System.out.println(green+"\n");
+		//arbol.preorden();
+		//arbol.insert(1, 1);
+		//System.out.println(green+"\n");
+		//arbol.preorden();
+		//System.out.println(green+"\n");
+      //  arbol.insert(4, 4);
+		//System.out.println(green+"\n");
+		//arbol.preorden();
+	//	arbol.insert(6, 6);
+
+		//arbol.preorden();
+		//arbol.rotarALaDerecha(arbol.retrieveNodo(3));
 
 	  // arbol.raiz= arbol.rotarALaDerecha(arbol.retrieveNodo(50));
 
@@ -679,12 +781,12 @@ public class AVLTree<K extends Comparable, T> implements TDABinarySearchTree<K, 
 				  System.out.print(green + "\tIntenta de nuevo:)" + white + "\n\n");
 				  sc.nextLine();
 				  continue;
-				} catch (Exception e) {
-				  System.out.print(red + "\n\tLo siento,ocurrio un error inesperado");
-				  System.out.print(green + "\n\tIntenta de nuevo:)" + white + "\n\n");
-				  sc.nextLine();
-				  continue;
-				}
+				}// } catch (Exception e) {
+				//   System.out.print(red + "\n\tLo siento,ocurrio un error inesperado");
+				//   System.out.print(green + "\n\tIntenta de nuevo:)" + white + "\n\n");
+				//   sc.nextLine();
+				//   continue;
+				// }
 	  
 				break;
 			  // opcion 3 (salir)
