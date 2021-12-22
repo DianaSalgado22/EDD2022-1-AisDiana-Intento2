@@ -294,9 +294,9 @@ public class AVLTree<K extends Comparable, T> implements TDABinarySearchTree<K, 
 		
 		// Por ultimo tenemos que reconectar a la rotacion con el resto del arbol o en su defecto asignar a la nueva raiz
 		if(aux==null){ // Entonces b era la raiz
-			this.root=a; // cambiamos a como la nueva raiz
+			this.raiz=a; // cambiamos a como la nueva raiz
 			// Como ahora a es la raiz su padre tiene que ser null
-			a.padre=null
+			a.padre=null;
 		}
 		// Este es el caso cuando no se hizo una rotación en la raiz
 		else{
@@ -313,7 +313,7 @@ public class AVLTree<K extends Comparable, T> implements TDABinarySearchTree<K, 
 		}
 		return a; // La verdad no estoy segura de que es lo que se tendria que devolver en este
 		//Tampoco sé muy bien que onda con las alturas si se cambian aqui o no 
-		
+
 		/*
 		AVLNode nuevo = actual.izquierdo;
         actual.izquierdo = nuevo.derecho;
