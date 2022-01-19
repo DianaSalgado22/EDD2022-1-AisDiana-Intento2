@@ -224,25 +224,9 @@ public class AVLTree<K extends Comparable, T> implements TDABinarySearchTree<K, 
 		
 
 	}  
-/* 
-
-	public void rotarALaIzquierda(AVLNode actual){
-		// AVLNode child = actual.left;
-        // actual.left = child.right;
-        // child.right = actual;
-		AVLNode nuevo = actual.derecho;
-        actual.derecho = nuevo.izquierdo;
-        nuevo.izquierdo = actual;
-		actual= nuevo;
-		// System.out.println(green+"");
-		// preorden(actual);
-		// System.out.println(white+"");
-	} */
 
 	public AVLNode rotarALaIzquierda(AVLNode actual){
-		// AVLNode child = actual.left;
-        // actual.left = child.right;
-        // child.right = actual;
+		
 		AVLNode nuevo = actual.derecho;
         actual.derecho = nuevo.izquierdo;
         nuevo.izquierdo = actual;
