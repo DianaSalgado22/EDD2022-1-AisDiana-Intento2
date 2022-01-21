@@ -95,19 +95,21 @@ public interface TDAGraph<V, E>{
         
 	}
 
+
+
  
     /**Agrega una arista entre el vertice startVertex y endVertex
      * @param startVertex vertice de inicio de la arista
      * @param endVertex vértice de llegada de la arista
      */
-    public void addEdge(V startVertex, V endVertex);
+    public void addEdge(int startVertex, int endVertex);
 
     /**
 	* Elimina un vertice de la grafica.
 	* @param e la arista a  eliminar de la grafica.
 	* @return el valor almacenado en el vertice o null si no existe.
 	*/
-	public Arista<V,E> removeEdge(V v1, V v2);
+	public void removeEdge(int v1, int v2);
 
 
    
