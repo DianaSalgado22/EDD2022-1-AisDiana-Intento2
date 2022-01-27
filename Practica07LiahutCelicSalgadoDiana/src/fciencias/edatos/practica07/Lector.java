@@ -26,6 +26,7 @@ public class Lector {
     static String yellow= "\033[33m";
 	static String rojo =  "\u001B[31m";
 
+    public String cadenaDeSimbolos="";
 
     public AbstractHashMap convierteAmapa(){
         String cadena = "";
@@ -66,6 +67,8 @@ public class Lector {
                             break;
                     }
                 }
+                cadenaDeSimbolos = cadenaDeSimbolos +simbolo+" ";
+               // System.out.print(simbolo+ " ");
                 peso=Double.parseDouble(pesoCad); //convertimos la cadea on el peso en un double
                 // Ya que terminamos de procesar una linea
                 Elemento elem= new Elemento(nombre,simbolo,peso); //creamos al elemento
@@ -87,6 +90,7 @@ public class Lector {
                 //this.toString(mapaTP.get(simbolo));
         }
             while((linea=lector1.readLine())!=null);
+           // System.out.println();
         }catch(FileNotFoundException fnfe){
             System.out.println(rojo+"\tNo se encontró el archivo");
         } catch(Exception e){
@@ -94,6 +98,10 @@ public class Lector {
         }
         //toString(mapaTP);
         return mapaTP;
+        }
+
+        public String cadenaDeSimbolos(){
+            return cadenaDeSimbolos;
         }
 
         public void toString(DoubleLinkedList<Elemento> lista){

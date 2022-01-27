@@ -1,5 +1,6 @@
 package fciencias.edatos.practica07;
-
+import java.util.Scanner;
+import java.util.InputMismatchException;
 
 /**
  * Clase que contiene las operaciones para
@@ -27,12 +28,16 @@ public class CalculadoraMM {
     // Arreglo aux con los num 
     public static String num="0123456789";
 
+    public String cadenaDeSimbolos="";
+
     /**
      * 
      */
     public CalculadoraMM(){
         Lector l1= new Lector();
         this.mapaTP=l1.convierteAmapa();
+        this.cadenaDeSimbolos = l1.cadenaDeSimbolos();
+
     }
 
     /** Metodo que calcula la 
@@ -155,16 +160,86 @@ public class CalculadoraMM {
 
 
     public static void main(String[] args) {
+        // static String verde = "\033[32m";
+        // static String blanco = "\u001B[0m";
+        // static String morado = "\033[35m";
+        // static String azul = "\033[34m";
+        // static String yellow= "\033[33m";
+        // static String rojo =  "\u001B[31m";
         CalculadoraMM p1=new CalculadoraMM();
+        Scanner sc = new Scanner(System.in); //Objeto para usar la clase Scanner
         //primero accedemos a la lista de elementos con la clave k 
         //DoubleLinkedList lista=mapaTP.get("Na");
-       
-        System.out.println("Na.O3. "+p1.calculaMM("Na.O3"));
-        System.out.println("K2.H3.I. "+p1.calculaMM("K2.H3.I"));
+        int aux=0;
+        int eleccion=0;
+        do{
+        System.out.println(morado+"Bievenido a la calculadora de masa moleculares🤓\nLos simbolos de la tabla periodica son los siguientes:"+blanco);
+
+
         
-        // Nota ya solo falta el menú 
-        // y poner un parte ahi en el menu que sea que si el metodo regresa -1 quiere decir que la cadena que se ingreso no es valida
-        // también poner en las instrucciones qque entre cada elemento hay que poner un punto.
+        System.out.println(p1.cadenaDeSimbolos+"\n");
+            
+
+    
+        System.out.println(azul+"Ingresa el elemento quimico del que quieres calcular su masa molecular:\n"+rojo+"(Recuerda poner entre elementos quimicos un punto" + '\u0022' +"." + '\u0022'+ "para el buen fundionaiento del programa)"+blanco);
+        try{
+            String cadena = sc.nextLine();
+            double resultado= p1.calculaMM(cadena);
+            if(resultado<0){
+                // System.out.println(red+"No ingresaste una cadena valida, recuerda las intruscciones 🤬\n"+blanco+"Te daremos otra oportunidad:p\n");
+                // continue;
+                aux= 1;
+                throw new IndexOutOfBoundsException("No ingresaste una cadena valida, recuerda las intruscciones 🤬\n"+blanco+"Te daremos otra oportunidad:p\n");
+               
+            }
+            System.out.println("La masa molecular de"+cadena+" es "+resultado+"\n");
+            
+        }catch (InputMismatchException ime) {
+            System.out.println(rojo + "\tNo ingresaste uuna cadena\n" + blanco);
+            System.out.print(verde + "\tIntenta de nuevo:)" + blanco + "\n\n");
+            aux=1;
+            sc.nextLine();
+            continue;
+
+        }catch (IndexOutOfBoundsException ioobe) {
+            System.out.println(
+              rojo + "Ingresa algo valido porfavor 🤬\n" + blanco
+            );
+            aux=1;
+            continue;
+          }
+
+        aux=0;
+
+        do{
+          System.out.println("¿Qué deseeas hacer?\n[1]Volver a usar el programa\n[2]Salir del progrma ");
+          try{
+          eleccion = sc.nextInt();
+          if(eleccion == 2){
+              return;
+          }
+          if(eleccion == 1){
+              aux =1;
+          }
+          if(eleccion != 1 && eleccion != 2){
+            throw new IndexOutOfBoundsException("No ingresaste valores validos 🤬\n"+blanco+"");
+          }
+        }catch(InputMismatchException ime){
+            System.out.println(
+                rojo + "Ingresa algo valido porfavor 🤬\n" + blanco
+              );
+              aux =2;
+              sc.nextLine();
+          }catch(IndexOutOfBoundsException ioobe){
+              System.out.println("No ingresaste valores validos 🤬\n"+blanco+"\n");
+              aux = 2;
+              sc.nextLine();
+          }
+          //aux=0;
+        }while(aux ==2);
+
+        }while(aux == 1);
+    
         
     }
 }
