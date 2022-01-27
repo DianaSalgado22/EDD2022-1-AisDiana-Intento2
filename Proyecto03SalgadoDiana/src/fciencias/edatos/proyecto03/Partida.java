@@ -23,30 +23,39 @@ import java.io.IOException;
  */
 public class Partida extends Thread{
 
-    //Hilo 1
+    //Hilo 1 - El que se usara para el cronometro
     Thread t1;
-    //Hilo 2
+    //Hilo 2 - El que se usara para pedir las palabras
     Thread t2;
 
+    //Clase que incluye el comportamiento del hilo que se encarga de recolectar las palabras
     public class PedirPalabras extends Thread{
     
-        //
+        // Objeto para usar la clase SC
         public Scanner sc = new Scanner(System.in);
     
             @Override
             public void run(){
+                // Por el tiempo que dura diciendo "preparados..."
                 delay4Segundos();
                 System.out.print("\n");
+                //Mientras el cronometro siga funcionando seguimos pidiendo palabras
                 while(t1.isAlive()){
+                    // Le recordamos al usuario la secuencia
                     System.out.print(purple+"🅂 🄴 🄲 🅄 🄴 🄽 🄲 🄸 🄰  : " +white);
                     sl.toString(secuencia);
+                    // La palabra que se ingrese 
                     String palabra=sc.nextLine();
                     //Se agrega a la lista 
                     listaTodas.add(0,palabra);
                 }
+                // Para este punto ya se acabaron los 60 seg
                 System.out.println("\n"+blue+ "𝗣 𝗮 𝗿 𝘁 𝗶 𝗱 𝗮    𝘁 𝗲 𝗿 𝗺  𝗶 𝗻 𝗮 𝗱 𝗮"+ white+"\n");
             }
-    
+            
+            /**
+             * Metodo que para a un hilo 4 segundos
+             */
             public void delay4Segundos(){
                 try {
                     sleep(4000);
@@ -56,9 +65,10 @@ public class Partida extends Thread{
             }
     }
     
+    // Clase que implementa  a un hilo como un cronometro
     public class Cronometro extends Thread { 
     
-    
+        @Override
         public void run(){
             Integer milesimas=0,segundos = 0;
             boolean cronometroAtivo=true;
@@ -107,23 +117,29 @@ public class Partida extends Thread{
     String cyan = "\033[36m";
     String white = "\u001B[0m";
 
-    // Atributos:
+    // Atributos necesarios para acceder a todas las clases:
     private Scanner sc = new Scanner(System.in);
     private SecuenciaLetras sl=new SecuenciaLetras();
     private Checador ch=new Checador();
     private PedirPalabras pp=new PedirPalabras();
+    //Lista con solo palabras validas
     public DoubleLinkedList<String> listaCorrectas=new DoubleLinkedList();
+    // La secuencia de la partida
     public String secuencia="";
+    // Lista con palabras validas e invalidas
     public DoubleLinkedList<String> listaTodas=new DoubleLinkedList();
  
         /**
-         * Metodo que da inicio a los hilos del cronometro y el pedirle las respuestas al usuario
+         * Metodo que da inicio a los hilos del cronometro y el de pedirle las respuestas al usuario
          */
         public void comienza(){
+            //Asignamos los hilos al atributo que corresponden
             t1=new Cronometro();
             t2=new PedirPalabras();
+            //Lo iniciamos
             t1.start();
             t2.start();
+            // Para que no se encime con lo que va despues de la ejecuccion de los dos hilos
             while(t2.isAlive()){
 
             }
@@ -139,7 +155,7 @@ public class Partida extends Thread{
 		
 
         /**
-         * Metodo que separa las palabras validas de ls que no
+         * Metodo que separa las palabras validas de las que no
          */
         public void filtra(){
             //Recorremos la lista con las palabras mientras no este vacia
@@ -204,10 +220,14 @@ public class Partida extends Thread{
             
         }
         
+        /**
+         * Metodo que imprime todos los puntajes que estan guardados en el arbol
+         */
         public void toStringTodos()throws FileNotFoundException,IOException,ClassNotFoundException{
             try{
                 // Guardamos al arbol 
                 BinarySearchTree<String,Jugador[]> arbolP=leeArchivo();
+                //Aplicamos preorden para accceder a todos los nodos
                 preorden(arbolP);
                 
               }catch(FileNotFoundException e){
@@ -256,7 +276,13 @@ public class Partida extends Thread{
 
 
         /**
-         * Método para agregar un nuevo puntaje 
+         * Método para agregar un nuevo puntaje o para descartarlo si no supera a los antiguos
+         * @param nombre del usuario
+         * @param pts obtenidos
+         * @param secuencia
+         * @throws FileNotFoundException
+         * @throws IOException
+         * @throws ClassNotFoundException
          */
         public void addPuntaje(String nombre,int pts,String secuencia)throws FileNotFoundException,IOException,ClassNotFoundException{
             try{

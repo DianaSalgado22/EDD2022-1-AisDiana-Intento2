@@ -7,20 +7,11 @@ import java.util.Random;
  * el juego del proyecto 03
  * @version 1.Enero 2022.
  * @author Salgado Tirado Diana Laura
+ * @author Celic Aislinn Liahut Ley
  * @since Estructuras de Datos 2022-1
  */
 public class SecuenciaLetras implements Serializable{
   static final long serialVersionUID = 1L;
-  /*
-  // COLORES                                                               
-  String green = "\033[32m";
-  String white = "\u001B[0m";
-  String purple = "\033[35m";
-  String blue = "\033[34m";
-  String yellow= "\033[33m";
-  String red =  "\u001B[31m";  
-  String black = "\033[30m";
-  */
 
   // Cadena con las letras consideradas comunes
   String comunes="BCDFGHJLMNPRSTV";

@@ -14,9 +14,9 @@ import java.io.FileOutputStream;
 import java.io.ObjectInputStream;
 
 /**
- * Clase que sirve para realizar un juego 
- * contador de palabras y que tiene los metodos para checar su validez 
- * y puntuación - proyecto 03
+ * Clase que se encarga de procesar el diccionario 
+ * y convertirlo de txt a una estructura de datos
+ * (Un mapa de arboles de busqueda)
  * @version 1.Enero 2022.
  * @author Celic Aislinn Liahut Ley
  * @author Salgado Tirado Diana Laura

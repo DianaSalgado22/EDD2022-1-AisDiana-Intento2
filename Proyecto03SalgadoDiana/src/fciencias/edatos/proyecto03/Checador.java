@@ -3,9 +3,8 @@ package fciencias.edatos.proyecto03;
 import java.io.Serializable;
 
 /**
- * Clase que sirve para realizar un juego 
- * contador de palabras y que tiene los metodos para checar su validez 
- * y puntuación - proyecto 03
+ * Clase que tiene los metodos que validan si una palabra 
+ * es valida o no y checa si se encuentran en ele diccionario
  * @version 1.Enero 2022.
  * @author Celic Aislinn Liahut Ley
  * @author Salgado Tirado Diana Laura
