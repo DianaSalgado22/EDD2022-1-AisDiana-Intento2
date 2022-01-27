@@ -23,7 +23,81 @@ import java.io.IOException;
  */
 public class Partida extends Thread{
 
+    //Hilo 1
+    Thread t1;
+    //Hilo 2
+    Thread t2;
 
+    public class PedirPalabras extends Thread{
+    
+        //
+        public Scanner sc = new Scanner(System.in);
+    
+            @Override
+            public void run(){
+                delay4Segundos();
+                System.out.print("\n");
+                while(t1.isAlive()){
+                    System.out.print(purple+"🅂 🄴 🄲 🅄 🄴 🄽 🄲 🄸 🄰  : " +white);
+                    sl.toString(secuencia);
+                    String palabra=sc.nextLine();
+                    //Se agrega a la lista 
+                    listaTodas.add(0,palabra);
+                }
+                System.out.println("\n"+blue+ "𝗣 𝗮 𝗿 𝘁 𝗶 𝗱 𝗮    𝘁 𝗲 𝗿 𝗺  𝗶 𝗻 𝗮 𝗱 𝗮"+ white+"\n");
+            }
+    
+            public void delay4Segundos(){
+                try {
+                    sleep(4000);
+                } catch (Exception e) {
+                    
+                }
+            }
+    }
+    
+    public class Cronometro extends Thread { 
+    
+    
+        public void run(){
+            Integer milesimas=0,segundos = 0;
+            boolean cronometroAtivo=true;
+            try
+            {
+                System.out.println(yellow+"\t Preparado"+white);
+                delaySegundo();
+                System.out.println(yellow+"\t Listo"+white);
+                delaySegundo();
+                System.out.println(green+"\t ¡¡¡YAAAAA!!!"+white);
+                //Mientras cronometroActivo sea verdadero entonces seguira
+                //aumentando el tiempo
+                while(cronometroAtivo ){
+                    for ( segundos= 0;  segundos<61;segundos++) {
+                        delaySegundo();
+                        //Si los segundos llegan a 60 entonces se acabo el tiempo
+                        if( segundos == 60 ){
+                        cronometroAtivo=false;
+                    }
+                    }
+                    
+                        
+                                
+                }
+                System.out.println("\n"+red+"\t ¡¡ 𝘛 𝘐 𝘌 𝘔 𝘗 𝘖 !!"+white+"\n"); 
+                System.out.println("\n"+green+"Da un ultimo click en enter para continuar"+white+"\n"); 
+            }catch(Exception e){}
+        }
+        
+    
+        public void delaySegundo(){
+            try {
+                Thread.sleep(1000);
+            } catch (Exception e) {
+                
+            }
+        }
+    }
+    
     // COLORES:
     String blue = "\033[34m";
     String green = "\033[32m";
@@ -39,12 +113,20 @@ public class Partida extends Thread{
     private Checador ch=new Checador();
     private PedirPalabras pp=new PedirPalabras();
     public DoubleLinkedList<String> listaCorrectas=new DoubleLinkedList();
+    public String secuencia="";
+    public DoubleLinkedList<String> listaTodas=new DoubleLinkedList();
+ 
         /**
          * Metodo que da inicio a los hilos del cronometro y el pedirle las respuestas al usuario
          */
         public void comienza(){
-		pp.start();
-        this.delay70Segundos();
+            t1=new Cronometro();
+            t2=new PedirPalabras();
+            t1.start();
+            t2.start();
+            while(t2.isAlive()){
+
+            }
 	    }
 
         public void delay70Segundos(){
@@ -61,11 +143,11 @@ public class Partida extends Thread{
          */
         public void filtra(){
             //Recorremos la lista con las palabras mientras no este vacia
-            while (!this.pp.listaTodas.isEmpty()) {
+            while (!listaTodas.isEmpty()) {
                 // Obtenemos la palabra en la pos 0 y la eliminamos
-                String palabra=this.pp.listaTodas.remove(0);
+                String palabra=listaTodas.remove(0);
                 // Verificamos si la palabra en valida o no
-                if(ch.wordIsValid(this.pp.secuencia,palabra)){
+                if(ch.wordIsValid(this.secuencia,palabra)){
                     // Si es una palabra valida y además no esta en la lista, la agregamos 
                     if(!listaCorrectas.contains(palabra)){
                         listaCorrectas.add(0, palabra);
@@ -334,16 +416,16 @@ public class Partida extends Thread{
                 String resp=sc.nextLine();
                 resp=resp.toLowerCase();
                 if(resp.equals("true")|| resp.equals("sí") || resp.equals("si")){
-                    p1.pp.secuencia=sl.generateRandom9();
+                    p1.secuencia=sl.generateRandom9();
                     aux=false;
                     
                 }else{
                     if(resp.equals("false")|| resp.equals("no")){
                         while(aux){
                             System.out.println("Ingresa una secuencia de 9 letras:");
-                            p1.pp.secuencia=sc.nextLine();
-                            p1.pp.secuencia=sl.isValid(p1.pp.secuencia);
-                            if(p1.pp.secuencia!=null){
+                            p1.secuencia=sc.nextLine();
+                            p1.secuencia=sl.isValid(p1.secuencia);
+                            if(p1.secuencia!=null){
                                 aux=false;
                             }
                             else{
@@ -356,7 +438,7 @@ public class Partida extends Thread{
                 }
                 
             }
-            // Empezamos la partida como tal (es decir el tiempo y el pedir las palabras
+            // Empezamos la partida como tal (es decir el tiempo y el pedir las palabras)
             p1.comienza();
             // Ahora checamos que palabras son validas y cuales no
             p1.filtra();
@@ -371,9 +453,9 @@ public class Partida extends Thread{
             try{
 
                 //Agregamos el puntaje del jugador
-                p1.addPuntaje(nombre, puntaje,p1.pp.secuencia);
+                p1.addPuntaje(nombre, puntaje,p1.secuencia);
                 //Imprimimos el ranking de esta secuencia en especifico
-                p1.toStringInd(p1.pp.secuencia);
+                p1.toStringInd(p1.secuencia);
   
               }catch(FileNotFoundException e){
                 e.printStackTrace();
