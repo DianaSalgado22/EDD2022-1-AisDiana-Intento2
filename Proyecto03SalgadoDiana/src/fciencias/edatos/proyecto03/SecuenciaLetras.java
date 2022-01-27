@@ -1,4 +1,5 @@
 package fciencias.edatos.proyecto03;
+import java.io.Serializable;
 import java.util.Random;
 /**
  * Clase que sirve para realizar las operaciones 
@@ -8,8 +9,8 @@ import java.util.Random;
  * @author Salgado Tirado Diana Laura
  * @since Estructuras de Datos 2022-1
  */
-public class SecuenciaLetras{
-
+public class SecuenciaLetras implements Serializable{
+  static final long serialVersionUID = 1L;
   /*
   // COLORES                                                               
   String green = "\033[32m";
@@ -34,7 +35,7 @@ public class SecuenciaLetras{
   /** Metodo que genera una secuencia
    *  de letras aleatoria.
    *  Considerando las probabilidades de:
-   *  50% Vocales, 45% letras comunes, 5% letras raras.
+   *  47% Vocales, 48% letras comunes, 5% letras raras.
    */
   public String generateRandom9(){
     Random random=new Random();//objeto para usar la clase random
@@ -42,15 +43,15 @@ public class SecuenciaLetras{
     do{
       //Para controlar las probabilidades de las letras :
       int prob=random.nextInt(101);// Generamos un int entre [0,101)
-      // 50% que sean vocales
-      if(prob<=50){
+      // 47% que sean vocales
+      if(prob<=47){
         //Generamos otro num random para elegir una letra 
         int posLetra=random.nextInt(vocales.length()); // [0,5)
         //Accedemos a la letra y la guardamos
           secuenciaFinal+=vocales.charAt(posLetra);
       }
-      // 45% de que sean letras comunes
-      if(prob>51 && prob<=95){
+      // 48% de que sean letras comunes
+      if(prob>48 && prob<=95){
         //Generamos otro num random para elegir una letra 
         int posLetra=random.nextInt(comunes.length()); // [0,15)
         //Accedemos a la letra y la guardamos
